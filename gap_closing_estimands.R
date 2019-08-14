@@ -41,6 +41,7 @@ d <- GSS %>%
   mutate(n_analytic = n()) %>%
   mutate(log_income = log(REALRINC)) %>%
   mutate(parent_class1 = egp_pa == 1) %>%
+  # Adjust to give equal total weight to each year.
   group_by(YEAR) %>%
   mutate(WTSSALL = WTSSALL / sum(WTSSALL)) %>%
   group_by() %>%
@@ -51,7 +52,7 @@ d %>%
   filter((1:n()) == 1) %>%
   select(starts_with("n_"))
 
-# Note class 1 occupations
+# Note some class 1 occupations
 unique(crosswalk$title[crosswalk$egp10_10 == 1])
 
 # Store survey design
