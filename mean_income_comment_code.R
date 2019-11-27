@@ -22,7 +22,58 @@ library(foreach)
 
 sink("figures/text_output.txt")
 
-# Plot utility functions
+# Figure 1: Plot simulated densities
+
+get_ln_density <- function(mu) {
+  data.frame(mu = mu,
+             p = seq(0,.99,.001)) %>%
+    mutate(x = qlnorm(p, meanlog = log(mu)),
+           pdf = dlnorm(x, meanlog = log(mu)))
+}
+mu_values <- seq(10000,100000,10000)
+several_densities <- foreach(mu_value = mu_values, .combine = "rbind") %do% {
+  get_ln_density(mu = mu_value)
+}
+medians <- data.frame(Summary = "Median",
+                      x = mu_values,
+                      y = mu_values)
+means <- data.frame(Summary = "Mean",
+                    x = exp(log(mu_values) + .5),
+                    y = mu_values)
+summary_values <- medians %>%
+  bind_rows(means)
+several_densities %>%
+  group_by(mu) %>%
+  mutate(pdf = pdf / max(pdf)) %>%
+  ggplot() +
+  geom_ribbon(aes(x = x, ymin = mu, ymax = mu + 5000*pdf, group = mu),
+              fill = "gray") +
+  geom_line(data = summary_values,
+            aes(x = x, y = y, color = Summary)) +
+  geom_point(data = summary_values,
+             size = 5,
+             aes(x = x, y = y, color = Summary)) +
+  geom_text(data = summary_values %>% filter(y == max(y)),
+            aes(x = x, y = y + 5000, label = Summary,
+                color = Summary, fontface = "bold"),
+            hjust = 0) +
+  theme_bw() +
+  scale_y_continuous(breaks = mu_values,
+                     labels = function(x) x / 1000,
+                     name = "Parent income\n(thousands of dollars)",
+                     limits = c(10000,112000)) +
+  scale_x_continuous(labels = function(x) x / 1000,
+                     name = "Offspring income\n(thousands of dollars)",
+                     limits = c(0,300000)) +
+  scale_color_manual(values = c("blue","seagreen4")) +
+  theme(panel.grid.minor = element_blank(),
+        legend.position = "none") +
+  coord_flip() +
+  ggsave("figures/simulated_densities.pdf",
+         height = 3, width = 6.5)
+
+
+# Figure 2: Plot utility functions
 data.frame(y = c(0,.1,.5,.75,1,500,seq(1000,100000,1000))) %>%
   mutate(Linear = y,
          log = log(y),
@@ -232,6 +283,7 @@ summary_measures <- d %>%
                              measure == "exp_mean_log" ~ "Exponentiated mean of log"),
          measure = fct_relevel(measure,"Exponentiated mean of log","Median","Mean"))
 
+# Figure 3: PSID offspring income distributions by quartiles of parent income
 d %>%
   ggplot(aes(x = offspring_familyIncome)) +
   geom_density() +
@@ -326,6 +378,7 @@ dollars_density <- data.frame(x = dollars_density$x,
   mutate(y = - y / max(y) * 80000) %>%
   filter(x <= quantile(d$parent_familyIncome, .95))
 
+# Figure 4: Smoothed quantiles
 predicted_df %>%
   ggplot() +
   geom_ribbon(aes(x = x, ymin = ci.min, ymax = ci.max,
