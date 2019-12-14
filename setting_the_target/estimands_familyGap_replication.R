@@ -21,29 +21,21 @@ data <- read.dta13("cps_00040.dta",
 rep_weights <- data %>% select(pernum, starts_with("repwtp"))
 
 d <- data %>%
-  filter(age >= 25 & age <= 44 & sex == 2 & classwly > 14 &
-           ## Drop those who report no incomes or for whom
-           ## incomes are missing
-           incwage != 9999999 & incwage != 9999998) %>%
+  filter(asecwt > 0) %>%
+  mutate(num_original = n()) %>%
+  filter(age >= 25 & age <= 44 & sex == 2 & classwly > 14) %>%
+  mutate(num_demographic = n()) %>%
+  ## Drop those who report no incomes or for whom
+  ## incomes are missing
+  mutate(incwage = case_when(incwage != 9999999 & incwage != 9999998 ~ incwage)) %>%
+  #filter(incwage != 9999999 & incwage != 9999998) %>%
+  mutate(num_withIncomes = n()) %>%
   mutate(
     ## Weeks worked last year
-    ## Use the intervalled value in years 1968-1975
-    ## Make intervalled weeks worked last year into the midpoint
-    wkswork2 = ifelse(wkswork2 == 5, 48.5,
-                      ifelse(wkswork2 == 6, 51,
-                             ifelse(wkswork2 == 4, 43.5,
-                                    ifelse(wkswork2 == 3, 33,
-                                           ifelse(wkswork2 == 2, 20,
-                                                  ifelse(wkswork2 == 1, 7, NA)))))),
     ## For the other years, we can just use wkswork1, which is the continuous report
-    wkswork1 = ifelse(year <= 1975, wkswork2,
-                      ifelse(wkswork1 <= 0, NA, wkswork1)),
+    wkswork1 = ifelse(wkswork1 <= 0, NA, wkswork1),
     ## Usual hours per week worked last year
-    uhrsworkly = ifelse(year <= 1975,
-                        ## For 1968-1975, use hours last week because usual hours worked last year is not available
-                        ifelse(ahrsworkt != 999, ahrsworkt, NA),
-                        ## Otherwise use the variable that directly measures this
-                        ifelse(uhrsworkly != 999, uhrsworkly, NA)),
+    uhrsworkly = ifelse(uhrsworkly != 999, uhrsworkly, NA),
     ## Create hourly wages
     wage = incwage / (wkswork1 * uhrsworkly),
     # Truncate log wage at 1st and 99th percentile
@@ -67,12 +59,17 @@ d <- data %>%
                   labels = c("White","Black","Other")),
     mother = (nchild > 0)
   ) %>%
-  select(pernum, ln_wage, mother, age, educ, married, race, asecwt, starts_with("repwtp")) %>%
-  filter(asecwt > 0) %>%
+  select(pernum, ln_wage, mother, age, educ, married, race, asecwt, starts_with("repwtp"), starts_with("num")) %>%
+  ## Remove those with missing education
+  filter(!is.na(educ)) %>%
+  mutate(num_with_ed = n()) %>%
   ## Remove those with missing hourly wages
   filter(!is.na(ln_wage)) %>%
-  ## Remove those with missing education
-  filter(!is.na(educ))
+  mutate(num_with_wage = n())
+
+d %>%
+  filter(1:n() == 1) %>%
+  select(starts_with("num"))
 
 ###################################
 # Note the common support problem #
@@ -220,10 +217,10 @@ aggregate_results <- estimate_point %>%
                                      approach == "OLS (interactive age)" ~ 4,
                                      approach == "OLS (additive age)" ~ 5),
                            labels = c("Stratification:\nNo assumptions",
-                                      "+ assume only interaction\nis motherhood x age",
-                                      "+ assume smooth\nage form (GAM)",
-                                      "+ assume quadratic\nage form",
-                                      "+ assume no interactions")))
+                                      "Race + Marital +\n(Age indicators x Motherhood)",
+                                      "Race + Marital +\n(Age smooth x Motherhood)",
+                                      "Race + Marital +\n(Age quadratic x Motherhood)",
+                                      "Race + Marital +\nAge quadratic + Motherhood")))
 
 aggregate_results %>%
   ggplot(aes(x = approach, y = Estimate,
@@ -348,10 +345,10 @@ subgroup_results <- estimate_point %>%
                                      approach == "OLS (interactive age)" ~ 4,
                                      approach == "OLS (additive age)" ~ 5),
                            labels = c("Stratification:\nNo assumptions",
-                                      "+ assume only interaction\nis motherhood x age",
-                                      "+ assume smooth\nage form (GAM)",
-                                      "+ assume quadratic\nage form",
-                                      "+ assume no interactions")))
+                                      "Race + Marital +\n(Age indicators x Motherhood)",
+                                      "Race + Marital +\n(Age smooth x Motherhood)",
+                                      "Race + Marital +\n(Age quadratic x Motherhood)",
+                                      "Race + Marital +\nAge quadratic + Motherhood")))
 
 subgroup_results %>% 
   ggplot(aes(x = age, y = Estimate, #color = approach,
@@ -361,13 +358,11 @@ subgroup_results %>%
   geom_point() +
   geom_errorbar() +
   theme_bw() +
-  #theme(strip.text = element_text(hjust = 0)) +
   facet_wrap(~approach, nrow = 1) +
   xlab("Age") +
   ylab("Estimated Log Wage Gap\n(Mothers - Non-mothers)") +
-  #scale_color_manual(name = "Estimator",
-  #                   values = c("blue","seagreen4","purple","black")) +
-  theme(axis.text.x = element_text(size = 8)) +
+  theme(axis.text.x = element_text(size = 8),
+        strip.text = element_text(size = 8)) +
   ggsave("gap_by_age.pdf",
          height = 3, width = 9)
 
@@ -455,10 +450,10 @@ cv_results <- cv_point %>%
                                      approach == "ols_interactive" ~ 4,
                                      approach == "ols_additive" ~ 5),
                            labels = c("Stratification:\nNo assumptions",
-                                      "+ assume only interaction\nis motherhood x age",
-                                      "+ assume smooth\nage form (GAM)",
-                                      "+ assume quadratic\nage form",
-                                      "+ assume no interactions")))
+                                      "Race + Marital +\n(Age indicators x Motherhood)",
+                                      "Race + Marital +\n(Age smooth x Motherhood)",
+                                      "Race + Marital +\n(Age quadratic x Motherhood)",
+                                      "Race + Marital +\nAge quadratic + Motherhood")))
 cv_results %>%
   mutate(approach = fct_rev(approach),
          best = mse == min(mse))
@@ -481,59 +476,60 @@ for_aggregate_plot %>%
   geom_point() +
   theme_bw() +
   scale_y_continuous(name = "Difference in log hourly wage\n(Mother - Non-mothers)",
-                     limits = c(-.25,.25)) +
+                     limits = c(-.27,.27)) +
   xlab("Age") +
   facet_grid(estimand ~ approach) +
   theme(strip.text.y = element_text(angle = 0),
+        strip.text.x = element_text(size = 8),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   # Annotate within facets
   geom_text(data = for_aggregate_plot %>%
               filter(estimand == "Aggregate\ngap") %>%
               mutate(age = ifelse(approach == "Stratification:\nNo assumptions",25,45),
-                     Estimate = .25,
+                     Estimate = .27,
                      label = case_when(
                        approach == "Stratification:\nNo assumptions" ~ "Weakest assumptions\n(most credible)",
-                       approach == "+ assume no interactions" ~ "Strongest assumptions\n(least credible)"
+                       approach == "Race + Marital +\nAge quadratic + Motherhood" ~ "Strongest assumptions\n(least credible)"
                      )),
             aes(label = label, hjust = ifelse(approach == "Stratification:\nNo assumptions",0,1)),
             vjust = 1,
             size = 3) +
   geom_text(data = for_aggregate_plot %>%
               filter(estimand == "Aggregate\ngap" &
-                       approach == "+ assume smooth\nage form (GAM)") %>%
-              mutate(Estimate = .25),
+                       approach == "Race + Marital +\n(Age smooth x Motherhood)") %>%
+              mutate(Estimate = .27),
             label = "All estimation strategies\nestimate a similar\naggregate gap",
             size = 3, vjust = 1) +
   geom_text(data = for_aggregate_plot %>%
-              filter(estimand == "Aggregate\ngap" & approach == "+ assume no interactions") %>%
+              filter(estimand == "Aggregate\ngap" & approach == "Race + Marital +\nAge quadratic + Motherhood") %>%
               mutate(age = 45,
-                     Estimate = -.25),
+                     Estimate = -.27),
             label = "This panel parallels the estimand and\n specification in Pal and Waldfogel (2016)",
             vjust = 0, hjust = 1,
             size = 2) +
   geom_segment(data = for_aggregate_plot %>%
                  filter(estimand == "Aggregate\ngap") %>%
-                 mutate(Estimate = .19,
-                        age = case_when(approach == "+ assume smooth\nage form (GAM)" ~ 27),
+                 mutate(Estimate = .205,
+                        age = case_when(approach == "Race + Marital +\n(Age smooth x Motherhood)" ~ 27),
                         xend = 25),
                aes(xend = xend, yend = Estimate),
                arrow = arrow(length = unit(.15,"cm"))) +
   geom_segment(data = for_aggregate_plot %>%
                  filter(estimand == "Aggregate\ngap") %>%
-                 mutate(Estimate = .19,
-                        age = case_when(approach == "+ assume smooth\nage form (GAM)" ~ 43),
+                 mutate(Estimate = .205,
+                        age = case_when(approach == "Race + Marital +\n(Age smooth x Motherhood)" ~ 43),
                         xend = 45),
                aes(xend = xend, yend = Estimate),
                arrow = arrow(length = unit(.15,"cm"))) +
   geom_text(data = for_aggregate_plot %>%
               filter(estimand == "Age-specific\ngap" & age == 25) %>%
-              mutate(Estimate = .25,
+              mutate(Estimate = .27,
                      label = case_when(
                        approach == "Stratification:\nNo assumptions" ~ "Uselessly uncertain\nage-specific\ngap",
-                       approach == "+ assume only interaction\nis motherhood x age" ~ "Uselessly uncertain\nage-specific\ngap",
-                       approach == "+ assume smooth\nage form (GAM)" ~ "With this assumption,\nevidence shows a gap\nat young ages only",
-                       approach == "+ assume no interactions" ~ "Additive OLS assumes\na constant effect.\nA gap exists at all ages\nonly by assumption."
+                       approach == "Race + Marital +\n(Age indicators x Motherhood)" ~ "Uselessly uncertain\nage-specific\ngap",
+                       approach == "Race + Marital +\n(Age smooth x Motherhood)" ~ "With this assumption,\nevidence shows a gap\nat young ages only",
+                       approach == "Race + Marital +\nAge quadratic + Motherhood" ~ "Additive OLS assumes\na constant effect.\nA gap exists at all ages\nonly by assumption."
                      )),
             aes(label = label),
             size = 3, hjust = 0, vjust = 1) +
