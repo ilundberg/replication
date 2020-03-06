@@ -3,7 +3,13 @@
 # Ian Lundberg, Sarah Gold, Louis Donnelly, Jeanne Brooks-Gunn, and Sara McLanahan
 # Code by Ian Lundberg (ilundberg@princeton.edu)
 
-setwd("C:/Users/iandl/Documents/FF_housing_assistance")
+# To run this code, you will need to apply for restricted data access
+# from the Fragile Families and Child Wellbeing Study.
+# The needed files are:
+# ff_allwaves_res_2019.dta
+# ff_mecon_all_res2.dta
+
+setwd("/Users/iandl/Dropbox/FF_housing_assistance/submissions/JPAM_final")
 sink("results/text_output.txt")
 set.seed(08544)
 
@@ -15,8 +21,6 @@ library(Amelia)
 library(mitools)
 library(xtable)
 library(foreach)
-library(doParallel)
-library(doRNG)
 library(survey)
 
 # Set the number of imputations
@@ -51,10 +55,6 @@ d1 <- d0 %>%
   transmute(
     idnum = idnum,
     weight = m5natwt,
-    #stratum = natstratum,
-    #psu = natpsu,
-    #weight = m5citywt,
-    #stratum = citystratum,
     psu = citypsu,
     ###
     # Most mothers live in the same metropolitan statistical area where they gave birth.
@@ -525,11 +525,18 @@ all_point_ci %>%
              color = Estimator)) +
   geom_hline(yintercept = 0) +
   geom_errorbar(position = position_dodge(width = .7), width = .5) +
-  geom_label(position = position_dodge(width = .7),
-             show.legend = F, size = 3, fontface = "bold") +
+  geom_rect(aes(xmin = as.numeric(treatment) - .2, xmax = as.numeric(treatment) + .2,
+                ymin = point - .015, ymax = point + .015,
+                linetype = Estimator),
+            fill = "white",
+            position = position_dodge(width = .7),
+            linejoin = "bevel", size = .4) +
+  geom_text(position = position_dodge(width = .7),
+            show.legend = F, size = 3, fontface = "bold") +
   ylab(paste0("Effect on P(Eviction)\ncompared with\nno assistance")) +
   scale_x_discrete(name = element_blank()) +
   scale_color_manual(values = c("blue","seagreen4")) +
+  scale_linetype_manual(values = c("twodash","solid")) +
   theme_bw() +
   theme(plot.title = element_text(face = "bold", hjust = 0)) +
   ggsave("results/difference_estimators_eviction.pdf",
@@ -579,11 +586,18 @@ all_point_ci %>%
              color = Estimator)) +
   geom_hline(yintercept = 0) +
   geom_errorbar(position = position_dodge(width = .7), width = .5) +
-  geom_label(position = position_dodge(width = .7),
-             show.legend = F, size = 3, fontface = "bold") +
+  geom_rect(aes(xmin = as.numeric(treatment) - .2, xmax = as.numeric(treatment) + .2,
+                ymin = point - .023, ymax = point + .023,
+                linetype = Estimator),
+            fill = "white",
+            position = position_dodge(width = .7),
+            linejoin = "bevel", size = .4) +
+  geom_text(position = position_dodge(width = .7),
+            show.legend = F, size = 3, fontface = "bold") +
   ylab(paste0("Effect on P(Nonpayment)\ncompared with\nno assistance")) +
   scale_x_discrete(name = element_blank()) +
   scale_color_manual(values = c("blue","seagreen4")) +
+  scale_linetype_manual(values = c("twodash","solid")) +
   theme_bw() +
   theme(plot.title = element_text(face = "bold", hjust = 0)) +
   ggsave("results/difference_estimators_nonpayment.pdf",
