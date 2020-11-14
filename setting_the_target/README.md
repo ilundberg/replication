@@ -46,8 +46,11 @@ You will need a .dat and a .dct file. Name them GSS.dat and GSS.dct.
 # Data for c_specific_example_2.R
 
 The data for this example are available from the Fragile Families and Child Wellbeing Study.
+
 The study website is: https://fragilefamilies.princeton.edu/
+
 The data are available at: https://www.opr.princeton.edu/archive/
+
 1. Register for an account
 2. Download ff_res_merge4.dta and place it in the data subdirectory
 
