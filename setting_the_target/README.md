@@ -19,7 +19,7 @@ output: This is an empty folder where our code will place all results
 
 The data used in this study are held by those who administer the data sources. To access the data, you will need to register for an account at each data provdier's website, download the data, and add it to the data subdirectory. We describe data access here and in comments at the top of each code file.
 
-# Data for a_estimation_example.R
+## Data for a_estimation_example.R
 
 The data for this example are available from IPUMS at
 https://cps.ipums.org/cps/
@@ -37,7 +37,7 @@ CLASSWLY, WKSWORK1, WKSWORK2, UHRSWORKLY, INCWAGE
 
 You will need to rename to "cps_00040.dta" for the code to run.
 
-# Data for b_specific_example_1.R
+## Data for b_specific_example_1.R
 
 The data for this example are available from the GSS at
 https://gssdataexplorer.norc.org/
@@ -50,7 +50,7 @@ EDUC, AGE, ID_, WTSSALL
 
 You will need a .dat and a .dct file. Name them GSS.dat and GSS.dct.
 
-# Data for c_specific_example_2.R
+## Data for c_specific_example_2.R
 
 The data for this example are available from the Fragile Families and Child Wellbeing Study.
 
@@ -61,6 +61,6 @@ The data are available at: https://www.opr.princeton.edu/archive/
 1. Register for an account
 2. Download ff_res_merge4.dta and place it in the data subdirectory
 
-# Data for d_risk_ratio_difference.R
+## Data for d_risk_ratio_difference.R
 
 This illustration is entirely simulated, so there is no data.
