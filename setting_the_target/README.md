@@ -1,5 +1,7 @@
 README
 
+**Note:** The canonical version of this replication package is [hosted on Dataverse](https://doi.org/10.7910/DVN/ASGOVU).
+
 This package contains replication code for
 "[What is Your Estimand? Defining the Target Quantity Connects Statistical Evidence to Theory](https://doi.org/10.31235/osf.io/ba67n)," by Ian Lundberg, Rebecca Johnson, and Brandon Stewart.
 
