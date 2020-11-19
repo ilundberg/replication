@@ -96,8 +96,8 @@ if(READ_RAW_DATA){
            
            ## Truncate log wage at 1st and 99th percentile
            derived_ln_wage = log(case_when(derived_wage < quantile(derived_wage, .01, na.rm = T) ~ quantile(derived_wage, .01, na.rm = T),
-                                derived_wage > quantile(derived_wage, .99, na.rm = T) ~ quantile(derived_wage, .99, na.rm = T),
-                                T ~ derived_wage)),
+                                           derived_wage > quantile(derived_wage, .99, na.rm = T) ~ quantile(derived_wage, .99, na.rm = T),
+                                           T ~ derived_wage)),
            
            ## Create conditioning set
            
@@ -124,21 +124,23 @@ if(READ_RAW_DATA){
            ## Mother is TRUE if nchild > 0, false otherwise
            derived_mother = (nchild > 0),
            
-           ## For later analysis, create age^squared
-           derived_agesq = age^2,
-           
            # Note who is employed for later filtering
-           filter_employed = !is.na(derived_ln_wage) & derived_ln_wage != -Inf) 
+           filter_employed = !is.na(derived_ln_wage) & derived_ln_wage != -Inf,
+           
+           # Define which variables are the outcome and treatment
+           # You could plug in a different outcome and binary treatment here, and the code would work.
+           derived_outcome = derived_ln_wage,
+           derived_treatment = derived_mother)
   
   ## Variables to include
   weights_identifiers = c("pernum", "serial", "asecwt",
                           grep("repwtp", colnames(d_all),
                                value = TRUE)) 
-  outcome = "derived_ln_wage"
-  treatment = "derived_mother"
+  outcome = "derived_outcome"
+  treatment = "derived_treatment"
   covariates = c(sprintf("derived_%s", 
                          c("educ", "married",
-                           "race", "agesq")), "age")
+                           "race")), "age")
   filters = grep("filter", colnames(d_all), value = TRUE)
   cols_keep = c(weights_identifiers, outcome, treatment, covariates, 
                 filters)
@@ -148,10 +150,10 @@ if(READ_RAW_DATA){
   supported_strata <- d_all %>%
     select(all_of(outcome),all_of(treatment),all_of(covariates)) %>%
     # Restrict to cases with an hourly wage
-    filter(!is.na(derived_ln_wage)) %>%
+    filter(!is.na(derived_outcome)) %>%
     # Restrict to strata with both moms and non-moms observed
     group_by_at(vars(all_of(covariates))) %>%
-    summarize(filter_onSupport = n_distinct(derived_mother) == 2) %>%
+    summarize(filter_onSupport = n_distinct(derived_treatment) == 2) %>%
     filter(filter_onSupport) %>%
     group_by()
   
@@ -161,11 +163,11 @@ if(READ_RAW_DATA){
     mutate(filter_onSupport = ifelse(is.na(filter_onSupport), 0, filter_onSupport),
            # Make the employed filter 0 for anyone who is already not on the support
            filter_employed = ifelse(!filter_onSupport, 0, filter_employed)) %>%
-    select(derived_mother,starts_with("filter")) %>%
-    group_by(derived_mother) %>%
+    select(derived_treatment,starts_with("filter")) %>%
+    group_by(derived_treatment) %>%
     summarize_all(.funs = sum) %>%
     # Order the filters in order of application
-    select(derived_mother, filter_inDemRange, filter_onSupport, filter_employed)
+    select(derived_treatment, filter_inDemRange, filter_onSupport, filter_employed)
     
   # Make data frames to fit (employed women)
   # and to predict (all mothers)
@@ -181,7 +183,7 @@ if(READ_RAW_DATA){
     # Determine which rows have support
     left_join(supported_strata, by = covariates) %>%
     # Restrict to mothers in common support
-    filter(filter_onSupport & derived_mother)
+    filter(filter_onSupport & derived_treatment)
   
   write.csv(d_restrictions, sprintf("intermediate/%s", RESTRICTIONS_DATA_NAME))
   write.csv(to_fit, sprintf("intermediate/%s", FIT_DATA_NAME))
@@ -223,7 +225,7 @@ estimate_gap <- function(weight_name) {
     # Normalize weight for fitting (matters for gam)
     mutate(weight = weight / mean(weight)) %>%
     # Make mother a factor variable (needed for gam)
-    mutate(derived_mother = factor(derived_mother))
+    mutate(derived_treatment = factor(derived_treatment))
     
   # Make a data frame d_predict with the covariate strata where we will predict, with this weight variable
   d_predict <- to_predict %>%
@@ -237,11 +239,11 @@ estimate_gap <- function(weight_name) {
   # Make estimates with the nonparametric adjustment strategy
   nonparametric_strata <- d_fit %>%
     ## Group by strata defined by treatment varname and control variables
-    group_by_at(vars(all_of(c(covariates,"derived_mother")))) %>%
+    group_by_at(vars(all_of(c(covariates,"derived_treatment")))) %>%
     ## Estimate the weighted mean ine ach stratum
-    summarize(estimate = weighted.mean(derived_ln_wage, w = weight)) %>%
+    summarize(estimate = weighted.mean(derived_outcome, w = weight)) %>%
     ## Calculate the gap between mothers and non-mothers in each stratum
-    spread(key = "derived_mother", value = "estimate") %>%
+    spread(key = "derived_treatment", value = "estimate") %>%
     mutate(estimate = `TRUE` - `FALSE`) %>%
     select(-`TRUE`, -`FALSE`)
   
@@ -268,22 +270,22 @@ estimate_gap <- function(weight_name) {
   # Fit a series of models that make different estimation assumptions to pool information
   model_fits <- list(
     # OLS model with all terms entered additively (no interactions)
-    additive = lm(derived_ln_wage ~ derived_mother + age + derived_agesq +
+    additive = lm(derived_outcome ~ derived_treatment + age + I(age ^ 2) +
                     derived_educ + derived_married + derived_race,
                   data = d_fit,
                   weights = weight),
     # OLS model that includes an interaction between age and motherhood
-    interactive = lm(derived_ln_wage ~ derived_mother*(age + derived_agesq) +
+    interactive = lm(derived_outcome ~ derived_treatment*(age + I(age ^ 2)) +
                        derived_educ + derived_married + derived_race,
                      data = d_fit,
                      weights = weight),
     # GAM that allows a smooth age curve interacted with motherhood
-    smooth = gam(derived_ln_wage ~ derived_mother + s(age, by = derived_mother) +
+    smooth = gam(derived_outcome ~ derived_treatment + s(age, by = derived_treatment) +
                    derived_educ + derived_married + derived_race,
                  data = d_fit,
                  weights = weight),
     # OLS with indicators for each age interacted with motherhood
-    indicators = lm(derived_ln_wage ~ derived_mother*factor(age) +
+    indicators = lm(derived_outcome ~ derived_treatment*factor(age) +
                       derived_educ + derived_married + derived_race,
                     data = d_fit,
                     weights = weight)
@@ -293,13 +295,13 @@ estimate_gap <- function(weight_name) {
   models_fitted <- foreach(fit_name = names(model_fits), .combine = "rbind") %do% {
     # First, calculate age-specific estimates
     age_specific <- d_predict %>%
-      # Make predictions with derived_mother set to TRUE and set to FALSE. Difference them.
+      # Make predictions with derived_treatment set to TRUE and set to FALSE. Difference them.
       mutate(estimate = predict(model_fits[[fit_name]],
                                 newdata = d_predict %>%
-                                  mutate(derived_mother = "TRUE")) -
+                                  mutate(derived_treatment = "TRUE")) -
                predict(model_fits[[fit_name]],
                        newdata = d_predict %>%
-                         mutate(derived_mother = "FALSE"))) %>%
+                         mutate(derived_treatment = "FALSE"))) %>%
       # Aggregate within age groups
       group_by(age) %>%
       summarize(estimate = weighted.mean(estimate, w = weight),
@@ -395,7 +397,7 @@ results %>%
                      )),
             aes(label = label),
             size = 3, hjust = 0, vjust = 1) +
-  ggsave("output/all_gap_estimates_new.pdf",
+  ggsave("output/all_gap_estimates.pdf",
          height = 5, width = 10)
 
 #######################
@@ -414,7 +416,7 @@ make_cv_results  <- function(weight_name, nfolds = 5) {
     # Normalize weight for fitting (matters for gam)
     mutate(weight = weight / mean(weight)) %>%
     # Make mother a factor variable (needed for gam)
-    mutate(derived_mother = factor(derived_mother)) %>%
+    mutate(derived_treatment = factor(derived_treatment)) %>%
     # Create folds for cross-validation systematically by sample weigth
     group_by() %>%
     arrange(weight) %>%
@@ -432,19 +434,19 @@ make_cv_results  <- function(weight_name, nfolds = 5) {
     
     # Fit the model-based approaches
     model_fits <- list(
-      additive = lm(derived_ln_wage ~ derived_mother + age + derived_agesq +
+      additive = lm(derived_outcome ~ derived_treatment + age + I(age ^ 2) +
                       derived_educ + derived_married + derived_race,
                     data = train,
                     weights = weight),
-      interactive = lm(derived_ln_wage ~ derived_mother*(age + derived_agesq) +
+      interactive = lm(derived_outcome ~ derived_treatment*(age + I(age ^ 2)) +
                          derived_educ + derived_married + derived_race,
                        data = train,
                        weights = weight),
-      smooth = gam(derived_ln_wage ~ derived_mother + s(age, by = derived_mother) +
+      smooth = gam(derived_outcome ~ derived_treatment + s(age, by = derived_treatment) +
                      derived_educ + derived_married + derived_race,
                    data = train,
                    weights = weight),
-      indicators = lm(derived_ln_wage ~ derived_mother*factor(age) +
+      indicators = lm(derived_outcome ~ derived_treatment*factor(age) +
                         derived_educ + derived_married + derived_race,
                       data = train,
                       weights = weight)
@@ -452,11 +454,11 @@ make_cv_results  <- function(weight_name, nfolds = 5) {
     
     # Get squared errors for the stratification approach
     stratification_result <- train %>%
-      group_by_at(vars(all_of(c(covariates,"derived_mother")))) %>%
-      summarize(yhat = weighted.mean(derived_ln_wage, w = weight)) %>%
+      group_by_at(vars(all_of(c(covariates,"derived_treatment")))) %>%
+      summarize(yhat = weighted.mean(derived_outcome, w = weight)) %>%
       # Use right join so we retain all rows in the test, even if they have no predictions
-      right_join(test, by = c(covariates,"derived_mother")) %>%
-      mutate(squared_error = (derived_ln_wage - yhat) ^ 2) %>%
+      right_join(test, by = c(covariates,"derived_treatment")) %>%
+      mutate(squared_error = (derived_outcome - yhat) ^ 2) %>%
       group_by() %>%
       mutate(model = "nonparametric") %>%
       select(model, squared_error, weight)
@@ -467,7 +469,7 @@ make_cv_results  <- function(weight_name, nfolds = 5) {
         mutate(yhat = predict(model_fits[[fit_name]],
                               newdata = test)) %>%
         transmute(model = fit_name,
-                  squared_error = (derived_ln_wage - yhat) ^ 2,
+                  squared_error = (derived_outcome - yhat) ^ 2,
                   weight = weight)
     } %>%
       bind_rows(stratification_result)
