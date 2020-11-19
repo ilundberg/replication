@@ -19,7 +19,8 @@
 # 4. Select data format ".dta (Stata)"
 # 5. Select cases on AGE (ages 25-44 only) and SEX (Female only)
 # 6. Download the data and place it in the data subdirectory.
-# You will need to rename to "cps_00040.dta" for the code below.
+# You will need to rename to "cps_00040.dta" for the code below or 
+# change the name of the RAW_DATA_NAME parameter
 
 library(readstata13)
 library(tidyverse)
@@ -27,496 +28,510 @@ library(reshape2)
 library(foreach)
 library(mgcv)
 
-sink("output/PalWaldfogel_output.txt")
+
+## Constants
+OUTPUT_NAME= "PalWaldfogel_output.txt"
+
+## Can either read raw data or read in prepared data
+READ_RAW_DATA <- TRUE
+RAW_DATA_NAME <- "cps_00040.dta"
+RESTRICTIONS_DATA_NAME <- "pw_d_restrictions.csv"
+FIT_DATA_NAME <- "pw_to_fit.csv"
+PREDICT_DATA_NAME <- "pw_to_predict.csv"
+RUN_VAR_ESTIMATION_AGGREGATE <- FALSE
+RUN_VAR_ESTIMATE_SUBGROUP <- FALSE
+
+
+# Function to open your default browser to check when
+# coding cps vars
+lookup_cpsvar_inbrowser <- function(varname){
+  browseURL(sprintf("https://cps.ipums.org/cps-action/variables/%s#codes_section",
+                    varname))
+}
+
+
+## Initiate output file
+sink(sprintf("output/%s", OUTPUT_NAME))
 print("Output from replication of Pal and Waldfogel")
 
-## Prep the main data file on women ages 25-44
-data <- read.dta13("data/cps_00040.dta",
-                   convert.factors = F)
 
-# Make a data frame of the replicate weights used for variance estimation
-rep_weights <- data %>% select(pernum, starts_with("repwtp"))
+####################################
+# Prep the main data file on women #
+# ages 25-44                       #
+####################################
 
-d_all <- data %>%
-  filter(asecwt > 0) %>%
-  mutate(num_original = n()) %>%
-  filter(age >= 25 & age <= 44 & sex == 2) %>%
-  mutate(num_demographic = n()) %>%
-  ## Mark missing incomes
-  mutate(incwage = case_when(classwly > 14 ~ incwage), # only keep incomes of those employed for wage or salary
-         incwage = case_when(incwage != 9999999 & incwage != 9999998 ~ incwage)) %>%
-  mutate(
-    ## Weeks worked last year
-    ## For the other years, we can just use wkswork1, which is the continuous report
-    wkswork1 = ifelse(wkswork1 <= 0, NA, wkswork1),
-    ## Usual hours per week worked last year
-    uhrsworkly = ifelse(uhrsworkly != 999, uhrsworkly, NA),
-    ## Create hourly wages
-    wage = incwage / (wkswork1 * uhrsworkly),
-    # Truncate log wage at 1st and 99th percentile
-    ln_wage = log(case_when(wage < quantile(wage, .01, na.rm = T) ~ quantile(wage, .01, na.rm = T),
-                            wage > quantile(wage, .99, na.rm = T) ~ quantile(wage, .99, na.rm = T),
-                            T ~ wage)),
-    ## Create controls
-    educ = factor(ifelse(educ == 1 | educ == 999, NA,
-                         ## Less than high school
-                         ifelse(educ <= 60 | educ == 71, 1,
-                                ## HS degree (include diploma unclear 72)
-                                ifelse(educ == 70 | educ == 72 | educ == 73, 2,
-                                       ## Some college
-                                       ifelse(educ < 110, 3,
-                                              ## College or more
-                                              4))))),
-    ## Family status is whether married with spouse present
-    married = ifelse(marst == 9, NA, marst == 1),
-    race = factor(ifelse(race == 100, 1,
-                         ifelse(race == 200, 2, 3)),
-                  labels = c("White","Black","Other")),
-    mother = (nchild > 0)
-  ) %>%
-  select(pernum, ln_wage, mother, age, educ, married, race, asecwt, starts_with("repwtp"), starts_with("num")) %>%
-  ## Remove those with missing education
-  filter(!is.na(educ)) %>%
-  mutate(num_with_ed = n())
-
-d <- d_all %>%
-  ## Remove those with missing hourly wages. We estimate models without them
-  filter(!is.na(ln_wage)) %>%
-  mutate(num_with_wage = n())
-
-print("Sample sizes")
-print(d %>%
-        filter(1:n() == 1) %>%
-        select(starts_with("num")))
-
-###################################
-# Note the common support problem #
-###################################
-
-support_data <- d %>%
-  group_by(age, educ, race, married) %>%
-  mutate(has_support = n_distinct(mother) == 2) %>%
-  filter(1:n() == 1) %>%
-  select(age, educ, race, married, has_support) %>%
-  right_join(d_all, by = c("age", "educ","race","married")) %>%
-  mutate(has_support = ifelse(is.na(has_support),F,has_support))
-
-print("Note proportion of mothers and non-mothers in the region of common support")
-print(support_data %>%
-        group_by(mother) %>%
-        summarize(has_support = weighted.mean(has_support, w = asecwt)))
-
-print("Analytical sample is in the region of common support")
-print(paste0("N_Total = ", 
-             sum(support_data$has_support)))
-print(paste0("N_Employed = ", 
-             sum(support_data$has_support & !is.na(support_data$ln_wage))))
-
-print("These groups are off the region of common support")
-print(data.frame(support_data %>%
-                   filter(!has_support) %>%
-                   select(mother, educ, married, race, age) %>%
-                   arrange(mother, educ, married, race, age)),
-      # The max is a very high number to tell it to print all rows
-      max = 9999)
-
-# All remaining analyses will focus on those with support only
-
-#################
-# Aggregate gap #
-#################
-
-make_aggregate_results <- function(weight_name) {
-  d_case <- support_data %>% filter(has_support)
-  d_case$weight <- d_case[[weight_name]]
-  # Normalize weights
-  d_case$weight <- d_case$weight / sum(d_case$weight)
-  unadjusted <- d_case %>%
-    group_by(mother) %>%
-    summarize(Estimate = weighted.mean(ln_wage, w = weight, na.rm = T)) %>%
-    spread(key = mother, value = Estimate) %>%
-    mutate(approach = "Unadjusted",
-           Estimate = `TRUE` - `FALSE`) %>%
-    select(approach, Estimate)
+if(READ_RAW_DATA){
   
-  nonparametric_adjusted <- d_case %>%
-    group_by(mother, age, educ, race, married) %>%
-    summarize(estimate = weighted.mean(ln_wage, w = weight, na.rm = T),
-              weight = sum(weight)) %>%
-    group_by(age, educ, race, married) %>%
-    # Give this stratum the weight of mothers in this stratum
-    mutate(weight = sum(weight * mother)) %>%
-    group_by(mother) %>%
-    summarize(Estimate = weighted.mean(estimate, w = weight)) %>%
-    spread(key = mother, value = Estimate) %>%
-    mutate(approach = "Stratification",
-           Estimate = `TRUE` - `FALSE`) %>%
-    select(approach, Estimate)
+  ## Read in stata file
+  data <- read.dta13(sprintf("data/%s", RAW_DATA_NAME),
+                     convert.factors = F)
   
-  ols_additive_fit <- lm(ln_wage ~ mother + age + I(age ^ 2) +
-                           educ + race + married,
-                         data = d_case,
-                         weights = weight)
-  ols_interactive_fit <- lm(ln_wage ~ mother*(age + I(age ^ 2)) +
-                              educ + race + married,
-                            data = d_case,
-                            weights = weight)
-  ols_ageFactor_fit <- lm(ln_wage ~ mother*(factor(age)) +
-                            educ + race + married,
-                          data = d_case,
-                          weights = weight)
-  gam_interactive_fit <- gam(ln_wage ~ mother + s(age, by = mother) +
-                               educ + race + married,
-                             data = d_case %>%
-                               group_by() %>%
-                               mutate(mother = factor(mother)),
-                             weight = d_case$weight)
+  d_all <- data %>%
+    
+    # Create different flags to filter sample
+    
+    ### Filter to 25-44 (inclusive) and sex == female (2)
+    filter(age >= 25 & age <= 44 & sex == 2) %>%
+    mutate(filter_inDemRange = 1) %>%
   
-  to_predict <- d_case %>%
-    group_by() %>%
-    filter(mother)
+    ## Mark missing incomes
+    ### classwly is job codes (https://cps.ipums.org/cps-action/variables/CLASSWLY#codes_section)
+    ## and >14 are wage/salary jobs
+    mutate(derived_incwage = case_when(classwly > 14 ~ incwage,
+                                       TRUE ~ NA_integer_), 
+           ### Even for those with jobs in those categories, set to missing if has
+           ### missing codes for those wages
+           derived_incwage = case_when(derived_incwage != 9999999 & derived_incwage != 9999998 ~ derived_incwage,
+                                       TRUE ~ NA_integer_),
+           
+           ## Weeks worked last year
+           ### For the other years, we can just use wkswork1, which is the continuous report
+           derived_wkswork1 = ifelse(wkswork1 <= 0, NA, wkswork1),
+           
+           ### Usual hours per week worked last year
+           derived_uhrsworkly = ifelse(uhrsworkly != 999, uhrsworkly, NA),
+           
+           ## Create hourly wages as total income/wage divided by # of weeks x usual weekly hours
+           derived_wage = derived_incwage / (derived_wkswork1 * derived_uhrsworkly),
+           
+           ## Truncate log wage at 1st and 99th percentile
+           derived_ln_wage = log(case_when(derived_wage < quantile(derived_wage, .01, na.rm = T) ~ quantile(derived_wage, .01, na.rm = T),
+                                derived_wage > quantile(derived_wage, .99, na.rm = T) ~ quantile(derived_wage, .99, na.rm = T),
+                                T ~ derived_wage)),
+           
+           ## Create conditioning set
+           
+           ### Code education into four levels 
+           derived_educ = factor(ifelse(educ == 1 | educ == 999, NA,
+                                        ## Less than high school
+                                        ifelse(educ <= 60 | educ == 71, 1,
+                                               ## HS degree (include diploma unclear 72)
+                                               ifelse(educ == 70 | educ == 72 | educ == 73, 2,
+                                                      ## Some college
+                                                      ifelse(educ < 110, 3,
+                                                             ## College or more
+                                                             4))))),
+           
+           ### Family status is whether married with spouse present (TRUE),
+           ### other categories (FALSE) or NA
+           derived_married = ifelse(marst == 9, NA, marst == 1),
+           
+           ### Race is white black or other, with later including mixed race
+           derived_race = factor(ifelse(race == 100, 1,
+                                        ifelse(race == 200, 2, 3)),
+                                 labels = c("White","Black","Other")),
+           
+           ## Mother is TRUE if nchild > 0, false otherwise
+           derived_mother = (nchild > 0),
+           
+           ## For later analysis, create age^squared
+           derived_agesq = age^2,
+           
+           # Note who is employed for later filtering
+           filter_employed = !is.na(derived_ln_wage) & derived_ln_wage != -Inf) 
   
-  ols_additive_adjusted <- data.frame(
-    approach = "OLS (additive age)",
-    Estimate = weighted.mean(predict(ols_additive_fit, newdata = to_predict %>% mutate(mother = T)) -
-                               predict(ols_additive_fit, newdata = to_predict %>% mutate(mother = F)),
-                             w = to_predict$weight)
-  )
+  ## Variables to include
+  weights_identifiers = c("pernum", "serial", "asecwt",
+                          grep("repwtp", colnames(d_all),
+                               value = TRUE)) 
+  outcome = "derived_ln_wage"
+  treatment = "derived_mother"
+  covariates = c(sprintf("derived_%s", 
+                         c("educ", "married",
+                           "race", "agesq")), "age")
+  filters = grep("filter", colnames(d_all), value = TRUE)
+  cols_keep = c(weights_identifiers, outcome, treatment, covariates, 
+                filters)
   
-  ols_interactive_adjusted <- data.frame(
-    approach = "OLS (interactive age)",
-    Estimate = weighted.mean(predict(ols_interactive_fit, newdata = to_predict %>% mutate(mother = T)) -
-                               predict(ols_interactive_fit, newdata = to_predict %>% mutate(mother = F)),
-                             w = to_predict$weight)
-  )
-
-  ols_ageFactor_adjusted <- data.frame(
-    approach = "OLS (age factor)",
-    Estimate = weighted.mean(predict(ols_ageFactor_fit, newdata = to_predict %>% mutate(mother = T)) -
-                               predict(ols_ageFactor_fit, newdata = to_predict %>% mutate(mother = F)),
-                             w = to_predict$weight)
-  )
-  
-  gam_interactive_adjusted <- data.frame(
-    approach = "GAM (interactive age)",
-    Estimate = weighted.mean(predict(gam_interactive_fit, newdata = to_predict %>% mutate(mother = T)) -
-                               predict(gam_interactive_fit, newdata = to_predict %>% mutate(mother = F)),
-                             w = to_predict$weight)
-  )
-  
-  return(ols_additive_adjusted %>%
-           bind_rows(ols_interactive_adjusted) %>%
-           bind_rows(ols_ageFactor_adjusted) %>%
-           bind_rows(gam_interactive_adjusted) %>%
-           bind_rows(nonparametric_adjusted))
-}
-
-estimate_aggregate_point <- make_aggregate_results("asecwt")
-replicates_aggregate <- foreach(i = 1:160, .combine = "rbind") %do% {
-  make_aggregate_results(paste0("repwtp",i))
-}
-
-estimate_aggregate_variance <- replicates_aggregate %>%
-  rename(Estimate_star = Estimate) %>%
-  left_join(estimate_aggregate_point,
-            by = "approach") %>%
-  group_by(approach) %>%
-  summarize(variance = 4 / 160 * sum((Estimate_star - Estimate) ^ 2))
-
-aggregate_results <- estimate_aggregate_point %>%
-  left_join(estimate_aggregate_variance, by = "approach") %>%
-  mutate(approach = factor(case_when(approach == "Stratification" ~ 1,
-                                     approach == "OLS (age factor)" ~ 2,
-                                     approach == "GAM (interactive age)" ~ 3,
-                                     approach == "OLS (interactive age)" ~ 4,
-                                     approach == "OLS (additive age)" ~ 5),
-                           labels = c("Stratification:\nNo estimation assumptions",
-                                      "Education + Marital + Race + \n(Age indicators x Motherhood)",
-                                      "Education + Marital + Race +\n(Age smooth x Motherhood)",
-                                      "Education + Marital + Race +\n(Age quadratic x Motherhood)",
-                                      "Education + Marital + Race +\nAge quadratic + Motherhood")))
-
-##################################
-# Estimates within age subgroups #
-##################################
-
-make_subgroup_results <- function(weight_name) {
-  d_case <- support_data %>% filter(has_support)
-  d_case$weight <- d_case[[weight_name]]
-  # Normalize weights
-  d_case$weight <- d_case$weight / sum(d_case$weight)
-  unadjusted <- d_case %>%
-    group_by(age,mother) %>%
-    summarize(Estimate = weighted.mean(ln_wage, w = weight, na.rm = T)) %>%
-    spread(key = mother, value = Estimate) %>%
-    mutate(approach = "Unadjusted",
-           Estimate = `TRUE` - `FALSE`) %>%
-    select(age, approach, Estimate)
-  
-  nonparametric_adjusted <- d_case %>%
-    group_by(mother, age, educ, race, married) %>%
-    summarize(estimate = weighted.mean(ln_wage, w = weight, na.rm = T),
-              weight = sum(weight)) %>%
-    group_by(age, educ, race, married) %>%
-    # Give this stratum the weight of mothers in this stratum
-    mutate(weight = sum(weight * mother)) %>%
-    group_by(age, mother) %>%
-    summarize(Estimate = weighted.mean(estimate, w = weight)) %>%
-    spread(key = mother, value = Estimate) %>%
-    mutate(approach = "Stratification",
-           Estimate = `TRUE` - `FALSE`) %>%
-    select(age, approach, Estimate)
-  
-  ols_additive_fit <- lm(ln_wage ~ mother + age + I(age ^ 2) +
-                           educ + race + married,
-                         data = d_case,
-                         weights = weight)
-  ols_interactive_fit <- lm(ln_wage ~ mother*(age + I(age ^ 2)) +
-                              educ + race + married,
-                            data = d_case,
-                            weights = weight)
-  ols_ageFactor_fit <- lm(ln_wage ~ mother*(factor(age)) +
-                               educ + race + married,
-                             data = d_case,
-                             weights = weight)
-  gam_interactive_fit <- gam(ln_wage ~ mother + s(age, by = mother) +
-                               educ + race + married,
-                             data = d_case %>%
-                               group_by() %>%
-                               mutate(mother = factor(mother)),
-                             weight = d_case$weight)
-  
-  to_predict <- d_case %>%
-    group_by(age) %>%
-    filter(1:n() == 1) %>%
+  # Determine the strata with support: 
+  # Both mothers and non-mothers observed with hourly wages
+  supported_strata <- d_all %>%
+    select(all_of(outcome),all_of(treatment),all_of(covariates)) %>%
+    # Restrict to cases with an hourly wage
+    filter(!is.na(derived_ln_wage)) %>%
+    # Restrict to strata with both moms and non-moms observed
+    group_by_at(vars(all_of(covariates))) %>%
+    summarize(filter_onSupport = n_distinct(derived_mother) == 2) %>%
+    filter(filter_onSupport) %>%
     group_by()
   
-  ols_additive_adjusted <- to_predict %>%
-    mutate(Estimate = predict(ols_additive_fit, newdata = to_predict %>% mutate(mother = T)) -
-             predict(ols_additive_fit, newdata = to_predict %>% mutate(mother = F)),
-           approach = "OLS (additive age)") %>%
-    select(age, approach, Estimate)
-  ols_interactive_adjusted <- to_predict %>%
-    mutate(Estimate = predict(ols_interactive_fit, newdata = to_predict %>% mutate(mother = T)) -
-             predict(ols_interactive_fit, newdata = to_predict %>% mutate(mother = F)),
-           approach = "OLS (interactive age)") %>%
-    select(age, approach, Estimate)
-  ols_ageFactor_adjusted <- to_predict %>%
-    mutate(Estimate = predict(ols_ageFactor_fit, newdata = to_predict %>% mutate(mother = T)) -
-             predict(ols_ageFactor_fit, newdata = to_predict %>% mutate(mother = F)),
-           approach = "OLS (age factor)") %>%
-    select(age, approach, Estimate)
-  gam_interactive_adjusted <- to_predict %>%
-    mutate(Estimate = predict(gam_interactive_fit, newdata = to_predict %>% mutate(mother = T)) -
-             predict(gam_interactive_fit, newdata = to_predict %>% mutate(mother = F)),
-           approach = "GAM (interactive age)") %>%
-    select(age, approach, Estimate)
+  # Create a dataset noting the restrictions
+  d_restrictions <- d_all %>%
+    left_join(supported_strata, by = covariates) %>%
+    mutate(filter_onSupport = ifelse(is.na(filter_onSupport), 0, filter_onSupport),
+           # Make the employed filter 0 for anyone who is already not on the support
+           filter_employed = ifelse(!filter_onSupport, 0, filter_employed)) %>%
+    select(derived_mother,starts_with("filter")) %>%
+    group_by(derived_mother) %>%
+    summarize_all(.funs = sum) %>%
+    # Order the filters in order of application
+    select(derived_mother, filter_inDemRange, filter_onSupport, filter_employed)
+    
+  # Make data frames to fit (employed women)
+  # and to predict (all mothers)
+  to_fit <- d_all %>%
+    select(all_of(cols_keep)) %>%
+    # Determine which rows have support
+    left_join(supported_strata, by = covariates) %>%
+    # Restrict to employed women in common support
+    filter(filter_onSupport & filter_employed)
   
-  return(data.frame(unadjusted) %>%
-           bind_rows(nonparametric_adjusted) %>%
-           bind_rows(ols_additive_adjusted) %>%
-           bind_rows(ols_interactive_adjusted) %>%
-           bind_rows(ols_ageFactor_adjusted) %>%
-           bind_rows(gam_interactive_adjusted))
+  to_predict <- d_all %>%
+    select(all_of(cols_keep)) %>%
+    # Determine which rows have support
+    left_join(supported_strata, by = covariates) %>%
+    # Restrict to mothers in common support
+    filter(filter_onSupport & derived_mother)
+  
+  write.csv(d_restrictions, sprintf("intermediate/%s", RESTRICTIONS_DATA_NAME))
+  write.csv(to_fit, sprintf("intermediate/%s", FIT_DATA_NAME))
+  write.csv(to_predict, sprintf("intermediate/%s", PREDICT_DATA_NAME))
+} else{
+  d_restrictions <- read.csv(sprintf("intermediate/%s", RESTRICTIONS_DATA_NAME))
+  to_fit <- read.csv(sprintf("intermediate/%s", FIT_DATA_NAME))
+  to_predict <- read.csv(sprintf("intermediate/%s", PREDICT_DATA_NAME))
 }
 
-estimate_subgroup_point <- make_subgroup_results("asecwt")
-replicates_age <- foreach(i = 1:160, .combine = "rbind") %do% {
-  make_subgroup_results(paste0("repwtp",i))
+##################################
+# Note the sample restrictions   #
+# and the common support problem #
+##################################
+
+print("Sample restrictions for mothers and non-mothers")
+print("The models are fit on employed mothers and non-mothers (right column)")
+print("Predictions are made for all mothers on common support (bottom middle)")
+print(d_restrictions)
+
+print("Note proportion of mothers and non-mothers in the region of common support")
+print(d_restrictions %>%
+        transmute(proportion_on_support = filter_onSupport / filter_inDemRange))
+
+##################################
+# Estimate the family gap in pay #
+# in aggregate and at each age   #
+##################################
+
+# Write a function to estimate the gap with a given weight variable.
+# Later, we will apply this function with the main weights and with each set of replicate weights.
+
+estimate_gap <- function(weight_name) {
+  
+  # Prepare a data frame d_fit for model fitting with this weight variable
+  d_fit <- to_fit %>%
+    # Assign a variable to have this weight
+    rename_at(weight_name, .funs = function(x) "weight") %>%
+    # Normalize weight for fitting (matters for gam)
+    mutate(weight = weight / mean(weight)) %>%
+    # Make mother a factor variable (needed for gam)
+    mutate(derived_mother = factor(derived_mother))
+    
+  # Make a data frame d_predict with the covariate strata where we will predict, with this weight variable
+  d_predict <- to_predict %>%
+    rename_at(weight_name, .funs = function(x) "weight") %>%
+    # Make one row per covariate stratum
+    # since prediction is constant within a stratum
+    group_by_at(vars(all_of(covariates))) %>%
+    summarize(weight = sum(weight)) %>%
+    group_by()
+  
+  # Make estimates with the nonparametric adjustment strategy
+  nonparametric_strata <- d_fit %>%
+    ## Group by strata defined by treatment varname and control variables
+    group_by_at(vars(all_of(c(covariates,"derived_mother")))) %>%
+    ## Estimate the weighted mean ine ach stratum
+    summarize(estimate = weighted.mean(derived_ln_wage, w = weight)) %>%
+    ## Calculate the gap between mothers and non-mothers in each stratum
+    spread(key = "derived_mother", value = "estimate") %>%
+    mutate(estimate = `TRUE` - `FALSE`) %>%
+    select(-`TRUE`, -`FALSE`)
+  
+  # Get fitted values  in the data frame where we are making predictions
+  nonparametric_fitted <- d_predict %>%
+    # Append the predictions from nonparametric stratification
+    left_join(nonparametric_strata, by = covariates) %>%
+    # Aggregate estimates within each age group
+    group_by(age) %>%
+    summarize(estimate = weighted.mean(estimate, w = weight)) %>%
+    mutate(estimand = "age_specific") %>%
+    # Append an estiamte that aggregates across the age groups
+    bind_rows(
+      d_predict %>%
+        left_join(nonparametric_strata, by = covariates) %>%
+        summarize(estimate = weighted.mean(estimate, w = weight)) %>%
+        mutate(estimand = "aggregate",
+               age = NA)
+    ) %>%
+    # Prepare columns to match our output format
+    mutate(model = "nonparametric") %>%
+    select(model, estimand, age, estimate)
+  
+  # Fit a series of models that make different estimation assumptions to pool information
+  model_fits <- list(
+    # OLS model with all terms entered additively (no interactions)
+    additive = lm(derived_ln_wage ~ derived_mother + age + derived_agesq +
+                    derived_educ + derived_married + derived_race,
+                  data = d_fit,
+                  weights = weight),
+    # OLS model that includes an interaction between age and motherhood
+    interactive = lm(derived_ln_wage ~ derived_mother*(age + derived_agesq) +
+                       derived_educ + derived_married + derived_race,
+                     data = d_fit,
+                     weights = weight),
+    # GAM that allows a smooth age curve interacted with motherhood
+    smooth = gam(derived_ln_wage ~ derived_mother + s(age, by = derived_mother) +
+                   derived_educ + derived_married + derived_race,
+                 data = d_fit,
+                 weights = weight),
+    # OLS with indicators for each age interacted with motherhood
+    indicators = lm(derived_ln_wage ~ derived_mother*factor(age) +
+                      derived_educ + derived_married + derived_race,
+                    data = d_fit,
+                    weights = weight)
+  )
+  
+  # Get the fitted values in the data frame where we are making predictions
+  models_fitted <- foreach(fit_name = names(model_fits), .combine = "rbind") %do% {
+    # First, calculate age-specific estimates
+    age_specific <- d_predict %>%
+      # Make predictions with derived_mother set to TRUE and set to FALSE. Difference them.
+      mutate(estimate = predict(model_fits[[fit_name]],
+                                newdata = d_predict %>%
+                                  mutate(derived_mother = "TRUE")) -
+               predict(model_fits[[fit_name]],
+                       newdata = d_predict %>%
+                         mutate(derived_mother = "FALSE"))) %>%
+      # Aggregate within age groups
+      group_by(age) %>%
+      summarize(estimate = weighted.mean(estimate, w = weight),
+                weight = sum(weight))
+    # Aggregate across age groups to get an aggregate estimate.
+    aggregate <- age_specific %>%
+      group_by() %>%
+      summarize(estimate = weighted.mean(estimate, w = weight))
+    
+    # Return a data frame with both the age-specific and aggregate estimate
+    age_specific %>%
+      select(-weight) %>%
+      mutate(estimand = "age_specific") %>%
+      bind_rows(aggregate %>%
+                  mutate(age = NA,
+                         estimand = "aggregate")) %>%
+      mutate(model = fit_name) %>%
+      select(model, estimand, age, estimate)
+  }
+  return(models_fitted %>%
+           bind_rows(nonparametric_fitted))
 }
 
-estimate_subgroup_variance <- replicates_age %>%
-  rename(Estimate_star = Estimate) %>%
-  left_join(estimate_subgroup_point,
-            by = c("age","approach")) %>%
-  group_by(age,approach) %>%
-  summarize(variance = 4 / 160 * sum((Estimate_star - Estimate) ^ 2))
+# Calculate the point estimate
+point <- estimate_gap("asecwt")
 
-subgroup_results <- estimate_subgroup_point %>%
-  filter(approach != "Unadjusted") %>%
-  left_join(estimate_subgroup_variance, by = c("age","approach")) %>%
-  mutate(approach = factor(case_when(approach == "Stratification" ~ 1,
-                                     approach == "OLS (age factor)" ~ 2,
-                                     approach == "GAM (interactive age)" ~ 3,
-                                     approach == "OLS (interactive age)" ~ 4,
-                                     approach == "OLS (additive age)" ~ 5),
-                           labels = c("Stratification:\nNo estimation assumptions",
-                                      "Education + Marital + Race + \n(Age indicators x Motherhood)",
-                                      "Education + Marital + Race +\n(Age smooth x Motherhood)",
-                                      "Education + Marital + Race +\n(Age quadratic x Motherhood)",
-                                      "Education + Marital + Race +\nAge quadratic + Motherhood")))
+# Calculate the replicate estimates
+replicates <- foreach(i = 1:160, .combine = "rbind") %do% {
+  estimate_gap(paste0("repwtp",i))
+}
 
-##########################
-# Plot the gap estimates #
-##########################
+# Aggregate those into results that include a point estimate and standard error
+results <- replicates %>%
+  rename(estimate_star = estimate) %>%
+  left_join(point,
+            by = c("model","estimand","age")) %>%
+  group_by(model,estimand,age) %>%
+  summarize(point = mean(estimate), # this just aggreagtes a constant point estimate
+            # Calculate the standard error as described in the survey documentation
+            se = sqrt(4 / 160 * sum((estimate_star - estimate) ^ 2))) %>% 
+  group_by() %>%
+  # Add detail to the variable values for use in plotting
+  mutate(model = factor(case_when(model == "nonparametric" ~ 1,
+                                  model == "indicators" ~ 2,
+                                  model == "smooth" ~ 3,
+                                  model == "interactive" ~ 4,
+                                  model == "additive" ~ 5),
+                        labels = c("Stratification:\nNo estimation assumptions",
+                                   "Education + Marital + Race +\n(Age indicators x Motherhood)",
+                                   "Education + Marital + Race +\n(Age smooth x Motherhood)",
+                                   "Education + Marital + Race +\n(Age quadratic x Motherhood)",
+                                   "Education + Marital + Race +\nAge quadratic + Motherhood")),
+         estimand = factor(case_when(estimand == "aggregate" ~ 1,
+                                     estimand == "age_specific"~ 2),
+                           labels = c("Aggregate\ngap","Age-specific\ngap")))
 
-for_aggregate_plot <- aggregate_results %>%
-  mutate(estimand = "Aggregate\ngap",
-         age = 35) %>%
-  bind_rows(subgroup_results %>%
-              mutate(estimand = "Age-specific\ngap")) %>%
-  mutate(estimand = fct_relevel(estimand,
-                                "Aggregate\ngap",
-                                "Age-specific\ngap"))
-for_aggregate_plot %>%
-  ggplot(aes(x = age, y = Estimate,
-             ymin = Estimate - qnorm(.975) * sqrt(variance),
-             ymax = Estimate + qnorm(.975) * sqrt(variance))) +
+# Plot the estimated gap
+results %>%
+  mutate(age = ifelse(estimand == "Aggregate\ngap",35,age)) %>%
+  ggplot(aes(x = age, y = point,
+             ymin = point - qnorm(.975) * se,
+             ymax = point + qnorm(.975) * se)) +
   geom_hline(yintercept = 0, color = "red") +
   geom_errorbar(width = .5) +
   geom_point() +
   theme_bw() +
-  #scale_y_continuous(name = "Difference in log hourly wage\n(Mother - Non-mothers)",
-  #                   limits = c(-.27,.27)) +
   scale_y_continuous(name = "Controlled direct effect of motherhood\non the log hourly wage that would\nbe realized if employed",
                      limits = c(-.27,.27)) +
   xlab("Age") +
-  facet_grid(estimand ~ approach) +
+  facet_grid(estimand ~ model) +
   theme(strip.text.y = element_text(angle = 0),
         strip.text.x = element_text(size = 8),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   # Annotate within facets
-  geom_text(data = for_aggregate_plot %>%
+  geom_text(data = results %>%
               filter(estimand == "Aggregate\ngap") %>%
-              mutate(age = ifelse(approach == "Stratification:\nNo estimation assumptions",25,45),
-                     Estimate = .27,
+              mutate(age = ifelse(model == "Stratification:\nNo estimation assumptions",25,45),
+                     point = .27,
                      label = case_when(
-                       approach == "Stratification:\nNo estimation assumptions" ~ "Weakest assumptions\n(most credible)",
-                       approach == "Education + Marital + Race +\nAge quadratic + Motherhood" ~ "Strongest assumptions\n(least credible)"
-                     )),
-            aes(label = label, hjust = ifelse(approach == "Stratification:\nNo estimation assumptions",0,1)),
+                       model == "Stratification:\nNo estimation assumptions" ~ "Weakest assumptions\n(most credible)",
+                       model == "Education + Marital + Race +\nAge quadratic + Motherhood" ~ "Strongest assumptions\n(least credible)")),
+            aes(label = label, hjust = ifelse(model == "Stratification:\nNo estimation assumptions",0,1)),
             vjust = 1,
             size = 3) +
-  geom_text(data = for_aggregate_plot %>%
-              filter(estimand == "Aggregate\ngap" &
-                       approach == "Race + Marital +\n(Age smooth x Motherhood)") %>%
-              mutate(Estimate = .27),
-            label = "All estimation strategies\nestimate a similar\naggregate gap",
-            size = 3, vjust = 1) +
-  geom_text(data = for_aggregate_plot %>%
-              filter(estimand == "Aggregate\ngap" & approach == "Race + Marital +\nAge quadratic + Motherhood") %>%
-              mutate(age = 45,
-                     Estimate = -.27),
-            label = "This panel parallels the estimand and\n specification in Pal and Waldfogel (2016)",
-            vjust = 0, hjust = 1,
-            size = 2) +
-  geom_segment(data = for_aggregate_plot %>%
-                 filter(estimand == "Aggregate\ngap") %>%
-                 mutate(Estimate = .205,
-                        age = case_when(approach == "Race + Marital +\n(Age smooth x Motherhood)" ~ 27),
-                        xend = 25),
-               aes(xend = xend, yend = Estimate),
-               arrow = arrow(length = unit(.15,"cm"))) +
-  geom_segment(data = for_aggregate_plot %>%
-                 filter(estimand == "Aggregate\ngap") %>%
-                 mutate(Estimate = .205,
-                        age = case_when(approach == "Race + Marital +\n(Age smooth x Motherhood)" ~ 43),
-                        xend = 45),
-               aes(xend = xend, yend = Estimate),
-               arrow = arrow(length = unit(.15,"cm"))) +
-  geom_text(data = for_aggregate_plot %>%
+  geom_text(data = results %>%
               filter(estimand == "Age-specific\ngap" & age == 25) %>%
-              mutate(Estimate = .27,
+              mutate(point = .27,
                      label = case_when(
-                       approach == "Stratification:\nNo estimation assumptions" ~ "Very uncertain\ngaps within\nsubgroups",
-                       approach == "Education + Marital + Race +\n(Age smooth x Motherhood)" ~ "With this assumption,\nevidence shows a gap\nat young ages only",
-                       approach == "Education + Marital + Race +\nAge quadratic + Motherhood" ~ "Additive OLS assumes\na constant effect.\nClearly this model\nis only an approximation."
+                       model == "Stratification:\nNo estimation assumptions" ~ "Very uncertain\ngaps within\nsubgroups",
+                       model == "Education + Marital + Race +\n(Age smooth x Motherhood)" ~ "With this assumption,\nevidence shows a gap\nat young ages only",
+                       model == "Education + Marital + Race +\nAge quadratic + Motherhood" ~ "Additive OLS assumes\na constant effect.\nClearly this model\nis only an approximation."
                      )),
             aes(label = label),
             size = 3, hjust = 0, vjust = 1) +
-  ggsave("output/all_gap_estimates.pdf",
+  ggsave("output/all_gap_estimates_new.pdf",
          height = 5, width = 10)
 
 #######################
 # Cross-validated MSE #
 #######################
 
-make_cv_results <- function(weight_name) {
+# This function will calculate cross-validated mean squared error by 5-fold cross-validation.
+# We will apply it with the main weights for a point estimate
+# and with each set of replicate weights to get a standard error.
+make_cv_results  <- function(weight_name, nfolds = 5) {
   
-  with_support <- support_data %>% filter(has_support)
-  with_support$weight <- with_support[[weight_name]]
-  
-  folded <- with_support %>%
+  # Assign a variable to have this weight
+  # and create folded data
+  folded <- to_fit %>%
+    rename_at(weight_name, .funs = function(x) "weight") %>%
+    # Normalize weight for fitting (matters for gam)
+    mutate(weight = weight / mean(weight)) %>%
+    # Make mother a factor variable (needed for gam)
+    mutate(derived_mother = factor(derived_mother)) %>%
+    # Create folds for cross-validation systematically by sample weigth
     group_by() %>%
     arrange(weight) %>%
-    mutate(fold = rep(1:5, ceiling(n() / 5))[1:n()])
+    mutate(fold = rep(1:nfolds, ceiling(n() / nfolds))[1:n()])
   
-  foreach(f = 1:5, .combine = "rbind") %do% {
+  # Iterate through folds as train and test set
+  # For each fold, store all squared errors in the test set
+  squared_errors <- foreach(f = 1:nfolds, .combine = "rbind") %do% {
+    
+    ## split into train and test
     train <- folded %>%
       filter(fold != f)
     test <- folded %>%
       filter(fold == f)
-    ols_additive_fit <- lm(ln_wage ~ mother + age + I(age ^ 2) +
-                             educ + race + married,
-                           data = train,
-                           weights = weight)
-    ols_interactive_fit <- lm(ln_wage ~ mother*(age + I(age ^ 2)) +
-                                educ + race + married,
-                              data = train,
-                              weights = weight)
-    ols_ageFactor_fit <- lm(ln_wage ~ mother*(factor(age)) +
-                              educ + race + married,
-                            data = train,
-                            weights = weight)
-    gam_interactive_fit <- gam(ln_wage ~ mother + s(age, by = mother) +
-                                 educ + race + married,
-                               data = train %>%
-                                 group_by() %>%
-                                 mutate(mother = factor(mother)),
-                               weight = train$weight)
     
+    # Fit the model-based approaches
+    model_fits <- list(
+      additive = lm(derived_ln_wage ~ derived_mother + age + derived_agesq +
+                      derived_educ + derived_married + derived_race,
+                    data = train,
+                    weights = weight),
+      interactive = lm(derived_ln_wage ~ derived_mother*(age + derived_agesq) +
+                         derived_educ + derived_married + derived_race,
+                       data = train,
+                       weights = weight),
+      smooth = gam(derived_ln_wage ~ derived_mother + s(age, by = derived_mother) +
+                     derived_educ + derived_married + derived_race,
+                   data = train,
+                   weights = weight),
+      indicators = lm(derived_ln_wage ~ derived_mother*factor(age) +
+                        derived_educ + derived_married + derived_race,
+                      data = train,
+                      weights = weight)
+    )
+    
+    # Get squared errors for the stratification approach
     stratification_result <- train %>%
-      group_by(mother, age, educ, race, married) %>%
-      summarize(yhat = weighted.mean(ln_wage, w = weight, na.rm = T)) %>%
-      inner_join(test, by = c("mother","age","educ","race","married")) %>%
-      mutate(squared_error = (ln_wage - yhat) ^ 2) %>%
+      group_by_at(vars(all_of(c(covariates,"derived_mother")))) %>%
+      summarize(yhat = weighted.mean(derived_ln_wage, w = weight)) %>%
+      # Use right join so we retain all rows in the test, even if they have no predictions
+      right_join(test, by = c(covariates,"derived_mother")) %>%
+      mutate(squared_error = (derived_ln_wage - yhat) ^ 2) %>%
       group_by() %>%
-      mutate(approach = "Stratification") %>%
-      select(approach, squared_error, weight)
+      mutate(model = "nonparametric") %>%
+      select(model, squared_error, weight)
     
-    model_squared_errors <- test %>%
-      select(ln_wage, weight) %>%
-      mutate(ols_additive = predict(ols_additive_fit, newdata = test),
-             ols_interactive = predict(ols_interactive_fit, newdata = test),
-             ols_ageFactor = predict(ols_ageFactor_fit, newdata = test),
-             gam_interactive = predict(gam_interactive_fit, newdata = test)) %>%
-      melt(id = c("ln_wage","weight"), variable.name = "approach", value.name = "yhat") %>%
-      mutate(squared_error = (ln_wage - yhat) ^ 2)
+    # Create one data frame of all squared errors for this fold
+    squared_errors_this_fold <- foreach(fit_name = names(model_fits), .combine = "rbind") %do% {
+      test %>%
+        mutate(yhat = predict(model_fits[[fit_name]],
+                              newdata = test)) %>%
+        transmute(model = fit_name,
+                  squared_error = (derived_ln_wage - yhat) ^ 2,
+                  weight = weight)
+    } %>%
+      bind_rows(stratification_result)
     
-    stratification_result %>%
-      bind_rows(model_squared_errors)
-  } %>%
-    group_by(approach) %>%
-    summarize(mse = weighted.mean(squared_error, w = weight, na.rm = T))
+    return(squared_errors_this_fold)
+  }
+  
+  # Aggregate to an estimate of mean squared error
+  mse <- squared_errors %>%
+    group_by(model) %>%
+    summarize(mse = weighted.mean(squared_error, w = weight, na.rm = T),
+              prop_included = weighted.mean(!is.na(squared_error), w = weight))
+  
+  return(mse)
 }
+      
+# Calculate the point estimate for cross-validated MSE
+cv_point <- make_cv_results("asecwt") %>%
+  arrange(mse)
 
-cv_point <- make_cv_results("asecwt")
-replicates <- foreach(i = 1:160, .combine = "rbind") %do% {
+# Calculate the replicate estimates for cross-validated MSE
+cv_replicates <- foreach(i = 1:160, .combine = "rbind") %do% {
   make_cv_results(paste0("repwtp",i))
 }
 
-cv_variance <- replicates %>%
+cv_results <- cv_replicates %>%
   rename(mse_star = mse) %>%
   left_join(cv_point,
-            by = c("approach")) %>%
-  group_by(approach) %>%
-  summarize(variance = 4 / 160 * sum((mse_star - mse) ^ 2))
+            by = c("model")) %>%
+  group_by(model) %>%
+  summarize(point = mean(mse), # this just aggreagtes a constant point estimate
+            se = sqrt(4 / 160 * sum((mse_star - mse) ^ 2))) %>% 
+  group_by() %>%
+  mutate(model = factor(case_when(model == "nonparametric" ~ 1,
+                                  model == "indicators" ~ 2,
+                                  model == "smooth" ~ 3,
+                                  model == "interactive" ~ 4,
+                                  model == "additive" ~ 5),
+                        labels = c("Stratification:\nNo estimation assumptions",
+                                   "Education + Marital + Race +\n(Age indicators x Motherhood)",
+                                   "Education + Marital + Race +\n(Age smooth x Motherhood)",
+                                   "Education + Marital + Race +\n(Age quadratic x Motherhood)",
+                                   "Education + Marital + Race +\nAge quadratic + Motherhood")))
 
-cv_results <- cv_point %>%
-  left_join(cv_variance, by = "approach") %>%
-  mutate(approach = factor(case_when(approach == "Stratification" ~ 1,
-                                     approach == "ols_ageFactor" ~ 2,
-                                     approach == "gam_interactive" ~ 3,
-                                     approach == "ols_interactive" ~ 4,
-                                     approach == "ols_additive" ~ 5),
-                           labels = c("Stratification:\nNo estimation assumptions",
-                                      "Education + Marital + Race +\n(Age indicators x Motherhood)",
-                                      "Education + Marital + Race +\n(Age smooth x Motherhood)",
-                                      "Education + Marital + Race +\n(Age quadratic x Motherhood)",
-                                      "Education + Marital + Race +\nAge quadratic + Motherhood")))
+print("Ranking of approaches by predictive performance")
 print(cv_results %>%
-        mutate(approach = fct_rev(approach),
-               best = mse == min(mse)))
+        arrange(point))
+
+print("More decimal places on mean squared error, in the above order:")
+print(sort(cv_results$point))
+
+# Plot of the cross-validation results
+cv_results %>%
+  filter(model != "Stratification:\nNo estimation assumptions") %>%
+  mutate(model = fct_reorder(model, point)) %>%
+  ggplot(aes(x = model, y = point,
+             ymin = point - qnorm(.975) * se,
+             ymax = point + qnorm(.975) * se)) +
+  geom_point() +
+  geom_errorbar(width = .2) +
+  scale_y_continuous(name = "Mean Squared Error") +
+  scale_x_discrete(name = "Statistical Approach") +
+  theme_bw() +
+  ggsave("output/cv_results.pdf",
+         height = 3, width = 10)
 
 sink()
