@@ -33,6 +33,49 @@ print("Output from replication of Wildeman et al.")
 # 3. Estimate of sample average treatment effect on probability
 # 4. 9 panels of mediation figure
 
+
+
+################
+# Helper functions
+# and constants 
+################
+
+#' Code individual items into a scale
+#' 
+#' @param data Dataframe that contains the columns
+#' @param prefix_string String with prefix for scale or gen regex pattern
+#' @param verbose whether to print name of items
+#' @param FUN  what to code as yes = true, no = false, and NA
+#' @return vector of length nrow(data) that has scale values (sum of yes on 
+#' indiv items and then averaging over n of items)
+#' One note is that, as structured, if a person is missing any
+#' scale items they are missing for the entire scale
+#' Can change by setting na.rm = TRUE in rowsums and adjusting
+#' the denominator on the scale to be person-specific 
+code_agg_scales <- function(data, prefix_string,
+                            verbose = FALSE,
+                            FUN){
+  
+  ## get all cols with that prefix
+  cols_withprefix = grep(sprintf("^%s", prefix_string),
+                         colnames(data),
+                         value = TRUE)
+  if(verbose) print(sprintf("Coding scale based on: %s", paste(cols_withprefix, 
+                                                        collapse = ";")))
+  ## apply coding func to all cols with that pattern
+  data[, cols_withprefix] = apply(data[, cols_withprefix], 2, FUN)
+  ## sum those cols and average by length of cols considered 
+  sum_across = rowSums(data[, cols_withprefix])
+  avg_across = (1/length(cols_withprefix)) * sum_across
+  # return vector of averages 
+  return(avg_across)
+}
+
+## Constants
+READ_RAW_DATA = TRUE
+RAW_DATA_NAME = "ff_res_merge4.dta"
+
+
 ################
 # Prepare data #
 ################
@@ -41,189 +84,161 @@ print("Output from replication of Wildeman et al.")
 # http://www.fragilefamilies.princeton.edu/documentation.asp
 # Most variables come from the 3- and 5-year mother interview codebooks.
 
-# Read data from baseline through 5 year interviews
-data <- read_dta("data/ff_res_merge4.dta") %>%
-  mutate(num_rawData = n()) %>%
-  # Restrict to those with non-zero weight
-  filter(!is.na(m4citywt)) %>%
-  mutate(num_withWeight = n()) %>%
-  # Mom completed both year 3 and 5 interviews
-  filter(m3intyr != -9 & m4intyr != -9) %>%
-  mutate(num_completedInterviews = n()) %>%
-  # Not missing data on either DV (depression and life satisfaction) at year 5
-  filter(cm4md_case_lib >= 0 & m4j0 >= 0) %>%
-  mutate(num_validOutcomes = n()) %>%
-  transmute(num_rawData = num_rawData,
-            num_withWeight = num_withWeight,
-            num_completedInterviews = num_completedInterviews,
-            num_validOutcomes = num_validOutcomes,
-            # City of birth is the one restricted variable not available in the public file
-            city = case_when(m1city != -9 ~ as_factor(m1city)),
-            city = fct_drop(city),
-            # Maternal depression
-            depressed.m.y5 = cm4md_case_lib == 1,
-            # Lagged maternal depression (measured at year 3)
-            depressed.m.y3 = case_when(cm3md_case_lib >= 0 ~ cm3md_case_lib == 1),
-            
-            # Recent paternal incarceration: Father incarcerated between age 3 and 5 interviews
-            pat.inc.rec = case_when(cmf4finjail == 1 ~ T,
-                                    m4c36 == 5 | m4c37 %in% c(1,3) ~ T, # this ignores missingness onf m4c37 and m4c36
-                                    cmf4finjail == 0 ~ F),
-            pat.inc.dist = case_when(cmf3fevjail %in% 0:1 ~ cmf3fevjail == 1),
-            
-            # COVARIATES
-            # Race: White, black, Hispanic, other
-            race.m = fct_drop(case_when(cm1ethrace > 0 ~ as_factor(cm1ethrace))),
-            race.f = fct_drop(case_when(cf1ethrace > 0 ~ as_factor(cf1ethrace))),
-            # Born outside the US
-            foreign.born.m = case_when(m1h2 %in% 1:2 ~ m1h2 == 2),
-            foreign.born.f = case_when(f1h2 %in% 1:2 ~ f1h2 == 2),
-            # Age in years at baseline survey
-            age.m = case_when(cm1age >= 0 ~ cm1age),
-            age.f = case_when(cf1age >= 0 ~ cf1age),
-            # Education: <HS, HS or GED, postsecondary education, at baseline
-            educ.m = fct_drop(case_when(cm1edu > 0 ~ as_factor(cm1edu))),
-            educ.f = fct_drop(case_when(cf1edu > 0 ~ as_factor(cf1edu))),
-            # Parents' relationship at 3-year: married, cohabiting, in a nonresidential romantic relationship, and no longer romantically involved
-            rel.yr3 = case_when(cm3relf==1 ~ "Married",
-                                cm3relf == 2 ~ "Cohabiting",
-                                cm3relf %in% 3:4 ~ "Nonresidential romantic relationship",
-                                cm3relf %in% 5:8 ~ "No longer romantically involved"),
-            # Whether mother reported romantic relationship with new partner at 3-year. MATCHES
-            newpartner.yr3 = case_when(m3e2d %in% c(-6,0) ~ F,
-                                       m3e2d == 1 ~ T),
-            # Whether either of the mother’s biological parents experienced a two-week period of feeling depressed, down in the dumps, or blue
-            # If has no knowledge of father (-14), I am coding as missing.
-            mom.par.depressed = case_when(m3j45 >= 0 & m3j50 >= 0 ~ m3j45 == 1 | m3j50 == 1,
-                                          m3j45 == 1 ~ T,
-                                          m3j50 == 1 ~ T),
-            # Maternal reports of income-to-poverty ratio
-            incratio.y3 = case_when(cm3povco >= 0 ~ cm3povco),
-            # Material hardship: Sum of events that could have happened because not enough money
-            # The authors write that there are 12 questions. I think that's a typo.
-            # I am only using the 8 items asked in all cities
-            mat.hard.y3 = 1 / 8 * (
-              case_when(m3i23a %in% 1:2 ~ m3i23a == 1) +
-                case_when(m3i23b %in% 1:2 ~ m3i23b == 1) +
-                case_when(m3i23c %in% 1:2 ~ m3i23c == 1) +
-                case_when(m3i23d %in% 1:2 ~ m3i23d == 1) +
-                case_when(m3i23e %in% 1:2 ~ m3i23e == 1) +
-                case_when(m3i23f %in% 1:2 ~ m3i23f == 1) +
-                case_when(m3i23g %in% 1:2 ~ m3i23g == 1) +
-                case_when(m3i23h %in% 1:2 ~ m3i23h == 1)
-            ),
-            # Relationship quality with the child’s father: 1 = poor to 5 = excellent
-            relat.qual.y3 = case_when(m3d0 == 2 ~ 1, # poor if skipped because of no relationship with father
-                                      m3d4 %in% 1:5 ~ 6 - as.numeric(m3d4)), 
-            # Number of children in the household
-            num.children = case_when(cm3kids >= 0 ~ cm3kids),
-            # Co-parenting as in Carlson, McLanahan, and Brooks-Gunn (2008),
-            # though distinction not at all clear on page 468 of that article
-            # Shared responsibility
-            shared.responsibility.y3 = 1 / 4 * (
-              case_when(m3c7a == -6 ~ 4,
-                        m3c7a %in% 1:4 ~ 5 - as.numeric(m3c7a)) +
-                case_when(m3c7b == -6 ~ 4,
-                          m3c7b %in% 1:4 ~ 5 - as.numeric(m3c7b)) +
-                case_when(m3c7c == -6 ~ 4,
-                          m3c7c %in% 1:4 ~ 5 - as.numeric(m3c7c)) +
-                case_when(m3c7d == -6 ~ 4,
-                          m3c7d %in% 1:4 ~ 5 - as.numeric(m3c7d))
-            ),
-            # Cooperation in parenting
-            cooperation.y3 = 1 / 6 * (
-              case_when(m3d1a == -6 ~ 4,
-                        m3d1a %in% 1:4 ~ 5 - as.numeric(m3d1a)) +
-                case_when(m3d1b == -6 ~ 4,
-                          m3d1b %in% 1:4 ~ 5 - as.numeric(m3d1b)) +
-                case_when(m3d1c == -6 ~ 4,
-                          m3d1c %in% 1:4 ~ 5 - as.numeric(m3d1c)) +
-                case_when(m3d1d == -6 ~ 4,
-                          m3d1d %in% 1:4 ~ 5 - as.numeric(m3d1d)) +
-                case_when(m3d1e == -6 ~ 4,
-                          m3d1e %in% 1:4 ~ 5 - as.numeric(m3d1e)) +
-                case_when(m3d1f == -6 ~ 4,
-                          m3d1f %in% 1:4 ~ 5 - as.numeric(m3d1f))
-            ),
-            # Paternal engagement: average (0 to 7) of days per week the mother reported the father
-            # did activities with the focal child, such as sing songs,
-            # read stories, or hug or show physical affection (m3c3a-m3c3m)
-            pat.engage.y3 = 1 / 13 * (
-              case_when(m3c3a == -6 ~ 0,
-                        m3c3a >= 0 ~ as.numeric(m3c3a)) +
-                case_when(m3c3b == -6 ~ 0,
-                          m3c3b >= 0 ~ as.numeric(m3c3b)) +
-                case_when(m3c3c == -6 ~ 0,
-                          m3c3c >= 0 ~ as.numeric(m3c3c)) +
-                case_when(m3c3d == -6 ~ 0,
-                          m3c3d >= 0 ~ as.numeric(m3c3d)) +
-                case_when(m3c3e == -6 ~ 0,
-                          m3c3e >= 0 ~ as.numeric(m3c3e)) +
-                case_when(m3c3f == -6 ~ 0,
-                          m3c3f >= 0 ~ as.numeric(m3c3f)) +
-                case_when(m3c3g == -6 ~ 0,
-                          m3c3g >= 0 ~ as.numeric(m3c3g)) +
-                case_when(m3c3h == -6 ~ 0,
-                          m3c3h >= 0 ~ as.numeric(m3c3h)) +
-                case_when(m3c3i == -6 ~ 0,
-                          m3c3i >= 0 ~ as.numeric(m3c3i)) +
-                case_when(m3c3j == -6 ~ 0,
-                          m3c3j >= 0 ~ as.numeric(m3c3j)) +
-                case_when(m3c3k == -6 ~ 0,
-                          m3c3k >= 0 ~ as.numeric(m3c3k)) +
-                case_when(m3c3l == -6 ~ 0,
-                          m3c3l >= 0 ~ as.numeric(m3c3l)) +
-                case_when(m3c3m == -6 ~ 0,
-                          m3c3m >= 0 ~ as.numeric(m3c3m))
-            ),
-            # Parenting stress: average of responses to the following (1 = strongly disagree to 4 = strongly agree):
-            # Being a parent is harder than I thought it would be;
-            # I feel trapped by my responsibilities as a parent; 
-            # Taking care of my children is much more work than pleasure;
-            # I often feel tired, worn out, or exhausted from raising a family.
-            parenting.stress.y3 = 1 / 4 * (
-              case_when(m3b6a %in% 1:4 ~ 5 - as.numeric(m3b6a)) +
-                case_when(m3b6b %in% 1:4 ~ 5 - as.numeric(m3b6b)) +
-                case_when(m3b6c %in% 1:4 ~ 5 - as.numeric(m3b6c)) +
-                case_when(m3b6d %in% 1:4 ~ 5 - as.numeric(m3b6d))
-            ),
-            # Father impulsivity at baseline: Dickman’s (1990) impulsivity scale, 
-            # based on an average of six questions 
-            # (recoded to 1 = strongly disagree to 4 = strongly agree)
-            impulsivity = 1 / 6 * (
-              case_when(f2j21 %in% 1:4 ~ 5 - as.numeric(f2j21)) +
-                case_when(f2j22 %in% 1:4 ~ 5 - as.numeric(f2j22)) +
-                case_when(f2j23 %in% 1:4 ~ 5 - as.numeric(f2j23)) +
-                case_when(f2j24 %in% 1:4 ~ 5 - as.numeric(f2j24)) +
-                case_when(f2j25 %in% 1:4 ~ 5 - as.numeric(f2j25)) +
-                case_when(f2j26 %in% 1:4 ~ 5 - as.numeric(f2j26))
-            ),
-            # Domestic violence: mother’s report that the father hit, slapped, or kicked her at any point up to and including the three-year interview.
-            dom.violence.yb13 = case_when(m1b7b %in% 1:2 | m1b13b %in% 1:2 |
-                                            m2d6h %in% 1:2 | m2d6i %in% 1:2 |
-                                            m3d7m == 1 | m3d7o == 1 ~ T,
-                                          m1b7b %in% c(3,-6) & m1b13b %in% c(3,-6) &
-                                            m2d6h %in% c(3,-6) & m2d6i %in% c(3,-6) &
-                                            m3d7m %in% c(2,-6) & m3d7o %in% c(2,-6) ~ F),
-            # Drug and alcohol abuse at year 3 interview, interfering with work. Use mother's report only to avoid complex missingness.
-            drug.y3 = case_when(m3c44 == 1 ~ T,
-                                m3c44 %in% c(2,-6) ~ F),
 
-            # Relationship type (5-year interview)
-            # Romantic partner other than the father at year 5 in the household most of the time
-            newpartner.y5 = case_when(m4e1 == 1 ~ F,
-                                      m4e2 == 2 ~ F,
-                                      m4e2d == 2 ~ F,
-                                      m4e2d == 1 ~ T),
-            weight = m4citywt) %>%
-  # Restrict to those with distal parental incarceration
-  filter(pat.inc.dist == 1) %>%
-  mutate(num_distalIncarceration = n())
-
-print("Sample restrictions:")
-print(data %>%
-        filter(1:n() == 1) %>%
-        select(starts_with("num_")))
+if(READ_RAW_DATA){
+  # Read data from baseline through 5 year interviews
+  raw_data <- read_dta(sprintf("data/%s", RAW_DATA_NAME))
+  
+  # Code and select variables
+  df_init <- raw_data %>%
+    # Filtering flags
+    ## Flag for those with with non-zero weight
+    ## Flag for mom completing y3 (wav3) and y5 (wave4) ints
+    ## Flag for not missing either of the outcomes data (so observe both)
+    mutate(filter_is_nonzero_cityweight = !is.na(m4citywt),
+           filter_momcompletey3y5 = m3intyr != -9 & m4intyr != -9,
+           filter_nonmissing_DV = cm4md_case_lib >= 0 & m4j0 >= 0) %>%
+    ## Clean up other variables/construct scales
+    transmute(filter_is_nonzero_cityweight,
+              filter_momcompletey3y5,
+              filter_nonmissing_DV,
+              # City of birth is the one restricted variable not available in the public file
+              city = case_when(m1city != -9 ~ as_factor(m1city)),
+              city = fct_drop(city),
+              # Maternal depression
+              depressed.m.y5 = cm4md_case_lib == 1,
+              # Lagged maternal depression (measured at year 3)
+              depressed.m.y3 = case_when(cm3md_case_lib >= 0 ~ cm3md_case_lib == 1),
+              
+              # Recent paternal incarceration: Father incarcerated between age 3 and 5 interviews
+              pat.inc.rec = case_when(cmf4finjail == 1 ~ T,
+                                      m4c36 == 5 | m4c37 %in% c(1,3) ~ T, # this ignores missingness onf m4c37 and m4c36
+                                      cmf4finjail == 0 ~ F),
+              # Distant paternal incarceration - among non-missing for dad ever in jail, if ever in jail
+              pat.inc.dist = case_when(cmf3fevjail %in% 0:1 ~ cmf3fevjail == 1),
+              
+              # COVARIATES
+              # Race: White, black, Hispanic, other
+              race.m = fct_drop(case_when(cm1ethrace > 0 ~ as_factor(cm1ethrace))),
+              race.f = fct_drop(case_when(cf1ethrace > 0 ~ as_factor(cf1ethrace))),
+              # Born outside the US
+              ## rj note: i think follows same logic of -9 through -1 missing
+              ## so changed just to make more consistent
+              foreign.born.m = case_when(m1h2 > 0 ~ m1h2 == 2),
+              foreign.born.f = case_when(f1h2 > 0 ~ f1h2 == 2),
+              # Age in years at baseline survey
+              age.m = case_when(cm1age >= 0 ~ cm1age),
+              age.f = case_when(cf1age >= 0 ~ cf1age),
+              # Education: <HS, HS or GED, postsecondary education, at baseline
+              educ.m = fct_drop(case_when(cm1edu > 0 ~ as_factor(cm1edu))),
+              educ.f = fct_drop(case_when(cf1edu > 0 ~ as_factor(cf1edu))),
+              # Parents' relationship at 3-year: married, cohabiting, in a nonresidential romantic relationship, 
+              # and no longer romantically involved; unnamed categories var < 0 become NA
+              rel.yr3 = case_when(cm3relf==1 ~ "Married",
+                                  cm3relf == 2 ~ "Cohabiting",
+                                  cm3relf %in% 3:4 ~ "Nonresidential romantic relationship",
+                                  cm3relf %in% 5:8 ~ "No longer romantically involved"),
+              # Whether mother reported romantic relationship with new partner at 3-year. MATCHES
+              newpartner.yr3 = case_when(m3e2d %in% c(-6,2) ~ F,
+                                         m3e2d == 1 ~ T),
+              # Romantic partner other than the father at year 5 who
+              # lives in the household most of the time
+              newpartner.y5 = case_when(m4e1 == 1 ~ F, # mother and father are living together most of the time
+                                        m4e2 == 2 ~ F, # mother reports "no" on whether involved in romantic relate w/ other than father
+                                        m4e2d == 2 ~ F, # even if yes to above (is involved in romantic relationship w/ non-f), reports no on living together
+                                        m4e2d == 1 ~ T), # finally, only true if not filtered to False above and affirmatively reports living together
+              
+              # Whether either of the mother’s biological parents experienced a two-week period of feeling depressed, down in the dumps, or blue
+              # If neither depressed (m3j[45|50] both equal 2), mom.par.depressed == FALSE
+              # If has no knowledge of father (-14), I am coding as missing.
+              mom.par.depressed = case_when(m3j45 >= 0 & m3j50 >= 0 ~ m3j45 == 1 | m3j50 == 1,
+                                            m3j45 == 1 ~ T,
+                                            m3j50 == 1 ~ T),
+              # Maternal reports of income-to-poverty ratio
+              incratio.y3 = case_when(cm3povco >= 0 ~ cm3povco),
+              # Number of children in the household
+              num.children = case_when(cm3kids >= 0 ~ cm3kids),
+              # Domestic violence: mother’s report that the father hit, slapped, or kicked her at any point up to and including the three-year interview.
+              dom.violence.yb13 = case_when(m1b7b %in% 1:2 | m1b13b %in% 1:2 |
+                                              m2d6h %in% 1:2 | m2d6i %in% 1:2 |
+                                              m3d7m == 1 | m3d7o == 1 ~ T,
+                                            m1b7b %in% c(3,-6) & m1b13b %in% c(3,-6) &
+                                              m2d6h %in% c(3,-6) & m2d6i %in% c(3,-6) &
+                                              m3d7m %in% c(2,-6) & m3d7o %in% c(2,-6) ~ F),
+              # Drug and alcohol abuse at year 3 interview, interfering with work. Use mother's report only to avoid complex missingness.
+              drug.y3 = case_when(m3c44 == 1 ~ T,
+                                  m3c44 %in% c(2,-6) ~ F),
+              weight = m4citywt,
+              
+              # Step 2: code scales  
+              ## Material hardship: Sum of events that could have happened because not enough money
+              ## The authors write that there are 12 questions. I think that's a typo.
+              ## I am only using the 8 items asked in all cities (so excluding ij suffix 
+              ## which here notes is only asked in 18-cities: https://fragilefamilies.princeton.edu/sites/fragilefamilies/files/year_3_guide.pdf)
+              mat.hard.y3 = code_agg_scales(raw_data, prefix_string = "m3i23[a-h]",
+                                            FUN = function(x){case_when(x %in% 1 ~ TRUE,
+                                                                        x %in% 2 ~ FALSE,
+                                                                        TRUE ~ NA)}),
+              ## Relationship quality with the child’s father: 1 = poor to 5 = excellent
+              relat.qual.y3 = case_when(m3d0 == 2 ~ 1, # poor if skipped because of no relationship with father
+                                        m3d4 %in% 1:5 ~ 6 - as.numeric(m3d4)), 
+              ## Co-parenting as in Carlson, McLanahan, and Brooks-Gunn (2008),
+              ## though distinction not at all clear on page 468 of that article
+              ## Shared responsibility (rev. code from 1 = often; 4 = never; those who skip are often)
+              shared.responsibility.y3 = code_agg_scales(raw_data, 
+                                                         prefix_string = "m3c7", 
+                                                         FUN = function(x){case_when(x == -6 ~ 4,
+                                                                                     x %in% 1:4 ~ 5 - as.numeric(x))}),
+              ## Cooperation in parenting (same values and skip logic coding as above)
+              cooperation.y3 = code_agg_scales(raw_data, 
+                                               prefix_string = "m3d1[a-f]$", 
+                                               FUN = function(x){case_when(x == -6 ~ 4,
+                                                                           x %in% 1:4 ~ 5 - as.numeric(x))}),
+              ## Paternal engagement: average (0 to 7) of days per week the mother reported the father
+              ## did activities with the focal child, such as sing songs,
+              ## read stories, or hug or show physical affection (m3c3a-m3c3m)
+              pat.engage.y3 = code_agg_scales(raw_data, 
+                                              prefix_string = "m3c3[a-m]$", 
+                                              FUN = function(x){case_when(x == -6 ~ 0,
+                                                                          x >=0  ~ as.numeric(x))}),
+              ## Parenting stress: average of responses to the following (recoded to 
+              ## 1 = strongly disagree to 4 = strongly agree)
+              ## Being a parent is harder than I thought it would be;
+              ## I feel trapped by my responsibilities as a parent; 
+              ## Taking care of my children is much more work than pleasure;
+              ## I often feel tired, worn out, or exhausted from raising a family
+              parenting.stress.y3 = code_agg_scales(raw_data, 
+                                                    prefix_string = "m3b6[a-d]$", 
+                                                    FUN = function(x){case_when(
+                                                      x %in% 1:4  ~5- as.numeric(x))}),
+              # Father impulsivity at baseline: Dickman’s (1990) impulsivity scale, 
+              # based on an average of six questions 
+              # (recoded to 1 = strongly disagree to 4 = strongly agree)
+              impulsivity = code_agg_scales(raw_data, 
+                                            prefix_string = "f2j2[1-6]$", 
+                                            FUN = function(x){case_when(
+                                              x %in% 1:4  ~5- as.numeric(x))})) %>%
+    mutate(filter_is_distalincarc = case_when(pat.inc.dist ~ TRUE,
+                                              TRUE ~ FALSE))
+  
+  print("Sample restrictions from each filter applied separately:")
+  all_filters = grep("^filter", colnames(df_init), value = TRUE)
+  print(sprintf("Orig: %s", nrow(df_init)))
+  for(i in 1:length(all_filters)){
+    filt_use = all_filters[1:i]
+    print(sprintf("Removing ppl who fail %s: %s", paste(gsub("filter\\_", "", filt_use), 
+                                                        collapse = ";"), nrow(df_init[rowSums(df_init[, filt_use]) == length(filt_use), ])))
+  }
+  
+  data <- df_init[rowSums(df_init[, all_filters]) == length(all_filters), ] %>%
+    select(-contains("filter")) %>%
+    filter(pat.inc.dist == TRUE) # explicitly restrict to those with affirmative pat incarc
+  
+  write.csv(data, "intermediate/w_ffs_preimpute.csv",
+            row.names = FALSE)
+} else{
+  data <- read.csv("intermediate/w_ffs_preimpute.csv")
+}
 
 print("Proportion missing on each covariate")
 print("High rate of missingness for father variables because he is often not interviewed")
@@ -240,7 +255,7 @@ print(round(prop.table(table(data$depressed.m.y5, useNA = "ifany")),2))
 get_estimates <- function(num.sims = 100) {
   d <- amelia(data.frame(data %>%
                            sample_frac(replace = T) %>%
-                           select(-starts_with("num_"), -contains("change"), -pat.inc.dist) %>%
+                           select(-pat.inc.dist) %>%
                            # Top-code to reduce extreme noisiness in imputations
                            mutate(incratio.y3 = ifelse(incratio.y3 > 5, 5, incratio.y3),
                                   num.children = factor(ifelse(num.children <= 3, num.children, 3)),
