@@ -13,6 +13,11 @@
 # 1. Register for an account
 # 2. Download ff_res_merge4.dta and place it in the data subdirectory
 
+# That file is restricted access because it contains city of birth.
+# That variable plays a minor role in this analysis.
+# If you are replicating, you can use the public-use file
+# and adjust the code to not use the city of birth variable (m1city).
+
 library(tidyverse)
 library(reshape2)
 library(haven)
@@ -33,8 +38,6 @@ print("Output from replication of Wildeman et al.")
 # 3. Estimate of sample average treatment effect on probability
 # 4. 9 panels of mediation figure
 
-
-
 ################
 # Helper functions
 # and constants 
@@ -42,32 +45,28 @@ print("Output from replication of Wildeman et al.")
 
 #' Code individual items into a scale
 #' 
-#' @param data Dataframe that contains the columns
-#' @param prefix_string String with prefix for scale or gen regex pattern
-#' @param verbose whether to print name of items
-#' @param FUN  what to code as yes = true, no = false, and NA
+#' @param data Data frame that contains the columns
+#' @param prefix_string String with prefix for scale or generic regular expression pattern
+#' @param verbose whether to print the names of items
+#' @param FUN what to code as yes = true, no = false, and NA
 #' @return vector of length nrow(data) that has scale values (sum of yes on 
-#' indiv items and then averaging over n of items)
-#' One note is that, as structured, if a person is missing any
-#' scale items they are missing for the entire scale
-#' Can change by setting na.rm = TRUE in rowsums and adjusting
-#' the denominator on the scale to be person-specific 
+#' individual items and then averaging over all n items)
 code_agg_scales <- function(data, prefix_string,
                             verbose = FALSE,
                             FUN){
   
-  ## get all cols with that prefix
+  ## get all columns with that prefix
   cols_withprefix = grep(sprintf("^%s", prefix_string),
                          colnames(data),
                          value = TRUE)
   if(verbose) print(sprintf("Coding scale based on: %s", paste(cols_withprefix, 
                                                         collapse = ";")))
-  ## apply coding func to all cols with that pattern
+  ## apply coding function to all columns with that pattern
   data[, cols_withprefix] = apply(data[, cols_withprefix], 2, FUN)
-  ## sum those cols and average by length of cols considered 
+  ## sum those columns and average by the number of columns considered
   sum_across = rowSums(data[, cols_withprefix])
   avg_across = (1/length(cols_withprefix)) * sum_across
-  # return vector of averages 
+  # return the vector of averages 
   return(avg_across)
 }
 
@@ -98,7 +97,8 @@ if(READ_RAW_DATA){
     mutate(filter_is_nonzero_cityweight = !is.na(m4citywt),
            filter_momcompletey3y5 = m3intyr != -9 & m4intyr != -9,
            filter_nonmissing_DV = cm4md_case_lib >= 0 & m4j0 >= 0) %>%
-    ## Clean up other variables/construct scales
+    ## Prepare variables and construct scales
+    ## These choices are attempts to be faithful to the analysis described in the original article.
     transmute(filter_is_nonzero_cityweight,
               filter_momcompletey3y5,
               filter_nonmissing_DV,
@@ -114,16 +114,14 @@ if(READ_RAW_DATA){
               pat.inc.rec = case_when(cmf4finjail == 1 ~ T,
                                       m4c36 == 5 | m4c37 %in% c(1,3) ~ T, # this ignores missingness onf m4c37 and m4c36
                                       cmf4finjail == 0 ~ F),
-              # Distant paternal incarceration - among non-missing for dad ever in jail, if ever in jail
+              # Distant paternal incarceration: among those non-missing for dad ever in jail, if ever in jail
               pat.inc.dist = case_when(cmf3fevjail %in% 0:1 ~ cmf3fevjail == 1),
               
               # COVARIATES
-              # Race: White, black, Hispanic, other
+              # Race: Non-Hispanic white, Non-Hispanic black, Hispanic, other
               race.m = fct_drop(case_when(cm1ethrace > 0 ~ as_factor(cm1ethrace))),
               race.f = fct_drop(case_when(cf1ethrace > 0 ~ as_factor(cf1ethrace))),
               # Born outside the US
-              ## rj note: i think follows same logic of -9 through -1 missing
-              ## so changed just to make more consistent
               foreign.born.m = case_when(m1h2 > 0 ~ m1h2 == 2),
               foreign.born.f = case_when(f1h2 > 0 ~ f1h2 == 2),
               # Age in years at baseline survey
@@ -138,7 +136,7 @@ if(READ_RAW_DATA){
                                   cm3relf == 2 ~ "Cohabiting",
                                   cm3relf %in% 3:4 ~ "Nonresidential romantic relationship",
                                   cm3relf %in% 5:8 ~ "No longer romantically involved"),
-              # Whether mother reported romantic relationship with new partner at 3-year. MATCHES
+              # Whether mother reported romantic relationship with new partner at 3-year
               newpartner.yr3 = case_when(m3e2d %in% c(-6,2) ~ F,
                                          m3e2d == 1 ~ T),
               # Romantic partner other than the father at year 5 who
@@ -168,6 +166,7 @@ if(READ_RAW_DATA){
               # Drug and alcohol abuse at year 3 interview, interfering with work. Use mother's report only to avoid complex missingness.
               drug.y3 = case_when(m3c44 == 1 ~ T,
                                   m3c44 %in% c(2,-6) ~ F),
+              # Survey weight
               weight = m4citywt,
               
               # Step 2: code scales  
@@ -184,15 +183,16 @@ if(READ_RAW_DATA){
                                         m3d4 %in% 1:5 ~ 6 - as.numeric(m3d4)), 
               ## Co-parenting as in Carlson, McLanahan, and Brooks-Gunn (2008),
               ## though distinction not at all clear on page 468 of that article
-              ## Shared responsibility (rev. code from 1 = often; 4 = never; those who skip are often)
+              ## Shared responsibility (reverse code from (1 = often, 4 = never) to (1 = never, 4 = often).
+              ## When the father is not around (-6), code as never)
               shared.responsibility.y3 = code_agg_scales(raw_data, 
                                                          prefix_string = "m3c7", 
-                                                         FUN = function(x){case_when(x == -6 ~ 4,
+                                                         FUN = function(x){case_when(x == -6 ~ 1,
                                                                                      x %in% 1:4 ~ 5 - as.numeric(x))}),
               ## Cooperation in parenting (same values and skip logic coding as above)
               cooperation.y3 = code_agg_scales(raw_data, 
                                                prefix_string = "m3d1[a-f]$", 
-                                               FUN = function(x){case_when(x == -6 ~ 4,
+                                               FUN = function(x){case_when(x == -6 ~ 1,
                                                                            x %in% 1:4 ~ 5 - as.numeric(x))}),
               ## Paternal engagement: average (0 to 7) of days per week the mother reported the father
               ## did activities with the focal child, such as sing songs,
@@ -218,21 +218,22 @@ if(READ_RAW_DATA){
                                             prefix_string = "f2j2[1-6]$", 
                                             FUN = function(x){case_when(
                                               x %in% 1:4  ~5- as.numeric(x))})) %>%
+    # Create a filter for having distal paternal incarceration (ever in jail by wave 3)
     mutate(filter_is_distalincarc = case_when(pat.inc.dist ~ TRUE,
                                               TRUE ~ FALSE))
   
   print("Sample restrictions from each filter applied separately:")
   all_filters = grep("^filter", colnames(df_init), value = TRUE)
-  print(sprintf("Orig: %s", nrow(df_init)))
+  print(sprintf("Original: %s", nrow(df_init)))
   for(i in 1:length(all_filters)){
     filt_use = all_filters[1:i]
-    print(sprintf("Removing ppl who fail %s: %s", paste(gsub("filter\\_", "", filt_use), 
-                                                        collapse = ";"), nrow(df_init[rowSums(df_init[, filt_use]) == length(filt_use), ])))
+    print(sprintf("Removing people we filter %s: %s", paste(gsub("filter\\_", "", filt_use), 
+                                                            collapse = ";"), nrow(df_init[rowSums(df_init[, filt_use]) == length(filt_use), ])))
   }
   
   data <- df_init[rowSums(df_init[, all_filters]) == length(all_filters), ] %>%
     select(-contains("filter")) %>%
-    filter(pat.inc.dist == TRUE) # explicitly restrict to those with affirmative pat incarc
+    filter(pat.inc.dist == TRUE) # explicitly restrict to those with affirmative paternal incarceration in the past
   
   write.csv(data, "intermediate/w_ffs_preimpute.csv",
             row.names = FALSE)
