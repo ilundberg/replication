@@ -76,10 +76,10 @@ d_init <- GSS %>%
   
   ## Restrict to white (race == 1)
   ## 25-34 inclusive
-  filter(RACE == 1 & AGE >= 25 & AGE <= 34) %>% # & YEAR >= 1972 & YEAR <= 2002) %>%
+  filter(RACE == 1 & AGE >= 25 & AGE <= 34) %>% 
   
   # Prepare variables
-  ## 97-99 tend to represent missing values so we code them to NA
+  ## 97-99 represent missing values so we code them to NA
   mutate(cohort = COHORT,
          college = case_when(EDUC < 98 ~ EDUC >= 16),
          age = case_when(AGE < 98 ~ AGE),
@@ -88,7 +88,7 @@ d_init <- GSS %>%
          father_some_college = father_educ >= 13,
          mother_some_college = mother_educ >= 13,
          
-         ## code whether respondent living w/ a father at time they 
+         ## code whether respondent living with a father at time they 
          ## were 16
          no_father = case_when(FAMILY16 != 9 ~ !(FAMILY16 %in% c(1,2,4))),
          weight = WTSSALL,
@@ -108,7 +108,7 @@ d_init <- GSS %>%
   ## Restrict so that all cohorts can be observed in all ages
   mutate(is_focal_cohort = cohort >= (1972 - 25) & cohort <= (2018 - 34))
 
-## code any NA in rel cols
+## code any NA in relevant columns
 rel_cols = c("college", "cohort", "father_category",
              "mother_category", "Gender",
              "weight")
@@ -122,9 +122,9 @@ cat(sprintf("Sample size from focusing on focal cohorts is %s, and then from
               nrow(d_init %>% filter(is_focal_cohort)),
               nrow(d_init %>% filter(is_focal_cohort & is_observed_all))))
 
-# Apply those filters and update weight
+# Apply those filters and normalize the weight to sum to the number of observations
 d <- d_init %>% filter(is_focal_cohort & is_observed_all) %>%
-  mutate(weight = weight/mean(weight))
+  mutate(weight = weight / mean(weight))
 
 # OUR MODEL
 fit_gam <- gam(college ~ Gender*mother_category*father_category + s(cohort, by = interaction(Gender,mother_category,father_category)),
