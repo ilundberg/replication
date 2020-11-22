@@ -66,3 +66,21 @@ The data are available at: https://www.opr.princeton.edu/archive/
 ## Data for d_risk_ratio_difference.R
 
 This illustration is entirely simulated, so there is no data.
+
+# Computing environment and software
+
+This code was executed on a 2019 MacBook Pro with a 2.4 GHz Quad-Core Intel Core i5 processor and 8 GB 2133 MHz LPDDR3 RAM.
+
+This code was run on R version 4.0.3.
+
+The code calls the following packages:
+Amelia (1.7.6),
+doParallel (1.0.16),
+doRNG (1.8.2),
+foreach (1.5.1),
+haven (2.3.1),
+mgcv (1.8.33),
+mvtnorm (1.1.1),
+readstata13 (0.9.2),
+reshape2 (1.4.4),
+tidyverse (1.3.0)
