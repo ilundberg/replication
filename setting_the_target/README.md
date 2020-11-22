@@ -69,7 +69,7 @@ This illustration is entirely simulated, so there is no data.
 
 # Computing environment and software
 
-This code was executed on a 2019 MacBook Pro with a 2.4 GHz Quad-Core Intel Core i5 processor and 8 GB 2133 MHz LPDDR3 RAM.
+This code was executed on a 2019 MacBook Pro with a 2.4 GHz Quad-Core Intel Core i5 processor and 8 GB 2133 MHz LPDDR3 RAM. It ran in 7 minutes, 23 seconds.
 
 This code was run on R version 4.0.3.
 
