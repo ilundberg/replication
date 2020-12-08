@@ -1,7 +1,7 @@
 
 README
 
-This replication package contains code for "Occupational segregation contributes to racial disparities in health: A counterfactual perspective" by Ian Lundberg
+This replication package contains code for "Occupational segregation contributes to racial disparities in health: A counterfactual perspective" by Ian Lundberg. This is a working paper, and updates to the code should be expected.
 
 Email: [ilundberg@princeton.edu](mailto:ilundberg@princeton.edu)
 
@@ -67,7 +67,7 @@ QUITSICK
 4. Select cases on AGE (ages 25-60 only)
 5. Download the data and place it in the data subdirectory
 
-You will need to rename to "cps_00040.dta" for the code to run.
+You will need to rename to "cps_00050.dta" for the code to run.
 
 # Computing environment and software
 
