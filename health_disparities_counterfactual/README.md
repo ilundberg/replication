@@ -69,7 +69,7 @@ QUITSICK
 
 You will need to rename to "cps_00050.dta" for the code to run.
 
-# Computing environment and software
+# Computing environment
 
 This code was run on a computing cluster running Windows Server 2012 R2 Standard.
 
@@ -78,3 +78,9 @@ Processor: Intel(R) Xeon(R) CPU E7-4850 v3 @2.20 GHz 2.19GHz (4 processors)
 Installed memory (RAM): 512 GB
 
 System type: 64-bit Operating System, x64-based processor
+
+# Software
+
+This code was run on R version 4.0.3
+
+It relies on the following packages: tidyverse (1.3.0), labelled (2.7.0), reshape2 (1.4.4), ipumsr (0.4.5), mgcv (1.8.33), foreach (1.5.1), doParallel (1.0.16), ggrepel (0.8.2)
