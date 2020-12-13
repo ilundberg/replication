@@ -1,3 +1,11 @@
+# Supporting code file for
+# Occupational segregation contributes to racial disparities in health: A gap-closing perspective
+# Ian Lundberg
+# ilundberg@princeton.edu
+
+# See run_all.R to see how this file is called
+
+# This file produces the main estimates of the paper.
 
 sink("figures/estimation_output.txt")
 

@@ -1,7 +1,7 @@
 
 README
 
-This replication package contains code for "Occupational segregation contributes to racial disparities in health: A counterfactual perspective" by Ian Lundberg. This is a working paper, and updates to the code should be expected.
+This replication package contains code for "[Occupational segregation contributes to racial disparities in health: A gap-closing perspective](https://drive.google.com/file/d/1OFYhRVK7CCglXMCfDOelKK2s0hIUWoX7/view?usp=sharing)" by Ian Lundberg. This is a working paper, and updates to the code should be expected.
 
 Email: [ilundberg@princeton.edu](mailto:ilundberg@princeton.edu)
 
