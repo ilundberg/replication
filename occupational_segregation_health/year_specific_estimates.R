@@ -1,5 +1,5 @@
 # Supporting code file for
-# Occupational segregation contributes to racial disparities in health: A gap-closing perspective
+# Occupational segregation contributes to racial disparities in health: A counterfactual perspective
 # Ian Lundberg
 # ilundberg@princeton.edu
 
@@ -8,7 +8,7 @@
 # This code calculates and plots year-specific estimates
 
 source("code/prepare_data.R")
-source("code/estimator_functions_within_educ.R")
+source("code/estimator_functions.R")
 
 all_data <- prepare_data(target_years = 2005:2020)
 
@@ -19,20 +19,25 @@ year_specific_point <- foreach(
   .combine = "rbind", 
   .packages = c("tidyverse","reshape2","mgcv","foreach")
 ) %dopar% {
+  this_case <- all_data$d %>%
+    filter(YEAR == i) %>%
+    group_by(OCC2010) %>%
+    mutate(in_support = n_distinct(RACE) == 4) %>%
+    group_by() %>%
+    filter(in_support)
   if (i == 2014) {
     this_formula <- formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
                               s(OCC2010, bs = "re") + 
-                              SEX + EDUC + RACE + foreign_born + s(AGE) + new_question +
+                              SEX + EDUC + foreign_born + s(AGE) + questionnaire_redesign +
                               factor(HEALTH))
   } else {
     this_formula <- formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
                               s(OCC2010, bs = "re") + 
-                              SEX + EDUC + RACE + foreign_born + s(AGE) +
+                              SEX + EDUC + foreign_born + s(AGE) +
                               factor(HEALTH))
   }
   counterfactual_estimator(weight_name = "ASECWT", 
-                           data = all_data$d_onset %>%
-                             filter(YEAR == i), 
+                           data = this_case, 
                            outcome_formula = this_formula,
                            save_intermediate = F) %>%
     mutate(YEAR = i)
@@ -89,3 +94,19 @@ year_specific_point %>%
   ggsave("figures/year_specific_disparity_arrows.pdf",
          height = 3, width = 6.5)
 
+# Plot the sample size of the year-specific estimates
+all_data$d_onset %>% # start with d_onset in order to count full amount lost for common support
+  group_by(YEAR, OCC2010) %>%
+  mutate(in_support = n_distinct(RACE) == 4) %>%
+  group_by(YEAR) %>%
+  summarize(in_support = weighted.mean(in_support, w = ASECWT)) %>%
+  ggplot(aes(x = YEAR, y = in_support, label = paste0(round(100*in_support),"%"))) +
+  geom_point() +
+  geom_text(size = 3, vjust = -1) +
+  ylab("Weighted Proportion\nin Common Support") +
+  xlab("Year") +
+  theme_bw() +
+  geom_hline(yintercept = 0) +
+  ylim(c(0,1)) +
+  ggsave("figures/year_specific_support.pdf",
+         height = 3, width = 6.5)

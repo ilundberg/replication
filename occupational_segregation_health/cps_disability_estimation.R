@@ -1,15 +1,7 @@
-# Supporting code file for
-# Occupational segregation contributes to racial disparities in health: A gap-closing perspective
-# Ian Lundberg
-# ilundberg@princeton.edu
-
-# See run_all.R to see how this file is called
-
-# This file produces the main estimates of the paper.
 
 sink("figures/estimation_output.txt")
 
-cl <- makeCluster(15)
+cl <- makeCluster(10)
 registerDoParallel(cl)
 
 #################
@@ -23,22 +15,31 @@ all_data <- prepare_data(target_years = 2005:2020)
 full_population <- all_data$full_population
 linked <- all_data$linked
 d_onset <- all_data$d_onset
+d <- all_data$d
 rm(all_data)
 
 print("Full population size")
 print(nrow(full_population))
+print("Oversamples")
+print(sum(full_population$CPSIDP == 0))
 print("From March basic CPS")
 print(sum(full_population$CPSIDP != 0))
 print("Not linked (person-years)")
 print(sum(full_population$CPSIDP != 0) - 2 * nrow(linked))
 print("Linked (persons)")
 print(nrow(linked))
-print("Sample that could recover from disability")
+print("Risk of recovery")
 print(sum(linked$lag))
-print("Sample that could experience disability onset")
-print(sum(linked$employed & !linked$lag))
-print("Analytic sample")
+print("History of health limitations")
+print(sum(linked$QUITSICK & !linked$lag))
+print("Not employed")
+print(sum(!linked$employed & !linked$lag & !linked$QUITSICK))
+print("Risk of onset")
 print(nrow(d_onset))
+print("Lack of common support")
+print(nrow(d_onset) - nrow(d))
+print("Occupation analyses")
+print(nrow(d))
 
 ########################################
 # Load the functions to make estimates #
@@ -94,37 +95,28 @@ save(disparity_results, file = "intermediate/disparity_results.Rdata")
 print("Beginning counterfactual disparity estimation")
 t0 <- Sys.time()
 print(t0)
-counterfactual_point <- counterfactual_estimator(weight_name = "ASECWT", 
-                                                 data = d_onset,
-                                                 outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
-                                                                             s(OCC2010, bs = "re") + 
-                                                                             SEX + EDUC + RACE + foreign_born + s(AGE) + s(YEAR, k = 8) + new_question +
-                                                                             factor(HEALTH)),
+counterfactual_point <- counterfactual_estimator(weight_name = "ASECWT",
                                                  save_intermediate = T)
+spent <- difftime(Sys.time(),t0)
+t0 <- Sys.time()
+print(t0)
 counterfactual_reps <- foreach(
   i = 1:160, 
   .combine = "rbind", 
   .packages = c("tidyverse","reshape2","foreach","mgcv")
 ) %dopar% {
-  counterfactual_estimator(weight_name = paste0("REPWTP",i), 
-                           data = d_onset,
-                           outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
-                                                       s(OCC2010, bs = "re") + 
-                                                       SEX + EDUC + RACE + foreign_born + s(AGE) + s(YEAR, k = 8) + new_question +
-                                                       factor(HEALTH)),
-                           save_intermediate = F) %>%
+  counterfactual_estimator(weight_name = paste0("REPWTP",i)) %>%
     mutate(replicate = i)
 }
 spent <- difftime(Sys.time(),t0)
+print("Time spent on replicates")
+print(spent)
 counterfactual_estimate <- estimate_from_point_reps(counterfactual_point, counterfactual_reps) 
 counterfactual_results <- list(counterfactual_estimate = counterfactual_estimate,
                                counterfactual_point = counterfactual_point,
                                counterfactual_reps = counterfactual_reps)
 save(counterfactual_results, file = "intermediate/counterfactual_results.Rdata")
 print("Finished counterfactual disparity estimation")
-print("Spent")
-print(difftime(Sys.time(),t0))
-print(Sys.time())
 
 #################################################
 # Point estimates of alternative specifications #
@@ -132,137 +124,180 @@ print(Sys.time())
 
 # In the 2009 and later period, subset to those without any reported difficulties
 print("Alternative specification: Filter on additional controls")
+d_alt_all <- d %>%
+  filter(YEAR >= 2009 & !DIFFANY) %>%
+  group_by(OCC2010) %>%
+  mutate(in_support = n_distinct(RACE) == 4) %>%
+  group_by()
+d_alt <- d_alt_all %>% filter(in_support)
 print("Sample size:")
-print(nrow(d_onset %>% filter(YEAR >= 2009 & !DIFFANY & !QUITSICK)))
-extra_controls <- counterfactual_estimator(
-  weight_name = "ASECWT", 
-  data = d_onset %>% filter(YEAR >= 2009 & !DIFFANY & !QUITSICK), 
-  outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
-                              s(OCC2010, bs = "re") + 
-                              SEX + EDUC + RACE + foreign_born + s(AGE) + s(YEAR, k = 8) + new_question +
-                              factor(HEALTH)),
-  save_intermediate = F
-)
+print(nrow(d_alt))
+print("Number of occupations")
+d_alt_all %>%
+  group_by(OCC2010) %>%
+  filter(1:n() == 1) %>%
+  group_by() %>%
+  summarize(total = n(),
+            on_support = sum(in_support),
+            off_support = sum(!in_support))
+print("Proportion of weight on common support")
+print(d_alt_all %>%
+        summarize(in_support = weighted.mean(in_support, w = ASECWT)))
+extra_controls <- counterfactual_estimator(data = d_alt)
 save(extra_controls, file = "intermediate/extra_controls.Rdata")
 
 # Estimate on the years with the new question 
-print("Alternative specification: Only the new version of the question")
+print("Alternative specification: After the questionnaire redesign")
+d_alt_all <-  d %>% 
+  filter(YEAR >= 2014) %>% 
+  mutate(to_keep = questionnaire_redesign & lag_questionnaire_redesign) %>% 
+  # Rescale the weights to keep the same sum when we restrict
+  group_by(YEAR) %>% 
+  mutate(ASECWT = ASECWT * sum(ASECWT) / sum(ASECWT * to_keep)) %>%
+  group_by() %>%
+  filter(to_keep) %>%
+  # Make common support restriction
+  group_by(OCC2010) %>%
+  mutate(in_support = n_distinct(RACE) == 4) %>%
+  group_by() %>%
+  mutate(ASECWT = ASECWT / mean(ASECWT))
+d_alt <- d_alt_all %>% filter(in_support)
 print("Sample size:")
-print(nrow(d_onset %>% filter(new_question & lag_new_question)))
-new_questions <- counterfactual_estimator(
-  weight_name = "ASECWT", 
-  data = d_onset %>% 
-    filter(YEAR >= 2014) %>% 
-    mutate(to_keep = new_question & lag_new_question) %>% 
-    # Rescale the weights to keep the same sum when we restrict
-    group_by(YEAR) %>% 
-    mutate(ASECWT = ASECWT * sum(ASECWT) / sum(ASECWT * to_keep)) %>%
-    group_by() %>%
-    filter(to_keep) %>%
-    mutate(ASECWT = ASECWT / mean(ASECWT)),
-  outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
-                              s(OCC2010, bs = "re") + 
-                              SEX + EDUC + RACE + foreign_born + s(AGE) + s(YEAR, k = 3) +
-                              factor(HEALTH)),
-  save_intermediate = F
-)
-save(new_questions, file = "intermediate/new_questions.Rdata")
+print(nrow(d_alt))
+print("Number of occupations")
+d_alt_all %>%
+  group_by(OCC2010) %>%
+  filter(1:n() == 1) %>%
+  group_by() %>%
+  summarize(total = n(),
+            on_support = sum(in_support),
+            off_support = sum(!in_support))
+print("Proportion of weight on common support")
+print(d_alt_all %>%
+        summarize(in_support = weighted.mean(in_support, w = ASECWT)))
+questionnaire_redesigns <- counterfactual_estimator(data = d_alt,
+                                                    outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
+                                                                                s(OCC2010, bs = "re") + 
+                                                                                SEX + EDUC + foreign_born + s(AGE) + s(YEAR, k = 3) + questionnaire_redesign +
+                                                                                factor(HEALTH)))
+save(questionnaire_redesigns, file = "intermediate/questionnaire_redesigns.Rdata")
 
 # Estimate on the years with the old question
-print("Alternative specification: Only the previous version of the question")
+print("Alternative specification: Before the questionnaire redesign")
+d_alt_all <-  d %>% 
+  filter(YEAR <= 2013) %>% 
+  mutate(to_keep = !questionnaire_redesign & !lag_questionnaire_redesign) %>% 
+  # Rescale the weights to keep the same sum when we restrict
+  group_by(YEAR) %>% 
+  mutate(ASECWT = ASECWT * sum(ASECWT) / sum(ASECWT * to_keep)) %>%
+  group_by() %>%
+  filter(to_keep) %>%
+  group_by(OCC2010) %>%
+  mutate(in_support = n_distinct(RACE) == 4) %>%
+  group_by() %>%
+  mutate(ASECWT = ASECWT / mean(ASECWT))
+d_alt <- d_alt_all %>% filter(in_support)
 print("Sample size:")
-print(nrow(d_onset %>% filter(!new_question & !lag_new_question)))
-old_questions <- counterfactual_estimator(
-  weight_name = "ASECWT", 
-  data = d_onset %>% 
-    filter(YEAR <= 2013) %>% 
-    mutate(to_keep = !new_question & !lag_new_question) %>% 
-    # Rescale the weights to keep the same sum when we restrict
-    group_by(YEAR) %>% 
-    mutate(ASECWT = ASECWT * sum(ASECWT) / sum(ASECWT * to_keep)) %>%
-    group_by() %>%
-    filter(to_keep) %>%
-    mutate(ASECWT = ASECWT / mean(ASECWT)), 
-  outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
-                              s(OCC2010, bs = "re") + 
-                              SEX + EDUC + RACE + foreign_born + s(AGE) + s(YEAR, k = 8) +
-                              factor(HEALTH)),
-  save_intermediate = F
-)
+print(nrow(d_alt))
+print("Number of occupations")
+d_alt_all %>%
+  group_by(OCC2010) %>%
+  filter(1:n() == 1) %>%
+  group_by() %>%
+  summarize(total = n(),
+            on_support = sum(in_support),
+            off_support = sum(!in_support))
+print("Proportion of weight on common support")
+print(d_alt_all %>%
+        summarize(in_support = weighted.mean(in_support, w = ASECWT)))
+old_questions <- counterfactual_estimator(data = d_alt)
 save(old_questions, file = "intermediate/old_questions.Rdata")
 
 # Estimate with the forward-linking weight
 print("Alternative specification: Using the forward-linking weight")
-print("Sample size:")
-print(nrow(d_onset %>% filter(YEAR >= 2005)))
+print("Sample size (this is the same size as the main specification):")
+print(nrow(d))
 link_weight <- counterfactual_estimator(
   weight_name = "LNKFW1YWT", 
-  data = d_onset %>% filter(YEAR >= 2005), 
-  outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
-                              s(OCC2010, bs = "re") + 
-                              SEX + EDUC + RACE + foreign_born + s(AGE) + s(YEAR, k = 8) + new_question +
-                              factor(HEALTH)),
-  save_intermediate = F
+  data = d
 )
 save(link_weight, file = "intermediate/link_weight.Rdata")
 
 # Estimate without immigrants
 print("Alternative specification: No immigrants")
+d_alt_all <-  d %>% 
+  filter(!foreign_born) %>%
+  group_by(OCC2010) %>%
+  mutate(in_support = n_distinct(RACE) == 4) %>%
+  group_by() %>%
+  mutate(ASECWT = ASECWT / mean(ASECWT))
+d_alt <- d_alt_all %>% filter(in_support)
 print("Sample size:")
-print(nrow(d_onset %>% filter(YEAR >= 2005 & !foreign_born)))
-no_immigrants <- counterfactual_estimator(
-  weight_name = "LNKFW1YWT", 
-  data = d_onset %>% filter(YEAR >= 2005 & !foreign_born), 
-  outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
-                              s(OCC2010, bs = "re") + 
-                              SEX + EDUC + RACE + s(AGE) + s(YEAR, k = 8) + new_question +
-                              factor(HEALTH)),
-  save_intermediate = F
-)
+print(nrow(d_alt))
+print("Number of occupations")
+d_alt_all %>%
+  group_by(OCC2010) %>%
+  filter(1:n() == 1) %>%
+  group_by() %>%
+  summarize(total = n(),
+            on_support = sum(in_support),
+            off_support = sum(!in_support))
+print("Proportion of weight on common support")
+print(d_alt_all %>%
+        summarize(in_support = weighted.mean(in_support, w = ASECWT)))
+no_immigrants <- counterfactual_estimator(data = d_alt)
 save(no_immigrants, file = "intermediate/no_immigrants.Rdata")
 
-# Estimate with race interacted with everything
-print("Alternative specification: Race interacted with everything")
-print("Sample size:")
-print(nrow(d_onset %>% filter(YEAR >= 2005) %>% group_by(OCC2010) %>% filter(n_distinct(RACE) == 4)))
-print("Weighted proportion lost due to common support restriction")
-print(d_onset %>% 
-        filter(YEAR >= 2005) %>% 
-        group_by(OCC2010) %>% 
-        mutate(has_all_four = n_distinct(RACE) == 4) %>%
-        group_by() %>%
-        summarize(included = sum(as.numeric(has_all_four) * ASECWT),
-                  total = sum(ASECWT),
-                  people = sum(has_all_four),
-                  occupations = n_distinct(ifelse(has_all_four,OCC2010,"Not")) - 1) %>%
-        mutate(prop_weight = included / total))
-race_interactions <- counterfactual_estimator_race_interactions(
-  weight_name = "LNKFW1YWT", 
-  data = d_onset %>% filter(YEAR >= 2005),
-  save_intermediate = F
-)
-save(race_interactions, file = "intermediate/race_interactions.Rdata")
-
 # Go back all the way to 1988
-all_data <- prepare_data(target_years = 1988:2020)
-d_onset_19882020 <- all_data$d_onset
-rm(all_data)
+all_data_all_years <- prepare_data(target_years = 1988:2020)
 print("Alternative specification: Full period 1988-2019 for year 1")
 print("Sample size:")
-print(nrow(d_onset_19882020))
-full_years <- counterfactual_estimator(
-  weight_name = "ASECWT", 
-  data = d_onset_19882020, 
-  outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
-                              s(OCC2010, bs = "re") + 
-                              SEX + EDUC + RACE + s(AGE) + s(YEAR, k = 8) + new_question),
-  save_intermediate = F
-)
+print(nrow(all_data_all_years$d))
+full_years <- counterfactual_estimator(data = all_data_all_years$d,
+                                       outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
+                                                                   s(OCC2010, bs = "re") + 
+                                                                   SEX + EDUC + s(AGE) + s(YEAR, k = 8) + questionnaire_redesign))
 save(full_years, file = "intermediate/full_years.Rdata")
 
-stopCluster(cl)
+# Estimate without race interactions, including standard errors for this one
+print("Alternative specification: No race interactions")
+print("Sample size (same as original):")
+print(nrow(d))
+print("Beginning additive counterfactual disparity estimation")
+additive_point <- counterfactual_estimator(data = d, interactions = "none",
+                                           outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
+                                                                       s(OCC2010, bs = "re") + 
+                                                                       RACE + SEX + EDUC + foreign_born + s(AGE) + s(YEAR, k = 8) + questionnaire_redesign +
+                                                                       factor(HEALTH)),
+                                           save_intermediate = F)
+save(additive_point, file = "intermediate/additive.Rdata")
+t0 <- Sys.time()
+print(t0)
+additive_reps <- foreach(
+  i = 1:160, 
+  .combine = "rbind", 
+  .packages = c("tidyverse","reshape2","foreach","mgcv")
+) %dopar% {
+  counterfactual_estimator(data = d, interactions = "none",
+                           outcome_formula = formula(y ~ s(prop_NonHispanicBlack) + s(prop_Hispanic) + s(prop_Other) + 
+                                                       s(OCC2010, bs = "re") + 
+                                                       RACE + SEX + EDUC + foreign_born + s(AGE) + s(YEAR, k = 8) + questionnaire_redesign +
+                                                       factor(HEALTH)),
+                           save_intermediate = F,
+                           weight_name = paste0("REPWTP",i)) %>%
+    mutate(replicate = i)
+}
+spent <- difftime(Sys.time(),t0)
+print("Time spent on additive replicates")
+print(spent)
+additive_estimate <- estimate_from_point_reps(additive_point, additive_reps) 
+additive_results <- list(additive_estimate = additive_estimate,
+                         additive_point = additive_point,
+                         additive_reps = additive_reps)
+save(additive_results, file = "intermediate/additive_results.Rdata")
+print("Finished additive counterfactual disparity estimation")
 
-# Run it separately by education
+stopCluster(cl)
 
 
 sink()

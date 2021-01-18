@@ -1,5 +1,5 @@
 # Supporting code file for
-# Occupational segregation contributes to racial disparities in health: A gap-closing perspective
+# Occupational segregation contributes to racial disparities in health: A counterfactual perspective
 # Ian Lundberg
 # ilundberg@princeton.edu
 

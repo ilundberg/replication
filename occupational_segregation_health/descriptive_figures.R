@@ -1,5 +1,5 @@
 # Supporting code file for
-# Occupational segregation contributes to racial disparities in health: A gap-closing perspective
+# Occupational segregation contributes to racial disparities in health: A counterfactual perspective
 # Ian Lundberg
 # ilundberg@princeton.edu
 
@@ -247,12 +247,12 @@ all_data$full_population %>%
 # 6. Change in onset over time
 all_data_all_years <- prepare_data(1988:2020)
 all_data_all_years$d_onset %>%
-  group_by(YEAR, new_question) %>%
+  group_by(YEAR, questionnaire_redesign) %>%
   summarize(onset = weighted.mean(y, w = ASECWT)) %>%
   ggplot(aes(x = YEAR, y = onset)) +
   geom_vline(xintercept = 2013, color = "gray") +
-  geom_point(aes(alpha = factor(new_question))) +
-  #geom_smooth(method = "lm", se = F, aes(y = ifelse(!new_question, onset, NA))) +
+  geom_point(aes(alpha = factor(questionnaire_redesign))) +
+  #geom_smooth(method = "lm", se = F, aes(y = ifelse(!questionnaire_redesign, onset, NA))) +
   theme_bw() +
   ylab("Onset of Work-Limiting Disability\nAmong the Employed") +
   ylim(c(0,.03)) +
@@ -263,9 +263,9 @@ all_data_all_years$d_onset %>%
   ggsave("figures/hazard_trend_earlyOnly.pdf",
          height = 3, width = 6.5)
 all_data_all_years$d_onset %>%
-  group_by(YEAR, new_question) %>%
+  group_by(YEAR, questionnaire_redesign) %>%
   summarize(onset = weighted.mean(y, w = ASECWT)) %>%
-  ggplot(aes(x = YEAR, y = onset, color = factor(new_question))) +
+  ggplot(aes(x = YEAR, y = onset, color = factor(questionnaire_redesign))) +
   geom_vline(xintercept = 2013, color = "gray") +
   geom_vline(xintercept = 2014.5, color = "gray") +
   geom_point() +
@@ -284,11 +284,11 @@ all_data_all_years$d_onset %>%
 all_data_all_years$d_onset %>%
   filter(grepl("Non-Hispanic",RACE)) %>%
   mutate(RACE = gsub("-| ","",RACE)) %>%
-  group_by(YEAR, RACE, new_question) %>%
+  group_by(YEAR, RACE, questionnaire_redesign) %>%
   summarize(onset = weighted.mean(y, w = ASECWT)) %>%
   spread(key = RACE, value = onset) %>%
   mutate(disparity = NonHispanicBlack - NonHispanicWhite) %>%
-  ggplot(aes(x = YEAR, y = disparity, color = factor(new_question))) +
+  ggplot(aes(x = YEAR, y = disparity, color = factor(questionnaire_redesign))) +
   geom_vline(xintercept = 2013, color = "gray") +
   geom_vline(xintercept = 2014.5, color = "gray") +
   geom_point() +
@@ -302,11 +302,11 @@ all_data_all_years$d_onset %>%
 
 # 8. Subgroup-specific trends over time
 all_data$full_population %>%
-  group_by(RACE, YEAR, new_question) %>%
+  group_by(RACE, YEAR, questionnaire_redesign) %>%
   summarize(y = weighted.mean(y, w = ASECWT)) %>%
   group_by() %>%
   mutate(RACE = fct_relevel(RACE,"Non-Hispanic Black","Non-Hispanic White","Hispanic","Other")) %>%
-  ggplot(aes(x = YEAR, y = y, color = RACE, shape = RACE, group = interaction(RACE,new_question))) +
+  ggplot(aes(x = YEAR, y = y, color = RACE, shape = RACE, group = interaction(RACE,questionnaire_redesign))) +
   geom_vline(xintercept = 2014, color = "gray") +
   geom_point() +
   geom_smooth(se = F) +
@@ -319,11 +319,11 @@ all_data$full_population %>%
   ggsave("figures/proportion_by_race_time_trend.pdf",
          height = 4, width = 6.5)
 all_data$d_onset %>%
-  group_by(RACE, YEAR, new_question) %>%
+  group_by(RACE, YEAR, questionnaire_redesign) %>%
   summarize(y = weighted.mean(y, w = ASECWT)) %>%
   group_by() %>%
   mutate(RACE = fct_relevel(RACE,"Non-Hispanic Black","Non-Hispanic White","Hispanic","Other")) %>%
-  ggplot(aes(x = YEAR, y = y, color = RACE, shape = RACE, group = interaction(RACE,new_question))) +
+  ggplot(aes(x = YEAR, y = y, color = RACE, shape = RACE, group = interaction(RACE,questionnaire_redesign))) +
   geom_vline(xintercept = 2013, color = "gray") +
   geom_point() +
   geom_smooth(method = "lm", se = F) +

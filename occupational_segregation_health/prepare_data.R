@@ -1,5 +1,5 @@
 # Supporting code file for
-# Occupational segregation contributes to racial disparities in health: A gap-closing perspective
+# Occupational segregation contributes to racial disparities in health: A counterfactual perspective
 # Ian Lundberg
 # ilundberg@princeton.edu
 
@@ -25,7 +25,7 @@ prepare_data <- function(target_years = 2005:2020) {
            # In years after 2014, mark as 1 (redesigned)
            # It flags a different format for the question to be asked.
            HFLAG = ifelse(is.na(HFLAG), 0, HFLAG),
-           new_question = case_when(YEAR < 2014 ~ 0,
+           questionnaire_redesign = case_when(YEAR < 2014 ~ 0,
                                     YEAR == 2014 & !HFLAG ~ 0,
                                     YEAR == 2014 & HFLAG ~ 1,
                                     YEAR > 2014 ~ 1),
@@ -85,7 +85,7 @@ prepare_data <- function(target_years = 2005:2020) {
     group_by() %>%
     # Rename a few variables to clarify they are measured in the lag period
     rename(lag = y,
-           lag_new_question = new_question) %>%
+           lag_questionnaire_redesign = questionnaire_redesign) %>%
     # Append the variables from the second observation on each person
     left_join(full_population %>%
                 group_by(CPSIDP) %>%
@@ -93,7 +93,7 @@ prepare_data <- function(target_years = 2005:2020) {
                 filter(1:n() == 2 & n() == 2) %>%
                 group_by() %>%
                 rename(employed_next = employed) %>%
-                select(CPSIDP, y, new_question, employed_next),
+                select(CPSIDP, y, questionnaire_redesign, employed_next),
               by = "CPSIDP") %>%
     mutate(num_linked = n()) %>%
     filter(AGE >= 25 & AGE <= 60) %>%
@@ -107,16 +107,23 @@ prepare_data <- function(target_years = 2005:2020) {
     mutate(num_linked = n()) %>%
     filter(!lag) %>%
     mutate(num_reportedNoYear1 = n()) %>%
+    filter(!QUITSICK) %>%
+    mutate(num_neverQuitSick = n()) %>%
     filter(employed) %>%
     mutate(num_employedYear1 = n()) %>%
-    # Restrict to those with a valid occupation in the first wave
-    #filter(OCC != 0 & !is.na(OCC) & OCC != 9840) %>%
-    filter(OCC2010 != 0 & !is.na(OCC2010) & OCC2010 < 9830) %>%
-    mutate(OCC2010 = factor(OCC2010)) %>%
-    mutate(num_withOccYear1 = n())
+    mutate(OCC2010 = factor(OCC2010))
+  
+  # For the model-based evidence, restrict to those employed in occupations
+  # in which all four racial categories are observed
+  d <- d_onset %>%
+    # Restrict to the occupations observed in every race category
+    group_by(OCC2010) %>%
+    filter(n_distinct(RACE) == 4) %>%
+    group_by()
   
   return(list(full_population = full_population,
               linked = linked, 
-              d_onset = d_onset))
+              d_onset = d_onset,
+              d = d))
 }
 

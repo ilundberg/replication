@@ -1,6 +1,6 @@
 
 # Main code file for
-# Occupational segregation contributes to racial disparities in health: A gap-closing perspective
+# Occupational segregation contributes to racial disparities in health: A counterfactual perspective
 # Ian Lundberg
 # ilundberg@princeton.edu
 
@@ -32,8 +32,8 @@ sink()
 # - data/cps_00050.xml
 # - data/cps_00050.dat
 # This code internally calls:
-#- prepare_data.R
-#- estimator_functions.R
+# - prepare_data.R
+# - estimator_functions.R
 source("code/cps_disability_estimation.R")
 
 # PRODUCE FIGURES
@@ -45,8 +45,8 @@ source("code/proportion_figure.R")
 source("code/disparity_figure.R")
 source("code/descriptive_figures.R")
 source("code/occupation_scatters.R")
+source("code/lottery_illustrations.R")
 source("code/model_summaries.R")
-source("code/intervention_density_shift.R")
 source("code/alternative_specifications_figure.R")
 source("code/year_specific_estimates.R")
 source("code/occupational_hazards_within_between.R")

@@ -1,5 +1,6 @@
+
 # Supporting code file for
-# Occupational segregation contributes to racial disparities in health: A gap-closing perspective
+# Occupational segregation contributes to racial disparities in health: A counterfactual perspective
 # Ian Lundberg
 # ilundberg@princeton.edu
 
@@ -43,6 +44,18 @@ for_disparity_figure %>%
   ggsave("figures/disparity.pdf",
          height = 3.75, width  = 6.5)
 
+# Note the percent reductions
+sink("figures/counterfactual_factor_change.txt")
+print(
+  counterfactual_estimate %>% 
+    filter(estimand %in% c("counterfactual_within_educ","factual")) %>%
+    filter(target == "disparity_vs_white") %>%
+    select(RACE, estimand, point) %>%
+    spread(key = estimand, value = point) %>%
+    mutate(factor_change = counterfactual_within_educ / factual)
+)
+sink()
+
 # Slide version appears at the bottom of this code
 
 print("figures/disparity_change.txt")
@@ -71,101 +84,95 @@ sink()
 # Compare to conditional gaps #
 ###############################
 
-load("intermediate/outcome_fit.Rdata")
-
-X <- model.matrix(outcome_fit)
-beta <- coef(outcome_fit)
-Sigma <- vcov(outcome_fit)
-
-# Calculate the conditional disparities for comparison to the gap-closing estimand
-sink("figures/coefficients.txt")
-print("The coefficients on racial categories in this model are:")
-print(beta[grepl("RACE",names(beta))])
-race_category_indices <- which(grepl("RACE",names(beta)))
-transformation <- rbind(BlackHispanic = c(1,0,0),
-                        HispanicWhite = c(0,-1,0),
-                        OtherHispanic = c(0,0,1),
-                        BlackWhite = c(1,-1,0),
-                        BlackOther = c(1,0,-1),
-                        OtherWhite = c(0,-1,1))
-disparities <- data.frame(quantity = rownames(transformation),
-                          disparity = transformation %*% beta[race_category_indices],
-                          se = sqrt(diag(transformation %*% Sigma[race_category_indices,race_category_indices] %*% t(transformation)))) %>%
-  mutate(pval = 2 * pnorm(abs(disparity / se), lower.tail = F),
-         stars = case_when(pval < .001 ~ "***",
-                           pval < .01 ~ "**",
-                           pval < .05 ~ "*",
-                           T ~ "ns"))
-print("Disparities conditional on all covariates")
-print(disparities)
-sink()
-
-disparities %>%
-  filter(grepl("White",quantity)) %>%
-  mutate(quantity = factor(case_when(quantity == "BlackWhite" ~ 1,
-                                     quantity == "HispanicWhite" ~ 2,
-                                     quantity == "OtherWhite" ~ 3),
-                           labels = c("Non-Hispanic Black\n- Non-Hispanic White","Hispanic\n- Non-Hispanic White","Other\n- Non-Hispanic White"))) %>%
-  ggplot(aes(x = quantity, y = disparity,
-             ymin = disparity - qnorm(.975) * se,
-             ymax = disparity + qnorm(.975) * se,
-             label = paste0(format(round(100*disparity,1),nsmall = 1),"%"))) +
+for_comparison_figure <- counterfactual_estimate %>%
+  filter(target == "disparity_vs_white" & estimand %in% c("factual","counterfactual_within_educ","conditional_vs_white")) %>%
+  filter(RACE != "Non-Hispanic White") %>%
+  group_by() %>%
+  rename(Estimand = estimand) %>%
+  mutate(Estimand = case_when(Estimand == "factual" ~ "Factual Disparity",
+                              Estimand == "counterfactual_within_educ" ~ "Counterfactual Disparity",
+                              Estimand == "conditional_vs_white" ~ "Conditional Disparity"),
+         Estimand = fct_rev(Estimand),
+         RACE = paste0(RACE,"\n- Non-Hispanic White"),
+         RACE = fct_relevel(RACE,"Non-Hispanic Black\n- Non-Hispanic White","Hispanic\n- Non-Hispanic White","Other\n- Non-Hispanic White"))
+for_comparison_figure %>%
+  ggplot(aes(x = RACE, y = point, color = Estimand, shape = Estimand,
+             ymin = point - qnorm(.975) * se,
+             ymax = point + qnorm(.975) * se,
+             label = paste0(format(round(100*point,1),nsmall = 1),"%"))) +
   geom_hline(yintercept = 0) +
-  geom_errorbar(position = position_dodge(width = .5),
+  geom_errorbar(position = position_dodge(width = .7),
                 width = .2, size = .2) +
-  geom_point(position = position_dodge(width = .5)) +
-  geom_text(position = position_dodge(width = .5),
-            hjust = 1.15,
-            size = 4,
+  geom_point(position = position_dodge(width = .7)) +
+  geom_text(position = position_dodge(width = .7),
+            aes(hjust = ifelse(Estimand == "Factual Disparity", 1.1, -.1)),
+            size = 3,
             show.legend = F, fontface = "bold") +
   theme_bw() +
-  scale_y_continuous(name = "Conditional Disparity (All Else Equal)\nin Onset of Work-Limiting Disability",
+  scale_y_continuous(name = "Disparity in Onset of\nWork-Limiting Disability",
                      labels = function(x) paste0(format(round(100 * x, 1), nsmall = 1),"%")) +
   xlab("Race / Ethnicity Contrast") +
   theme(legend.position = "bottom",
         axis.text.x = element_text(size = 10),
         axis.title = element_text(face = "bold")) +
-  ggsave("figures/conditional_gap.pdf",
+  ggsave("figures/conditional_comparison.pdf",
          height = 3.75, width  = 6.5)
 
-# Also show all three gaps
+##############
+# FOR SLIDES #
+##############
 
-disparities %>%
-  filter(grepl("White",quantity)) %>%
-  mutate(quantity = factor(case_when(quantity == "BlackWhite" ~ 1,
-                                     quantity == "HispanicWhite" ~ 2,
-                                     quantity == "OtherWhite" ~ 3),
-                           labels = c("Non-Hispanic Black\n- Non-Hispanic White","Hispanic\n- Non-Hispanic White","Other\n- Non-Hispanic White"))) %>%
-  mutate(Estimand = "Conditional Disparity") %>%
-  select(-pval, -stars) %>%
-  bind_rows(for_disparity_figure %>%
-              select(-target) %>%
-              rename(quantity = RACE, disparity = point)) %>%
-  mutate(Estimand = fct_rev(Estimand)) %>%
-  ggplot(aes(x = quantity, y = disparity,
-             color = Estimand,
-             ymin = disparity - qnorm(.975) * se,
-             ymax = disparity + qnorm(.975) * se,
-             label = paste0(format(round(100*disparity,1),nsmall = 1),"%"))) +
+# All three gaps for black-white only
+for_comparison_figure %>%
+  filter(RACE == "Non-Hispanic Black\n- Non-Hispanic White") %>%
+  ggplot(aes(x = Estimand, y = point,
+             ymin = point - qnorm(.975) * se,
+             ymax = point + qnorm(.975) * se,
+             label = paste0(format(round(100*point,1),nsmall = 1),"%"))) +
   geom_hline(yintercept = 0) +
-  geom_errorbar(position = position_dodge(width = .5),
+  geom_errorbar(position = position_dodge(width = .7),
                 width = .2, size = .2) +
-  geom_point(position = position_dodge(width = .5)) +
-  geom_label(position = position_dodge(width = .5), size = 2, show.legend = F, fontface = "bold") +
-  #geom_point(position = position_dodge(width = .5)) +
-  #geom_text(position = position_dodge(width = .5),
-  #          hjust = 1.15,
-  #          size = 4,
-  #          show.legend = F, fontface = "bold") +
+  geom_point(position = position_dodge(width = .7)) +
+  geom_text(position = position_dodge(width = .7),
+            aes(hjust = ifelse(Estimand == "Factual Disparity", 1.2, -.2)),
+            size = 3,
+            show.legend = F, fontface = "bold") +
   theme_bw() +
-  scale_y_continuous(name = "Conditional Disparity (All Else Equal)\nin Onset of Work-Limiting Disability",
+  scale_y_continuous(name = "Black-White Disparity in Onset of\nWork-Limiting Disability",
                      labels = function(x) paste0(format(round(100 * x, 1), nsmall = 1),"%")) +
-  xlab("Race / Ethnicity Contrast") +
+  xlab("Estimand") +
   theme(legend.position = "bottom",
         axis.text.x = element_text(size = 10),
         axis.title = element_text(face = "bold")) +
-  ggsave("figures/conditional_gap_comparison.pdf",
-         height = 4, width  = 6.5)
+  ggsave("figures/conditional_gap_comparison_blackwhite.pdf",
+         height = 3.75, width  = 6.5)
+
+# For first slide, make the conditional disparity invisible
+for_comparison_figure %>%
+  filter(RACE == "Non-Hispanic Black\n- Non-Hispanic White") %>%
+  ggplot(aes(x = Estimand, y = point,
+             ymin = point - qnorm(.975) * se,
+             ymax = point + qnorm(.975) * se,
+             label = paste0(format(round(100*point,1),nsmall = 1),"%"),
+             alpha = Estimand != "Conditional Disparity")) +
+  geom_hline(yintercept = 0) +
+  geom_errorbar(position = position_dodge(width = .7),
+                width = .2, size = .2) +
+  geom_point(position = position_dodge(width = .7)) +
+  geom_text(position = position_dodge(width = .7),
+            aes(hjust = ifelse(Estimand == "Factual Disparity", 1.1, -.1)),
+            size = 3,
+            show.legend = F, fontface = "bold") +
+  theme_bw() +
+  scale_y_continuous(name = "Black-White Disparity in Onset of\nWork-Limiting Disability",
+                     labels = function(x) paste0(format(round(100 * x, 1), nsmall = 1),"%")) +
+  xlab("Estimand") +
+  scale_alpha_manual(values = c(0,1)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 10),
+        axis.title = element_text(face = "bold")) +
+  ggsave("figures/conditional_gap_comparison_blackwhite_0.pdf",
+         height = 3.75, width  = 6.5)
 
 #####################################
 # SLIDE VERSION OF DISPARITY FIGURE #
