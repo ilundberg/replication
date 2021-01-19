@@ -27,7 +27,7 @@ forplot <- counterfactual_results$counterfactual_point %>%
   bind_rows(extra_controls %>%
               mutate(estimand = ifelse(estimand == "counterfactual_within_educ","counterfactual",as.character(estimand))) %>%
               filter(estimand != "counterfactual_marginal") %>% 
-              mutate(facet = "C) Restricted to those without other reported disabilities\nData in 2005--2020")) %>% 
+              mutate(facet = "C) Restricted to those without other reported disabilities\nData in 2009--2020")) %>% 
   bind_rows(no_immigrants %>%
               mutate(estimand = ifelse(estimand == "counterfactual_within_educ","counterfactual",as.character(estimand))) %>%
               filter(estimand != "counterfactual_marginal") %>% 
