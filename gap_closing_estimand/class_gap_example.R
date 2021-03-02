@@ -1,25 +1,17 @@
 
+
 # Author: Ian Lundberg (ilundberg@princeton.edu)
-# Title: A causal approach to study interventions that close gaps across social categories
+# Title: The gap-closing estimand: A causal approach to study interventions that close gaps across social categories
+# Available at https://doi.org/10.31235/osf.io/gx4y3
 # Paper is a working draft. Code will be posted on the Harvard Dataverse when the paper is finalized for publication.
 
-# To run this code, you will need the private files in a data/ directory
+# See run_all.R to set up the working environment.
+# This file analyzes the empirical example.
 
-library(tidyverse)
-library(reshape2)
-library(survey)
-library(haven)
-library(foreach)
-library(doParallel)
-library(doRNG)
-library(survey)
-library(ranger)
-library(Amelia)
-library(xtable)
+# Initialize sink file to hold printed output
+sink("figures/class_gap_example_out.txt")
 
-# This runs on a cluster computer (local directory commented out below)
-setwd("C:/Users/iandl/Documents/gap_closing_estimands")
-#setwd("/Users/iandl/Dropbox/Dissertation/gap_closing_estimands")
+# Set seed
 set.seed(08544)
 
 # Load data
@@ -28,9 +20,7 @@ set.seed(08544)
 crosswalk <- read_csv("data/occ10-to-egp-class-crosswalk.csv")
 # The data come from the General Social Survey,
 # available at: https://gss.norc.org/
-source("data/class_ceiling_with_sample/GSS.r")
-
-normalize <- function(x) x / sum(x)
+source("data/GSS.r")
 
 # Note that lone PSUs are very rare in the sample
 GSS %>%
@@ -38,9 +28,10 @@ GSS %>%
   mutate(lone_psu = n_distinct(VPSU) == 1) %>%
   group_by() %>%
   summarize(num_lone_psu = sum(lone_psu),
-            mean_lone_psu = weighted.mean(lone_psu, w = WTSSALL))
+            mean_lone_psu = weighted.mean(lone_psu, w = WTSSALL),
+            .groups = "drop")
 
-# Remove the lone PSUs, merge in crosswalk, and define some variables
+# Remove the lone PSUs, merge in crosswalk, and define variables
 GSS <- GSS  %>%
   group_by(VSTRAT) %>%
   mutate(lone_psu = n_distinct(VPSU) == 1) %>%
@@ -55,20 +46,40 @@ GSS <- GSS  %>%
               select(occ10,egp10_10) %>%
               rename(PAOCC10 = occ10,
                      egp_pa = egp10_10), by = "PAOCC10") %>%
-  # Define treatment t and group-identifying variable g
-  mutate(treated = egp_r == 1,
+  # Define treatment treated and group-defining category X
+  mutate(treated = as.numeric(egp_r == 1),
          X = egp_pa == 1)
 save(GSS, file = "intermediate/GSS_clean.Rdata")
 
-sample_restrictions <- function(raw_data) {
-  print("Number in age range:")
-  print(sum(raw_data$AGE >= 30 & raw_data$AGE <= 45))
-  print("Number not NA on parent occupation:")
-  print(sum(raw_data$AGE >= 30 & raw_data$AGE <= 45 & raw_data$PAOCC10 > 0))
-  print("Number not NA on own occupation:")
-  print(sum(raw_data$AGE >= 30 & raw_data$AGE <= 45 & raw_data$PAOCC10 > 0 & raw_data$OCC10 > 0))
-  print("Number reporting positive incomes:")
-  print(sum((raw_data$AGE >= 30 & raw_data$AGE <= 45 & raw_data$PAOCC10 > 0 & raw_data$OCC10 > 0 & raw_data$REALRINC > 0)))
+# Define balanced repeated replicates that will be used for uncertainty.
+set.seed(08544)
+# Define the survey design in the survey package
+gss_svydesign <- svydesign(ids = ~ cluster_id,
+                           strata = ~ VSTRAT,
+                           weights = ~ WTSSALL,
+                           data = GSS %>%
+                             mutate(cluster_id = paste(VSTRAT,VPSU, sep = "_")))
+# Create balanced repeated replicate weights
+# The advantage of a computational approach is that inference works for
+# a wide variety of estimation algorithms, without any adaptation.
+# This line takes a long time.
+gss_brr <- as.svrepdesign(gss_svydesign, type = "BRR", compress = F)
+save(gss_brr, file = "intermediate/gss_brr.Rdata")
+
+# A function to convert raw_data into imputed data.
+# This will be called once for each point estimate and once within
+# each balanced repeated replicate draw for uncertainty estimation
+sample_restrictions <- function(raw_data, print_summaries = F) {
+  if (print_summaries) {
+    print("Number in age range:")
+    print(sum(raw_data$AGE >= 30 & raw_data$AGE <= 45))
+    print("Number not NA on parent occupation:")
+    print(sum(raw_data$AGE >= 30 & raw_data$AGE <= 45 & raw_data$PAOCC10 > 0))
+    print("Number not NA on own occupation:")
+    print(sum(raw_data$AGE >= 30 & raw_data$AGE <= 45 & raw_data$PAOCC10 > 0 & raw_data$OCC10 > 0))
+    print("Number reporting positive incomes:")
+    print(sum((raw_data$AGE >= 30 & raw_data$AGE <= 45 & raw_data$PAOCC10 > 0 & raw_data$OCC10 > 0 & raw_data$REALRINC > 0)))
+  }
   to_impute <- raw_data %>%
     filter(AGE >= 30 & AGE <= 45) %>%
     filter(PAOCC10 > 0) %>%
@@ -80,23 +91,28 @@ sample_restrictions <- function(raw_data) {
            DEGREE = factor(DEGREE),
            id = 1:n()) %>%
     group_by(YEAR) %>%
-    mutate(weight = normalize(WTSSALL)) %>%
+    mutate(weight = WTSSALL / sum(WTSSALL)) %>%
     group_by() %>%
     select(id, VSTRAT, weight, outcome, treated, X, RACE, SEX, DEGREE, AGE)
   
   # Note prevalence of missingness
-  print("Weighted proportion missing")
-  print(to_impute %>%
-          summarize(outcome = weighted.mean(is.na(outcome), w = weight), 
-                    treated = weighted.mean(is.na(treated), w = weight), 
-                    X = weighted.mean(is.na(X), w = weight),
-                    RACE = weighted.mean(is.na(RACE), w = weight), 
-                    DEGREE = weighted.mean(is.na(DEGREE), w = weight), 
-                    SEX = weighted.mean(is.na(SEX), w = weight),
-                    AGE = weighted.mean(is.na(AGE), w = weight))
-  )
+  if (print_summaries) {
+    print("Weighted proportion missing")
+    print(data.frame(
+      to_impute %>%
+        summarize(outcome = weighted.mean(is.na(outcome), w = weight), 
+                  treated = weighted.mean(is.na(treated), w = weight), 
+                  X = weighted.mean(is.na(X), w = weight),
+                  RACE = weighted.mean(is.na(RACE), w = weight), 
+                  DEGREE = weighted.mean(is.na(DEGREE), w = weight), 
+                  SEX = weighted.mean(is.na(SEX), w = weight),
+                  AGE = weighted.mean(is.na(AGE), w = weight),
+                  .groups = "drop") %>%
+        melt(id = NULL)
+    ))
+  }
   
-  # Singly impute since uncertainty will come from BRR instead
+  # Singly impute since uncertainty will come from BRR
   imputed <- amelia(data.frame(to_impute),
                     noms = c("RACE","SEX","DEGREE","treated","X"),
                     idvars = c("id","VSTRAT"),
@@ -104,8 +120,8 @@ sample_restrictions <- function(raw_data) {
   return(imputed)
 }
 
-d <- sample_restrictions(GSS)
-
+# Produce the main data set for the analyses
+d <- sample_restrictions(GSS, print_summaries = T)
 # Repeat that several times to average over randomness, and produce descriptive statistics
 set.seed(08544)
 many_imputations <- foreach(i = 1:10, .combine = "rbind") %do% sample_restrictions(GSS)
@@ -114,7 +130,8 @@ many_imputations <- foreach(i = 1:10, .combine = "rbind") %do% sample_restrictio
 print("Proportion upper class")
 print(many_imputations %>%
         summarize(X = weighted.mean(X, w = weight),
-                  treated = weighted.mean(treated, w = weight)))
+                  treated = weighted.mean(treated, w = weight),
+                  .groups = "drop"))
 
 # Make table of descriptive statistics by X
 matrix_of_variables <- model.matrix(~-1 + outcome + treated + RACE + DEGREE + SEX + AGE,
@@ -123,7 +140,7 @@ descriptives_upperOrigin <- apply(matrix_of_variables[many_imputations$X,], 2, w
 descriptives_lowerOrigin <- apply(matrix_of_variables[!many_imputations$X,], 2, weighted.mean, w = many_imputations$weight[!many_imputations$X])
 descriptives <- cbind(upperOrigin = descriptives_upperOrigin,
                       lowerOrigin = descriptives_lowerOrigin)
-# Add the omitted category of treatments
+# Add the omitted categories
 descriptives <- rbind(descriptives[1:3,], RACE1 = 1 - colSums(descriptives[4:5,]), descriptives[4:11,])
 # Make sex 0 = male, 1 = female instead of 1 and 2
 descriptives["SEX",] <- descriptives["SEX",] - 1
@@ -150,268 +167,229 @@ print(xtable::xtable(descriptives))
 # Note some class 1 occupations
 unique(crosswalk$title[crosswalk$egp10_10 == 1])
 
-# Load the code for analysis (this code will ultimately be part of a package)
-source("code/gap_estimator.R")
-
 # Calculate point estimates
-point_estimates <- gap_estimator_allMethods(data = d,
-                                            treatment_formula = formula(treated ~ X + RACE + DEGREE + SEX + AGE),
-                                            outcome_formula = formula(outcome ~ treated*X + RACE + DEGREE + SEX + AGE),
-                                            treatment_formula_marginal = formula(treated ~ RACE + DEGREE + SEX + AGE),
-                                            stratum_id = "VSTRAT",
-                                            num_folds = 2,
-                                            learner = "glm") %>%
-  mutate(learner = "glm") %>%
-  bind_rows(gap_estimator_allMethods(data = d,
-                                     treatment_formula = formula(treated ~ X + RACE + DEGREE + SEX + AGE),
-                                     outcome_formula = formula(outcome ~ treated + X + RACE + DEGREE + SEX + AGE),
-                                     treatment_formula_marginal = formula(treated ~ RACE + DEGREE + SEX + AGE),
-                                     stratum_id = "VSTRAT",
-                                     num_folds = 2,
-                                     learner = "ranger") %>%
-              mutate(learner = "ranger"))
+gss_point_estimator <- function(data) {
+  # Create a list of counterfactual assignment rules
+  list_counterfactual_assignments <- list(
+    under_treatment = 1,
+    under_control = 0,
+    marginal = weighted.mean(data$treated, w = data$weight),
+    conditional = (data %>%
+                     group_by(RACE, DEGREE, SEX, AGE) %>%
+                     mutate(prop_treated = weighted.mean(treated, w = weight)))$prop_treated
+  )
+  # Assign folds for cross-fitting
+  num_folds <- 2
+  folded <- data %>%
+    group_by(VSTRAT) %>%
+    mutate(fold = sample(rep(1:num_folds,
+                             ceiling(n() / num_folds)),
+                         n(),
+                         replace = F)) %>%
+    group_by()
+  # Calculate point estimates
+  point_estimates <- lapply(list_counterfactual_assignments, function(counterfactual_assignments_case) {
+    glm_estimates <- gapclosing(data = data,
+                                counterfactual_assignments = counterfactual_assignments_case,
+                                treatment_formula = formula(treated ~ X + RACE + DEGREE + SEX + AGE),
+                                outcome_formula = formula(outcome ~ treated*X + RACE + DEGREE + SEX + AGE),
+                                category_name = "X",
+                                treatment_algorithm = "glm",
+                                outcome_algorithm = "lm",
+                                weight_name = "weight")
+    gam_estimates <- gapclosing(data = data,
+                                counterfactual_assignments = counterfactual_assignments_case,
+                                treatment_formula = formula(treated ~ X + RACE + DEGREE + SEX + s(AGE)),
+                                outcome_formula = formula(outcome ~ treated*X + RACE + DEGREE + SEX + s(AGE)),
+                                category_name = "X",
+                                treatment_algorithm = "gam",
+                                outcome_algorithm = "gam",
+                                sample_split = "cross_fit",
+                                folds = folded$fold,
+                                weight_name = "weight")
+    ranger_estimates <- gapclosing(data = data,
+                                   counterfactual_assignments = counterfactual_assignments_case,
+                                   treatment_formula = formula(treated ~ X + RACE + DEGREE + SEX + AGE),
+                                   outcome_formula = formula(outcome ~ X + RACE + DEGREE + SEX + AGE),
+                                   category_name = "X",
+                                   treatment_algorithm = "ranger",
+                                   outcome_algorithm = "ranger",
+                                   weight_name = "weight",
+                                   sample_split = "cross_fit",
+                                   folds = folded$fold)
+    return(list(outcome_modeling = glm_estimates$all_estimates$outcome_modeling[,c("setting","category","estimate")],
+                treatment_modeling = glm_estimates$all_estimates$treatment_modeling[,c("setting","category","estimate")],
+                doubly_robust = glm_estimates$all_estimates$doubly_robust[,c("setting","category","estimate")],
+                gam_estimates = gam_estimates$primary_estimate[,c("setting","category","estimate")],
+                ranger_estimates = ranger_estimates$primary_estimate[,c("setting","category","estimate")],
+                outcome_coefs = coef(glm_estimates$outcome_model),
+                treatment_coefs = coef(glm_estimates$treatment_model)))
+  })
+  # For comparison, get coefficient in conditional model
+  simple_fit <- lm(outcome ~ X + treated + RACE + DEGREE + SEX + AGE,
+                   data = data,
+                   weights = weight)
+  simple_fit_noTreatment <- lm(outcome ~ X + RACE + DEGREE + SEX + AGE,
+                               data = data,
+                               weights = weight)
+  return(c(point_estimates,comparison_coefs = list(coef(simple_fit)),
+           comparison_coefs_notreatment = list(coef(simple_fit_noTreatment))))
+}
+# Calculate the point estimate
+point <- gss_point_estimator(d)
 
-# Use balanced repeated replicates to computationally simulate uncertainty.
-set.seed(08544)
-# Define the survey design in the survey package
-gss_svydesign <- svydesign(ids = ~ cluster_id,
-                           strata = ~ VSTRAT,
-                           weights = ~ WTSSALL,
-                           data = GSS %>%
-                             mutate(cluster_id = paste(VSTRAT,VPSU, sep = "_")))
-# Create balanced repeated replicate weights
-# The advantage of a computational approach is that inference works for
-# a wide variety of estimation algorithms, without any adaptation.
-# This line takes a long time.
-gss_bs <- as.svrepdesign(gss_svydesign, type = "BRR", compress = F)
-save(gss_bs, file = "intermediate/gss_bs.Rdata")
-
-cl <- makeCluster(20)
+# Calculate the estimates on the balanced repeated replicates
+cl <- makeCluster(4)
 registerDoParallel(cl)
 t0 <- Sys.time()
-# With 20 cores, I expect about 40 minutes
-bs_samps_glm <- foreach(
-  i = 1:ncol(gss_bs$repweights),
-  .combine = "rbind", 
-  .packages = c("tidyverse","foreach","reshape2","Amelia")
+brr_estimates <- foreach(
+  i = 1:ncol(gss_brr$repweights),
+  .packages = c("tidyverse","Amelia","gapclosing")
 ) %dorng% {
   # Restrict to the chosen PSUs
-  GSS_replicate <- GSS[gss_bs$repweights[,i] > 0,]
+  GSS_replicate <- GSS[gss_brr$repweights[,i] > 0,]
   d_replicate <- sample_restrictions(GSS_replicate)
-  gap_estimator_allMethods(data = d_replicate,
-                           treatment_formula = formula(treated ~ X + RACE + DEGREE + SEX + AGE),
-                           outcome_formula = formula(outcome ~ treated*X + RACE + DEGREE + SEX + AGE),
-                           treatment_formula_marginal = formula(treated ~ RACE + DEGREE + SEX + AGE),
-                           stratum_id = "VSTRAT",
-                           num_folds = 2,
-                           learner = "glm") %>%
-    mutate(learner = "glm")
+  gss_point_estimator(d_replicate)
 }
-spent <- difftime(t0, Sys.time())
+spent <- difftime(Sys.time(),t0)
+print("Time spent on BRR estimates")
+print(spent)
 stopCluster(cl)
-save(bs_samps_glm, file = "intermediate/bs_samps_glm.Rdata")
+save(brr_estimates, file = "intermediate/brr_estimates_glm.Rdata")
 
-cl <- makeCluster(2)
-registerDoParallel(cl)
-t0 <- Sys.time()
-bs_samps_ranger <- foreach(
-  i = 1:ncol(gss_bs$repweights),
-  .combine = "rbind", 
-  .packages = c("tidyverse","foreach","reshape2","ranger","Amelia")
-) %dorng% {
-  # Restrict to the chosen PSUs
-  GSS_replicate <- GSS[gss_bs$repweights[,i] > 0,]
-  d_replicate <- sample_restrictions(GSS_replicate)
-  gap_estimator_allMethods(data = d_replicate,
-                           treatment_formula = formula(treated ~ X + RACE + DEGREE + SEX + AGE),
-                           outcome_formula = formula(outcome ~ treated + X + RACE + DEGREE + SEX + AGE),
-                           treatment_formula_marginal = formula(treated ~ RACE + DEGREE + SEX + AGE),
-                           stratum_id = "VSTRAT",
-                           num_folds = 2,
-                           learner = "ranger") %>%
-    mutate(learner = "ranger")
+# Aggregate to standard errors
+se_estimate <- foreach(method_case = c("treatment_modeling","outcome_modeling","doubly_robust","gam_estimates","ranger_estimates"), .combine = "rbind") %do% {
+  foreach(counterfactual_case = c("under_treatment","under_control","marginal","conditional"), .combine = "rbind") %do% {
+    these_estimates <- foreach(r = 1:length(brr_estimates), .combine = "rbind") %do% {
+      brr_estimates[[r]][[counterfactual_case]][[method_case]]
+    }
+    se <- these_estimates %>%
+      group_by(setting, category) %>%
+      summarize(se = sd(estimate), .groups = "drop") %>%
+      mutate(method = method_case,
+             counterfactual = counterfactual_case)
+  }
 }
-spent <- difftime(t0, Sys.time())
-stopCluster(cl)
-save(bs_samps_ranger, file = "intermediate/bs_samps_ranger.Rdata")
 
-results <- bs_samps_glm %>%
-  bind_rows(bs_samps_ranger) %>%
-  group_by(estimand,strategy,cross_fit,learner) %>%
-  summarize_all(.funs = sd) %>%
-  melt(id = c("estimand","strategy","cross_fit","learner"),
-       variable.name = "group", value.name = "se") %>%
-  left_join(point_estimates %>%
-              melt(id = c("estimand","strategy","cross_fit","learner"),
-                   variable.name = "group",
-                   value.name = "estimate"),
-            by = c("estimand","strategy","cross_fit","group","learner"))
+# Combine the point and SE estimates
+counterfactual_estimates <- foreach(method_case = c("treatment_modeling","outcome_modeling","doubly_robust","gam_estimates","ranger_estimates"), .combine = "rbind") %do% {
+  foreach(counterfactual_case = c("under_treatment","under_control","marginal","conditional"), .combine = "rbind") %do% {
+    point[[counterfactual_case]][[method_case]] %>%
+      mutate(method = method_case,
+             counterfactual = counterfactual_case)
+  }
+} %>%
+  left_join(se_estimate, by = c("method","counterfactual","setting","category"))
+save(counterfactual_estimates, file = "intermediate/counterfactual_estimates.Rdata")
 
-# For comparison, get coefficient in conditional model
-simple_fit <- coef(lm(outcome ~ X + treated + RACE + DEGREE + SEX + AGE,
-                      data = d,# %>% filter(treated),
-                      weights = weight))["XTRUE"]
-cl <- makeCluster(20)
-registerDoParallel(cl)
-simple_fit_draws <- foreach(
-  i = 1:ncol(gss_bs$repweights),
-  .combine = "c", 
-  .packages = c("tidyverse","foreach","reshape2","Amelia")
-) %dorng% {
-  # Restrict to the chosen PSUs
-  GSS_replicate <- GSS[gss_bs$repweights[,i] > 0,]
-  d_replicate <- sample_restrictions(GSS_replicate)
-  fit <- lm(outcome ~ X + treated + RACE + DEGREE + SEX + AGE,
-            data = d_replicate,
-            weights = weight)
-  return(coef(fit)["XTRUE"])
+# Extract coefficients of the treatment model, outcome model, and comparison model
+# model_name will take values comparison_coefs, treatment_coefs, outcome_coefs
+get_coefficient_estimates <- function(model_name) {
+  if (model_name == "comparison_coefs") {
+    coef_point <- point$comparison_coefs
+  } else if (model_name == "comparison_coefs_notreatment") {
+    coef_point <- point$comparison_coefs_notreatment
+  } else {
+    # Note that the treatment and outcome coefficients are the same under any counterfactual rule,
+    # so extract them from only one rule (under_treatment)
+    coef_point <- point$under_treatment[[model_name]]
+  }
+  coef_reps <- foreach(r = 1:length(brr_estimates), .combine = "rbind") %do% {
+    if (model_name == "comparison_coefs") {
+      coef_star <- brr_estimates[[r]]$comparison_coefs
+    } else if (model_name == "comparison_coefs_notreatment") {
+      coef_star <- brr_estimates[[r]]$comparison_coefs_notreatment
+    } else {
+      coef_star <- brr_estimates[[r]]$under_treatment[[model_name]]
+    }
+    if (!all(names(coef_star) == names(coef_point))) {
+      stop("ERROR: Replicate and point estimate names do not match")
+    }
+    coef_star
+  }
+  to_return <- data.frame(covariate = names(coef_point),
+                          coefficient = coef_point,
+                          se = apply(coef_reps,2,sd)) %>%
+    mutate(ci.min = coefficient - qnorm(.975) * se,
+           ci.max = coefficient + qnorm(.975) * se)
+  rownames(to_return) <- NULL
+  return(to_return)
 }
-stopCluster(cl)
-simple_fit_result <- data.frame(coefficient = simple_fit,
-                                se = sd(simple_fit_draws)) %>%
-  mutate(ci.min = coefficient - qnorm(.975) * se,
-         ci.max = coefficient + qnorm(.975) * se)
-print("Coefficient when sample is restricted to T = 1")
-coef(lm(outcome ~ X + RACE + DEGREE + SEX + AGE,
-        data = d %>% filter(treated),
-        weights = weight))["XTRUE"]
+# Use that function to extract the coefficients and standard errors
+comparison_coefs <- get_coefficient_estimates("comparison_coefs")
+comparison_coefs_notreatment <- get_coefficient_estimates("comparison_coefs_notreatment")
+treatment_coefs <- get_coefficient_estimates("treatment_coefs")
+outcome_coefs <- get_coefficient_estimates("outcome_coefs")
+save(comparison_coefs, file = "intermediate/comparison_coefs.Rdata")
+save(comparison_coefs_notreatment, file = "intermediate/comparison_coefs_notreatment.Rdata")
+save(treatment_coefs, file = "intermediate/treatment_coefs.Rdata")
+save(outcome_coefs, file = "intermediate/outcome_coefs.Rdata")
 
-results %>%
-  filter(strategy == "AIPW" & !cross_fit & learner == "glm") %>%
-  mutate(estimand = factor(case_when(estimand == "unadjusted" ~ 1,
-                                     estimand == "equalize1" ~ 2,
-                                     estimand == "equalize0" ~ 3,
-                                     estimand == "marginal" ~ 4,
-                                     estimand == "conditional" ~ 5),
-                           labels = c("Factual\ngap",
-                                      "Counterfactual\ngap if\nequalized at\nT = 1",
-                                      "Counterfactual\ngap if\nequalized at\nT = 0",
-                                      "Counterfactual\ngap under\nmarginal\nequalization",
-                                      "Counterfactual\ngap under\nconditional\nequalization"))) %>%
-  ggplot(aes(x = estimand, y = estimate,
-             ymin = estimate - qnorm(.975) * se,
-             ymax = estimate + qnorm(.975) * se,
-             label = format(round(estimate, 2), nsmall = 2))) +
-  geom_errorbar() +
-  geom_label() +
-  theme_bw() +
-  xlab("Estimand") +
-  ylab("Gap in log annual income by class origin\n(Upper - Lower)") +
-  geom_hline(yintercept = simple_fit_result$coefficient, linetype = "dashed") +
-  annotate(geom = "text",
-           x = 3, y = simple_fit_result$coefficient,
-           label = paste0("Dashed comparison: OLS coefficient on class origin, which is not a gap-closing estimand. Estimate: ",
-                          format(round(simple_fit_result$coefficient,2),nsmall = 2)," (CI: ",
-                          paste(format(round(c(simple_fit_result$ci.min,simple_fit_result$ci.max),2),nsmall = 2), collapse = ", "),")"),
-           size = 2.5, vjust = -1) +
-  #geom_text(data = data.frame(#estimand = "Equalized at\nT = 0",
-  #                            estimate = simple_fit_result$coefficient,
-  #                            se = NA),
-  #          label = paste0("Dashed comparison: OLS coefficient on class origin, which is not a gap-closing estimand. Estimate: ",
-  #                         format(round(simple_fit_result$coefficient,2),nsmall = 2)," (CI: ",
-  #                         paste(format(round(c(simple_fit_result$ci.min,simple_fit_result$ci.max),2),nsmall = 2), collapse = ", "),")"),
-  #          size = 2.5, vjust = -1) +
-  ggsave("figures/class_gap_aipw.pdf",
-         height = 3.5, width = 6.5)
+######################
+# Print main results #
+######################
 
-results %>%
-  filter((!cross_fit  & learner != "ranger") | (cross_fit & strategy == "AIPW" & learner == "ranger")) %>%
-  # Keep only one unadjusted estimate
-  filter(!(estimand == "unadjusted" & strategy != "IPW")) %>%
-  mutate(estimand = factor(case_when(estimand == "unadjusted" ~ 1,
-                                     estimand == "equalize1" ~ 2,
-                                     estimand == "equalize0" ~ 3,
-                                     estimand == "marginal" ~ 4,
-                                     estimand == "conditional" ~ 5),
-                           labels = c("Unadjusted",
-                                      "Equalized at\nT = 1",
-                                      "Equalized at\nT = 0",
-                                      "Marginal\nequalization",
-                                      "Conditional\nequalization")),
-         strategy = factor(case_when(strategy == "IPW" & estimand == "Unadjusted" ~ 1,
-                                     strategy == "Imputation" ~ 2,
-                                     strategy == "IPW" ~ 3,
-                                     strategy == "AIPW" & !cross_fit ~ 4,
-                                     strategy == "AIPW" & cross_fit ~ 5),
-                           labels = c("Mean difference",
-                                      "Outcome\nModeling",
-                                      "Inverse\nProbability Weighting",
-                                      "Augmented Inverse\nProbability Weighting\n(main text specification)",
-                                      "Double Machine\nLearning"))) %>%
-  ggplot(aes(x = estimand, y = estimate,
-             ymin = estimate - qnorm(.975) * se,
-             ymax = estimate + qnorm(.975) * se,
-             color = strategy, shape = strategy)) +
-  geom_point(position = position_dodge(width = .8)) +
-  geom_errorbar(position = position_dodge(width = .8),
-                width = .5) +
-  theme_bw() +
-  xlab("Estimand") +
-  ylab("Gap in log annual income by class origin\n(Upper - Lower)") +
-  scale_shape_discrete(name = "Estimation\nStrategy") +
-  scale_color_manual(name = "Estimation\nStrategy",
-                     values = c("black","blue","gray","seagreen4","purple")) +
-  theme(legend.key.height = unit(1,"cm")) +
-  ggsave("figures/class_gap_all_estimators.pdf",
-         height = 3.5, width = 6.5)
+print("Doubly-robust estimates")
+print(counterfactual_estimates %>%
+        filter(method == "doubly_robust") %>%
+        select(counterfactual, setting, category, estimate, se),
+      digits = 2)
 
-# Print parametric fits of g and m
-get_fits <- function(data) {
-  m_fit <- glm(treated ~ X + RACE + DEGREE + SEX + AGE,
-               data = data,
-               family = binomial(link = "logit"),
-               weights = weight)
-  m_fit_noGroup <- glm(treated ~ RACE + DEGREE + SEX + AGE,
-                       data = data,
-                       family = binomial(link = "logit"),
-                       weights = weight)
-  g_fit <- glm(outcome ~ treated*X + RACE + DEGREE + SEX + AGE,
-               data = data,
-               weights = weight)
-  standard_fit <- glm(outcome ~ treated + X + RACE + DEGREE + SEX + AGE,
-                      data = data,
-                      weights = weight)
-  data.frame(variable = names(coef(m_fit)),
-             fit = "m",
-             coefficient = coef(m_fit)) %>%
-    bind_rows(data.frame(variable = names(coef(g_fit)),
-                         fit = "g",
-                         coefficient = coef(g_fit))) %>%
-    bind_rows(data.frame(variable = names(coef(standard_fit)),
-                         fit = "standard",
-                         coefficient = coef(standard_fit))) %>%
-    bind_rows(data.frame(variable = names(coef(m_fit_noGroup)),
-                         fit = "m_noGroup",
-                         coefficient = coef(m_fit_noGroup)))
-}
-point <- get_fits(d)
-cl <- makeCluster(30)
-registerDoParallel(cl)
-replicates <- foreach(
-  i = 1:ncol(gss_bs$repweights),
-  .combine = "rbind", 
-  .packages = c("tidyverse","foreach","reshape2","ranger","Amelia")
-) %dorng% {
-  # Restrict to the chosen PSUs
-  GSS_replicate <- GSS[gss_bs$repweights[,i] > 0,]
-  d_replicate <- sample_restrictions(GSS_replicate)
-  get_fits(d_replicate)
-}
-stopCluster(cl)
+print("Fitted treatment model")
+print(treatment_coefs, digits = 2)
 
-print(xtable(
-  replicates %>%
-    group_by(variable, fit) %>%
-    summarize(se = sd(coefficient)) %>%
-    left_join(point, by = c("variable","fit")) %>%
-    melt(id = c("variable","fit"), variable.name = "quantity") %>%
-    mutate(value = format(round(value, 2), nsmall = 2),
-           value = ifelse(quantity == "se", paste0("(",value,")"), value)) %>%
-    spread(key = fit, value = value) %>%
-    select(variable, quantity, standard, g, m, m_noGroup) %>%
-    mutate(quantity = fct_rev(quantity)) %>%
-    arrange(variable, quantity) %>%
-    mutate(variable = ifelse(quantity == "coefficient", variable, "")) %>%
-    select(-quantity)
-), include.rownames = F)
+print("Fitted outcome model")
+print(outcome_coefs, digits = 2)
 
+print("Fitted comparison model")
+print(comparison_coefs, digits = 2)
+
+print("Fitted comparison model, without treatment")
+print(comparison_coefs_notreatment, digits = 2)
+
+print("Significance of comparison coefficient on X in comparison model")
+print(comparison_coefs %>%
+        filter(covariate == "XTRUE") %>%
+        mutate(pval = 2*pnorm(-abs(coefficient / se))))
+
+print("Significance of comparison coefficient on X in comparison model with no treatment")
+print(comparison_coefs_notreatment %>%
+        filter(covariate == "XTRUE") %>%
+        mutate(pval = 2*pnorm(-abs(coefficient / se))))
+
+print("Outcome and treatment coefficients arranged for placement in a table")
+print(data.frame(outcome_coefs %>%
+                   mutate(model = "outcome") %>%
+                   bind_rows(treatment_coefs %>%
+                               mutate(model = "treatment")) %>%
+                   mutate(covariate = fct_reorder(factor(covariate),1:n())) %>%
+                   select(covariate, coefficient, se, model) %>%
+                   melt(id = c("covariate","model"), variable.name = "quantity") %>%
+                   spread(key = model, value = value) %>%
+                   mutate(covariate = fct_relevel(covariate,
+                                                  "XTRUE","treated:XTRUE","treated","AGE",
+                                                  "DEGREE1","DEGREE2","DEGREE3","DEGREE4",
+                                                  "RACE2","RACE3","SEX")) %>%
+                   arrange(covariate, quantity) %>%
+                   mutate(outcome = format(round(outcome,2),nsmall = 2),
+                          treatment = format(round(treatment,2),nsmall = 2))))
+
+print("Comparison coefficients arranged for placement in a table")
+print(data.frame(comparison_coefs_notreatment %>%
+                   mutate(model = "no_treatment") %>%
+                   bind_rows(comparison_coefs %>%
+                               mutate(model = "with_treatment")) %>%
+                   mutate(covariate = fct_reorder(factor(covariate),1:n())) %>%
+                   select(covariate, coefficient, se, model) %>%
+                   melt(id = c("covariate","model"), variable.name = "quantity") %>%
+                   spread(key = model, value = value) %>%
+                   mutate(covariate = fct_relevel(covariate,
+                                                  "XTRUE","treated","AGE",
+                                                  "DEGREE1","DEGREE2","DEGREE3","DEGREE4",
+                                                  "RACE2","RACE3","SEX")) %>%
+                   arrange(covariate, quantity) %>%
+                   mutate(no_treatment = format(round(no_treatment,2),nsmall = 2),
+                          with_treatment = format(round(with_treatment,2),nsmall = 2))))
+
+# Close the sink
+sink()
