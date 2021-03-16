@@ -317,7 +317,7 @@ counterfactual_estimates %>%
                                    method == "outcome_modeling" ~ 4,
                                    method == "gam_estimates" ~ 5,
                                    method == "ranger_estimates" ~ 6),
-                         labels = c("Undadjusted\nmean difference",
+                         labels = c("Unadjusted\nmean difference",
                                     "Doubly-robust with\ngeneralized\nlinear models",
                                     "Treatment modeling\nwith generalized\nlinear models",
                                     "Outcome modeling\nwith generalized\nlinear models",
