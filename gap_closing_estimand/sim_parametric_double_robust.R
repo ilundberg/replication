@@ -84,7 +84,7 @@ giant_sample %>%
   ggplot(aes(x = l, y = g, color = Treatment, linetype = Category)) +
   geom_line() +
   xlab("Confounding Variable L") +
-  scale_y_continuous(name = ("Potential Outcome Y(t)"),
+  scale_y_continuous(name = ("Expected Potential Outcome"),
                      breaks = seq(0,10,2)) +
   facet_wrap(~true_or_estimated, ncol = 2) +
   ggsave("figures/simulation_wrong_g.pdf",
@@ -144,11 +144,11 @@ sims_treatment_correct <- draw_simulations(treatment_formula = formula(d ~ poly(
 
 # Combine all simulations into one data frame
 sims_combined <- sims_both_correct %>%
-  mutate(fun_form = "Both Models\nCorrect") %>%
+  mutate(fun_form = "Both Prediction\nFunctions Correct") %>%
   bind_rows(sims_outcome_correct %>%
-              mutate(fun_form = "Treatment Model\nIncorrect")) %>%
+              mutate(fun_form = "Treatment Prediction\nFunction Incorrect")) %>%
   bind_rows(sims_treatment_correct %>%
-              mutate(fun_form = "Outcome Model\nIncorrect")) %>%
+              mutate(fun_form = "Outcome Prediction\nFunction Incorrect")) %>%
   left_join(truth, by = c("category","setting")) %>%
   mutate(error = estimate - truth,
          method = fct_relevel(method,"outcome_modeling","treatment_modeling","doubly_robust"),
@@ -157,7 +157,7 @@ sims_combined <- sims_both_correct %>%
 save(sims_combined, file = "intermediate/sims_combined_parametric.Rdata")
 
 # Make variable label vectors to improve ggplot2 output
-method_labels <- c("Outcome Modeling", "Treatment Modeling", "Doubly Robust")
+method_labels <- c("Estimation by\nPredicted Outcomes", "Estimation by\nPredicted Treatment Probabilities", "Doubly Robust Estimation")
 names(method_labels) <- c("outcome_modeling","treatment_modeling","doubly_robust")
 
 # Plot the densities
@@ -165,7 +165,7 @@ for (category_case in unique(sims_combined$category)) {
   sims_combined %>%
     filter(category == category_case & setting == "counterfactual") %>%
     ggplot(aes(x = error, y = fun_form)) +
-    geom_density_ridges(color = NA, scale = .9, fill = "gray", bandwidth = .05) +
+    geom_density_ridges(color = NA, scale = .9, fill = "gray", bandwidth = .06) +
     geom_vline(xintercept = 0, size = .2) +
     facet_wrap(~ method,
                labeller = as_labeller(method_labels)) +
@@ -182,7 +182,7 @@ for (category_case in unique(sims_combined$category)) {
     ggsave(case_when(category_case == "1" ~ "figures/sim_x1.pdf",
                      category_case == "0" ~ "figures/sim_x0.pdf",
                      category_case == "1 - 0" ~ "figures/sim_x1mx0.pdf"),
-           height = 1.8, width = 6.5)
+           height = 2, width = 8)
 }
 
 # Animated slide versions of the gap-closing estimand plot
@@ -207,7 +207,7 @@ for (slide_number in 0:3) {
           axis.text.x = element_blank(),
           legend.position = "none") +
     ggsave(paste0("figures/sim_x1mx0_",slide_number,".pdf"),
-           height = 1.8, width = 6.5)
+           height = 2, width = 8)
 }
 
 stopCluster(cl)

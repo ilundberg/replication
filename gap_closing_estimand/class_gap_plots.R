@@ -319,8 +319,8 @@ counterfactual_estimates %>%
                                    method == "ranger_estimates" ~ 6),
                          labels = c("Unadjusted\nmean difference",
                                     "Doubly-robust with\ngeneralized\nlinear models",
-                                    "Treatment modeling\nwith generalized\nlinear models",
-                                    "Outcome modeling\nwith generalized\nlinear models",
+                                    "Estimation by\npredicted treatment\nprobabilities\nfrom generalized\nlinear models",
+                                    "Estimation by\npredicted outcomes\nfrom generalized\nlinear models",
                                     "Cross-fitting\nwith generalized\nadditive models",
                                     "Cross-fitting\nwith random\nforests"))) %>%
   # Remove repeated factual rows that are identical

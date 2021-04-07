@@ -105,11 +105,11 @@ results <- sim_cross_fitting_helps %>%
                               category == "1" ~ "Post-Intervention Mean\nin Category 1",
                               category == "1 - 0" ~ "Gap-Closing Estimand\nCategory 1 - Category 0"),
          category = fct_rev(category),
-         method_label = case_when(method == "doubly_robust" & sample_split == "cross_fit" ~ "Doubly robust\n+ cross fitting",
-                                  method == "doubly_robust" & sample_split == "single_sample" ~ "Doubly robust",
-                                  method == "outcome_modeling" ~ "Outcome modeling",
-                                  method == "treatment_modeling" ~ "Treatment modeling"),
-         method_label = fct_relevel(method_label,"Outcome modeling","Treatment modeling","Doubly robust","Doubly robust\n+ cross fitting"),
+         method_label = case_when(method == "doubly_robust" & sample_split == "cross_fit" ~ "Doubly robust estimator\n+ cross fitting",
+                                  method == "doubly_robust" & sample_split == "single_sample" ~ "Doubly robust estimator",
+                                  method == "outcome_modeling" ~ "Estimator with\npredicted outcomes",
+                                  method == "treatment_modeling" ~ "Estimator with\npredicted treatment\nprobabilities"),
+         method_label = fct_relevel(method_label,"Estimator with\npredicted outcomes","Estimator with\npredicted treatment\nprobabilities","Doubly robust estimator","Doubly robust estimator\n+ cross fitting"),
          sample_split_label = case_when(sample_split == "cross_fit" ~ "Cross Fitting",
                                         sample_split == "single_sample" ~ "Single Sample"))
 save(results, file = "intermediate/sim_crossfit_results.Rdata")
@@ -117,7 +117,7 @@ save(results, file = "intermediate/sim_crossfit_results.Rdata")
 # Compare to outcome and DR in terms of RMSE
 for (i in 0:3) {
   results %>%
-    filter(method_label %in% c("Outcome modeling","Doubly robust","Doubly robust\n+ cross fitting") &
+    filter(method_label %in% c("Estimator with\npredicted outcomes","Doubly robust estimator","Doubly robust estimator\n+ cross fitting") &
              category == "Gap-Closing Estimand\nCategory 1 - Category 0") %>%
     ggplot(aes(x = n, y = sqrt(mse),
                color = method_label, shape = method_label,
@@ -277,8 +277,8 @@ parametric_results <- sim_parametric_correct %>%
                               category == "1" ~ "Post-Intervention Mean\nin Category 1",
                               category == "1 - 0" ~ "Gap-Closing Estimand\nCategory 1 - Category 0"),
          method_label = case_when(method == "doubly_robust" ~ "Doubly robust\n(correct GLMs)",
-                                  method == "outcome_modeling" ~ "Outcome modeling\n(correct OLS)",
-                                  method == "treatment_modeling" ~ "Treatment modeling\n(correct logit)"))
+                                  method == "outcome_modeling" ~ "Estimator with\npredicted outcomes\n(correct OLS)",
+                                  method == "treatment_modeling" ~ "Estimator with\npredicted treatment probabilities\n(correct logit)"))
 
 
 parametric_results %>%
@@ -289,7 +289,9 @@ parametric_results %>%
          method_label = factor(case_when(method == "outcome_modeling" ~ 1,
                                          method == "treatment_modeling" ~ 2,
                                          method == "doubly_robust" ~ 3),
-                               labels = c("Outcome Modeling","Treatment Modeling","Doubly Robust"))) %>%
+                               labels = c("Estimator with\npredicted outcomes\n(correct OLS)",
+                                          "Estimator with\npredicted treatment\nprobabilities\n(correct logit)",
+                                          "Doubly robust\n(correct GLMs)"))) %>%
   ggplot(aes(x = n, y = sqrt(mse),
              color = fun_form, shape = fun_form)) +
   geom_hline(yintercept = 0) +
@@ -314,11 +316,11 @@ results %>%
   filter(category != "Gap-Closing Estimand\nCategory 1 - Category 0") %>%
   mutate(ci.min = mse - qnorm(.975) * mse_se,
          ci.max = mse + qnorm(.975) * mse_se,
-         method_label = factor(case_when(method_label == "Outcome modeling" ~ 1,
-                                         method_label == "Treatment modeling" ~ 2,
-                                         method_label == "Doubly robust" ~ 3,
-                                         method_label == "Doubly robust\n+ cross fitting" ~ 4),
-                               labels = c("Outcome\nmodeling","Treatment\nmodeling","Doubly\nrobust (DR)","DR + cross\nfitting")),
+         method_label = factor(case_when(method == "outcome_modeling" ~ 1,
+                                         method == "treatment_modeling" ~ 2,
+                                         method == "doubly_robust" & sample_split == "single_sample" ~ 3,
+                                         method == "doubly_robust" & sample_split == "cross_fit" ~ 4),
+                               labels = c("Predicted\nOutcomes","Predicted\nTreatments","Doubly\nRobust (DR)","DR + Cross\nFitting")),
          n_label = paste0("Sample Size\nn = ",n),
          n_label = fct_reorder(n_label,n)) %>%
   ggplot(aes(x = method_label, y = sqrt(mse),
@@ -328,7 +330,7 @@ results %>%
   geom_point() +
   facet_grid(n_label ~ category, scales = "free_y") +
   ylab("RMSE") +
-  xlab("Method") +
+  xlab("Estimation With") +
   theme(axis.text.x = element_text(size = 8),
         strip.text = element_text(size = 8),
         legend.text = element_text(size = 8)) +

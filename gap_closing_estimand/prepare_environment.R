@@ -31,7 +31,7 @@ if (!has_all_subdirectories) {
 files_in_code <- list.files("code/")
 has_all_code <- all(c("run_all.R",
                       "class_gap_example.R","class_gap_plots.R",
-                      "sim_parametric_double_robust.R","sim_parametric_both_approximate.R",
+                      "sim_parametric_double_robust.R","sim_parametric_double_robust_complex_sample.R",
                       "sim_cross_fitting_helps.R") %in% files_in_code)
 if (!has_all_code) {
   stop("Your code subdirectory does not have the required code files.")
