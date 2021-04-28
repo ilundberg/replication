@@ -157,10 +157,10 @@ forplot %>%
   geom_text(aes(y = 0, vjust = -.5,
                 label = paste0(format(round(100 * onset,1), nsmall = 1), "%")),
             color = "white", fontface = "bold", size = 6) +
-  scale_y_continuous(name = expression(bold(Onset)~'of Work-Limiting Disability')) +
+  scale_y_continuous(name = 'Onset of Work-Limiting Disability') +
   xlab("Race / Ethnicity") +
   theme_bw() +
-  theme(axis.title.x = element_text(face = "bold")) +
+  theme(axis.title = element_text(face = "bold")) +
   ggsave("figures/onset_by_race.pdf",
          height = 3.5, width = 5)
 forplot %>%
@@ -205,7 +205,7 @@ forplot %>%
   geom_errorbar(width = .2, position = position_dodge(width = .9), size = .1) +
   geom_text(aes(y = 0, vjust = -.5,
                 label = paste0(format(round(100 * employed,1), nsmall = 1), "%")),
-            color = "white", fontface = "bold", size = 3, position = position_dodge(width = .9)) +
+            color = "white", fontface = "bold", size = 6, position = position_dodge(width = .9)) +
   ylab("Proportion Employed") +
   xlab("Race / Ethnicity") +
   scale_fill_manual(values = c("gray60","gray30"),
@@ -213,7 +213,7 @@ forplot %>%
   theme_bw() +
   theme(axis.title = element_text(face = "bold")) +
   ggsave("figures/employment_disparities.pdf",
-         height = 3.5, width = 6)
+         height = 3.5, width = 12)
 
 # 4. Examine the age trend in disability
 all_data$full_population %>%

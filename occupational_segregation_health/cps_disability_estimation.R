@@ -122,6 +122,18 @@ print("Finished counterfactual disparity estimation")
 # Point estimates of alternative specifications #
 #################################################
 
+# Doubly robust estimate
+t0_dr <- Sys.time()
+print("Doubly robust")
+doubly_robust <- counterfactual_estimator(
+  treatment_formula = formula(OCC2010 ~ SEX + EDUC + foreign_born + 
+                                AGE + YEAR + questionnaire_redesign +
+                                factor(HEALTH))
+)
+save(doubly_robust, file = "intermediate/doubly_robust.Rdata")
+print("Spent on doubly robust estimation:")
+print(difftime(t0,Sys.time()))
+
 # In the 2009 and later period, subset to those without any reported difficulties
 print("Alternative specification: Filter on additional controls")
 d_alt_all <- d %>%

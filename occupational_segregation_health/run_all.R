@@ -15,6 +15,7 @@ library(mgcv)
 library(foreach)
 library(doParallel)
 library(ggrepel)
+library(nnet)
 
 sink("figures/session_info.txt")
 print("Date and time of code run:")

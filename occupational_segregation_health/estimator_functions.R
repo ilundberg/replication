@@ -1,4 +1,6 @@
 
+library(nnet)
+
 # Supporting code file for
 # Occupational segregation contributes to racial disparities in health: A counterfactual perspective
 # Ian Lundberg
@@ -36,6 +38,7 @@ counterfactual_estimator <- function(
                               s(OCC2010, bs = "re") + 
                               SEX + EDUC + foreign_born + s(AGE) + s(YEAR, k = 8) + questionnaire_redesign +
                               factor(HEALTH)),
+  treatment_formula = NULL,
   save_intermediate = F,
   interactions = "with_race"
 ) {
@@ -62,9 +65,88 @@ counterfactual_estimator <- function(
   # Append those to the dataset
   data <- data %>%
     bind_cols(fitted_category_proportions) %>%
-    mutate(RACE = factor(RACE))
+    mutate(RACE = factor(RACE)) %>%
+    # Add the major occupational group
+    mutate(major = substr(as.character(OCC2010),1,1))
   
-  # If no interactions, fit one outcome model that we will reference several times
+  # If a treatment model is called for, fit the treatment model within categories of race
+  if (!is.null(treatment_formula)) {
+    # Create a weight for the treatment models that only weights
+    # occupations that collectively comprise 95% of the population
+    zeroed_occupations <- data %>%
+      group_by(OCC2010) %>%
+      summarize(prop = sum(weight)) %>%
+      group_by() %>%
+      mutate(prop = prop / sum(prop)) %>%
+      arrange(-prop) %>%
+      mutate(cum_prop = cumsum(prop)) %>%
+      mutate(zeroed = cum_prop > .9) %>%
+      select(OCC2010, zeroed)
+    print("Total number of occupations in most analyses")
+    print(nrow(zeroed_occupations))
+    print("Occupations comprising 90% of the population")
+    print(sum(!zeroed_occupations$zeroed))
+    data <- data %>%
+      left_join(zeroed_occupations, by = "OCC2010")
+    major_treatment_formula <- as.character(treatment_formula)
+    major_treatment_formula[2] <- "major"
+    major_treatment_formula <- formula(paste0(major_treatment_formula[2],"~",major_treatment_formula[3]))
+    t0_m_fit <- Sys.time()
+    fitted_m <- foreach (r = unique(data$RACE), .combine = "rbind") %do% {
+      print(paste("Starting m_hat fit for",r))
+      # Restrict to those within a race category
+      this_case <- data %>% 
+        filter(RACE == r) %>%
+        # Make occupation a character for the multinom call
+        mutate(OCC2010 = as.character(OCC2010)) %>%
+        filter(!zeroed)
+      fit_major <- multinom(major_treatment_formula,
+                            data = this_case,
+                            maxit = 1000,
+                            weights = weight)
+      fitted_this_case <- foreach(major_value = unique(data$major), .combine = "rbind") %do% {
+        print(paste("Starting m_hat fit for",r,"major category",major_value))
+        this_major <- this_case %>% 
+          filter(major == major_value)
+        fit_minor <- multinom(treatment_formula,
+                              data = this_major,
+                              maxit = 1000,
+                              weights = weight)
+        # Convert those to fitted values
+        fitted_major <- predict(fit_major, newdata = this_major, type = "prob")
+        fitted_minor <- predict(fit_minor, type = "prob")
+        fitted_this_major <- rep(NA,nrow(this_major))
+        for (i in 1:length(fitted_this_major)) {
+          mhat_major <- fitted_major[i,which(colnames(fitted_major) == this_major$major[i])]
+          mhat_minor <- fitted_minor[i,which(colnames(fitted_minor) == this_major$OCC2010[i])]
+          fitted_this_major[i] <- mhat_major * mhat_minor
+        }
+        return(this_major %>%
+                 group_by() %>%
+                 select(CPSIDP) %>%
+                 mutate(m_hat = fitted_this_major))
+      }
+      return(fitted_this_case)
+    }
+    save(fitted_m, file = "intermediate/fitted_m.Rdata")
+    print("Spent on fitting m:")
+    print(difftime(Sys.time(),t0_m_fit))
+    
+    # Merge in the fitted m and get the pi_hat and counterfactual weight
+    data <- data %>%
+      left_join(fitted_m, by = "CPSIDP") %>%
+      # Get the counterfactual assignment rule for the observed occupation: Prevalence within education
+      group_by(EDUC, OCC2010) %>%
+      mutate(pi_hat = sum(weight * !zeroed)) %>%
+      group_by(EDUC) %>%
+      mutate(pi_hat = pi_hat / sum(pi_hat)) %>%
+      group_by() %>%
+      mutate(counterfactual_weight = ifelse(pi_hat > 0, weight * pi_hat / m_hat, 0))
+    
+    save(data, file = "intermediate/data_with_counterfactual_weight.Rdata")
+  }
+
+  # If no interactions, fit one outcome model and one treatment model that we will reference several times
   if (interactions == "none") {
     fit <- bam(outcome_formula,
                weights = weight,
@@ -89,6 +171,11 @@ counterfactual_estimator <- function(
       }
     }
     
+    # If a treatment model was specified, get the bias correction
+    if (!is.null(treatment_formula)) {
+      bias_correction <- weighted.mean(fitted(fit) - this_case$y, w = this_case$counterfactual_weight)
+    }
+    
     # Extract the coefficients on the linear basis
     beta <- coef(fit)
     
@@ -111,16 +198,19 @@ counterfactual_estimator <- function(
     equalized <- which(grepl("prop_|OCC",colnames(X_all)))
     
     # Carry out marginal equalization
-    # Replace the equalized columns
-    X_equalized_marginal[,equalized] <- apply(
-      X_all[,equalized], 
-      # With the weighted average of that column in X_all
-      2, 
-      # over all cases
-      function(x) rep(weighted.mean(x, w = data$weight), 
-                      # Repeated as many rows as in this_case
-                      nrow(this_case))
-    )
+    # We only do this if this is not a doubly-robust run.
+    if (is.null(treatment_formula)) {
+      # Replace the equalized columns
+      X_equalized_marginal[,equalized] <- apply(
+        X_all[,equalized], 
+        # With the weighted average of that column in X_all
+        2, 
+        # over all cases
+        function(x) rep(weighted.mean(x, w = data$weight), 
+                        # Repeated as many rows as in this_case
+                        nrow(this_case))
+      )
+    }
     
     # Carry out equalization within educational categories
     for (e in educ_values) {
@@ -143,30 +233,43 @@ counterfactual_estimator <- function(
     
     # For comparison to the gap-closing estimand, predict the outcomes for people in this category
     # compared with the outcomes of observationally-similar non-Hispanic white people
+    # We only do this if this is not a doubly-robust run.
     
-    if (r == "Non-Hispanic White") {
-      conditional_disparity <- rep(0,nrow(this_case))
-    } else if (interactions == "with_race") {
-      # Load the white fit for comparison
-      fit_this_case <- fit
-      load("intermediate/outcome_NonHispanicWhite_fit.Rdata")
-      conditional_disparity <- predict(fit_this_case, newdata = this_case) -
-        predict(fit, newdata = this_case)
-    } else if (interactions == "none") {
-      conditional_disparity <- rep(
-        ifelse(r == "Hispanic", 0 - coef(fit)["RACENon-Hispanic White"],
-               coef(fit)[paste0("RACE",r)] - coef(fit)["RACENon-Hispanic White"]),
-        nrow(this_case)
-      )
+    if (is.null(treatment_formula)) {
+      if (r == "Non-Hispanic White") {
+        conditional_disparity <- rep(0,nrow(this_case))
+      } else if (interactions == "with_race") {
+        # Load the white fit for comparison
+        fit_this_case <- fit
+        load("intermediate/outcome_NonHispanicWhite_fit.Rdata")
+        conditional_disparity <- predict(fit_this_case, newdata = this_case) -
+          predict(fit, newdata = this_case)
+      } else if (interactions == "none") {
+        conditional_disparity <- rep(
+          ifelse(r == "Hispanic", 0 - coef(fit)["RACENon-Hispanic White"],
+                 coef(fit)[paste0("RACE",r)] - coef(fit)["RACENon-Hispanic White"]),
+          nrow(this_case)
+        )
+      }
     }
     
     # Predict the predicted counterfactual outcome by each equalization rule
-    counterfactual_predictions_this_case <- this_case %>%
-      select(CPSIDP,RACE,y,weight) %>%
-      mutate(counterfactual_marginal = as.vector(X_equalized_marginal %*% beta),
-             counterfactual_within_educ = as.vector(X_equalized_within_educ %*% beta),
-             not_equalized = as.vector(X %*% beta),
-             conditional_vs_white = conditional_disparity)
+    if (is.null(treatment_formula)) {
+      counterfactual_predictions_this_case <- this_case %>%
+        select(CPSIDP,RACE,y,weight) %>%
+        mutate(counterfactual_marginal = as.vector(X_equalized_marginal %*% beta),
+               counterfactual_within_educ = as.vector(X_equalized_within_educ %*% beta),
+               not_equalized = as.vector(X %*% beta),
+               conditional_vs_white = conditional_disparity)
+    } else {
+      counterfactual_predictions_this_case <- this_case %>%
+        select(CPSIDP,RACE,y,weight) %>%
+        mutate(counterfactual_marginal = NA,
+               counterfactual_within_educ = as.vector(X_equalized_within_educ %*% beta) - bias_correction,
+               not_equalized = NA,
+               conditional_vs_white = NA)
+    }
+    
     return(counterfactual_predictions_this_case)
   }
   

@@ -239,6 +239,10 @@ print(
     select(occ_title, category, proportion) %>%
     spread(key = category, value = proportion)
 )
+print("Later example uses CEOs")
+print(for_scatter %>%
+        filter(occ_title == "Chief executives and legislators/public administration") %>%
+        select(occ_title, category, proportion, y))
 sink()
 
 ##################

@@ -14,7 +14,7 @@ load("intermediate/link_weight.Rdata")
 load("intermediate/full_years.Rdata")
 load("intermediate/old_questions.Rdata")
 load("intermediate/questionnaire_redesigns.Rdata")
-load("intermediate/additive.Rdata")
+load("intermediate/doubly_robust.Rdata")
 
 forplot <- counterfactual_results$counterfactual_point %>%
   mutate(estimand = ifelse(estimand == "counterfactual_within_educ","counterfactual",as.character(estimand))) %>%
@@ -48,10 +48,14 @@ forplot <- counterfactual_results$counterfactual_point %>%
               mutate(estimand = ifelse(estimand == "counterfactual_within_educ","counterfactual",as.character(estimand))) %>%
               filter(estimand != "counterfactual_marginal") %>% 
               mutate(facet = "H) With questionnaire changes\nData in 2014-2020")) %>% 
-  bind_rows(additive_point %>%
+  bind_rows(doubly_robust %>%
               mutate(estimand = ifelse(estimand == "counterfactual_within_educ","counterfactual",as.character(estimand))) %>%
               filter(estimand != "counterfactual_marginal") %>% 
-              mutate(facet = "I) Additive model (no race interactions)\nData in 2005-2020")) %>% 
+              mutate(facet = "I) Doubly-robust estimates\nData in 2005-2020")) %>% 
+  #bind_rows(additive_point %>%
+  #            mutate(estimand = ifelse(estimand == "counterfactual_within_educ","counterfactual",as.character(estimand))) %>%
+  #            filter(estimand != "counterfactual_marginal") %>% 
+  #            mutate(facet = "I) Additive model (no race interactions)\nData in 2005-2020")) %>% 
   mutate(RACE = gsub(" ","\n",RACE)) %>%
   mutate(RACE = fct_relevel(RACE,"Non-Hispanic\nBlack","Non-Hispanic\nWhite","Hispanic","Other")) %>%
   spread(key = estimand, value = estimate)
