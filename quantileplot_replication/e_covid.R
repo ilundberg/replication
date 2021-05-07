@@ -1,6 +1,15 @@
 
-library(tidyverse)
-library(tidycensus)
+# Replication code for
+# "Smooth quantile visualizations enhance understanding of bivariate population distributions"
+# Robin C. Lee, Ian Lundberg, and Brandon M. Stewart
+
+# This file: Conducts the example tracking county-level COVID-19 over winter 2020-2021
+# Prerequisite: Run a_prepare_environment.R
+
+print("Before beginning, you will need to register for a U.S. Census API key: http://api.census.gov/data/key_signup.html")
+print("This key should be stored as a character string in data/census_apikey.txt")
+
+print("This file directly sources COVID-19 case counts from a NY Times GitHub repository. If the API changes, this code would need to be updated.")
 
 # Prepare for API access to Census data for county populations
 api_key <- read_table("data/census_apikey.txt", col_names = "key")[[1]]
@@ -40,7 +49,8 @@ d <- data.frame(date = rep(unique(covid_county$date), length(unique(covid_county
   # Thin the date frequency a bit to reduce file size. Keep every 10th date.
   group_by(fips) %>%
   arrange(fips, date) %>%
-  filter(1:n() %% 25 == 1)
+  filter(1:n() %% 25 == 1) %>%
+  filter(!is.na(cases_rate))
 
 # Produce the plot
 covid <- quantileplot(cases_rate ~ s(numeric_date),
@@ -48,6 +58,8 @@ covid <- quantileplot(cases_rate ~ s(numeric_date),
                       quantiles = c(.1,.25,.5,.75,.9),
                       y_range = c(0,150),
                       x_bw = 25)
+
+print("When customizing the plot, we are changing layers that are already present. Warnings about this are to be expected.")
 covid$plot +
   scale_x_continuous(breaks = sapply(c("2020-07-01","2020-10-01","2021-01-01","2021-04-01"),
                                      function(x) difftime(x,"2020-01-01",units = "days")),
@@ -95,12 +107,12 @@ dev.off()
 # Scatter plot
 d %>%
   sample_frac(.1) %>%
-  ggplot(aes(x = jitter(numeric_date,30),
+  ggplot(aes(x = jitter(numeric_date,1),
              y = cases_rate)) +
   geom_point(size = .1) +
   geom_smooth(method = "lm", se = F) +
   theme_bw() +
-  ylim(c(0,150)) +
+  coord_cartesian(ylim = c(0,150)) +
   scale_x_continuous(breaks = sapply(c("2020-07-01","2020-10-01","2021-01-01","2021-04-01"),
                                      function(x) difftime(x,"2020-01-01",units = "days")),
                      labels = c("1 Jul\n2020","1 Oct\n2020","1 Jan\n2021","1 Apr\n2021")) +

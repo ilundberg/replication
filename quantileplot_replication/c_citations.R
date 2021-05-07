@@ -1,19 +1,16 @@
 
-library(tidyverse)
-library(reshape2)
-library(haven)
-library(quantileplot)
+# Replication code for
+# "Smooth quantile visualizations enhance understanding of bivariate population distributions"
+# Robin C. Lee, Ian Lundberg, and Brandon M. Stewart
 
-setwd("/users/iandl/Dropbox/quantileplot_me/")
+# This file: Conducts the cumulative citations example
+# Prerequisite: Run a_prepare_environment.R
 
 # How to create data:
 # 1) Do a search in Web of Science
 # 2) Click "Create Citation Report"
 # 3) Under "Export Data" choose "Save to Excel File"
 # Do (3) in batches of 500 articles.
-
-# I am getting problems when there are quotes in titles.
-# Maybe excel would be a better format.
 
 d <- read_xls("data/demography_a.xls",
               skip = 27) %>%
@@ -36,11 +33,12 @@ d <- read_xls("data/demography_a.xls",
   mutate(Citations = cumsum(Citations)) %>%
   group_by()
 
-# TODO: Figure out how to resolve the 10th and 90th percentile convergence error
+# Produce the quantileplot
 citations <- quantileplot(Citations ~ s(Years_Since_Publication),
                           data = d,
                           y_range = c(0,150))
 
+print("The warning about missing values of text is only because the 90th percentile label would be off the plot. It is manually placed instead.")
 citations$plot +
   ylab("Cumulative Citations\nin Web of Science") +
   xlab("Years Since Publication") +
@@ -73,19 +71,8 @@ d %>%
   geom_point(size = .5) +
   geom_smooth(method = "lm", se = F) +
   theme_bw() +
-  ylim(citations$y_range) +
+  coord_cartesian(ylim = citations$y_range) +
   xlab("Years Since Publication") +
   ggsave("figures/citations_scatter.pdf",
          height = 4.55, width = 5.5)
 
-# SLIDE VERSION
-citations$plot +
-  ylab("Cumulative Citations\nin Web of Science") +
-  xlab("Years Since Publication") +
-  annotate(geom = "text", x = 13, y = 145, vjust = 1, hjust = 0,
-           size = 3,
-           label = "90th percentile") +
-  coord_cartesian(ylim = c(-25,155),
-                  xlim = c(0,24)) +
-  ggsave("figures/demography_cum_cites_tall.pdf",
-         height = 4.5, width = 5.55)

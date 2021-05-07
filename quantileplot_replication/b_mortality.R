@@ -1,11 +1,12 @@
 
+# Replication code for
+# "Smooth quantile visualizations enhance understanding of bivariate population distributions"
+# Robin C. Lee, Ian Lundberg, and Brandon M. Stewart
 
-library(tidyverse)
-library(reshape2)
-library(haven)
-library(quantileplot)
+# This file: Conducts the mortality example
+# Prerequisite: Run a_prepare_environment.R
 
-setwd("/users/iandl/Dropbox/quantileplot_me/")
+# Data come from the world bank. See the links below.
 
 # Infant mortality data from https://data.worldbank.org/indicator/SP.DYN.IMRT.IN
 mortality <- read_csv("data/API_SP.DYN.IMRT.IN_DS2_en_csv_v2_2166906.csv",
@@ -22,13 +23,15 @@ d_mortality <- mortality %>%
               transmute(code = `Country Code`,
                         gdp_pc = `2018`),
             by = "code") %>%
-  mutate(log_gdp_pc = log(gdp_pc))
+  mutate(log_gdp_pc = log(gdp_pc)) %>%
+  filter(!is.na(log_gdp_pc) & !is.na(mortality))
 
 # Plot for infant mortality rate
 mortality <- quantileplot(mortality ~ s(log_gdp_pc),
                           data = d_mortality,
                           quantile_notation = "legend")
 
+print("A warning message is to be expected when customizing axis scales.")
 mortality$plot +
   scale_x_continuous(breaks = log(c(1000,10000,100000)),
                      labels = function(x) paste0(exp(x) / 1000,"k")) +
@@ -45,6 +48,7 @@ mortality_uncertainty <- do.call(
 )
 
 # Customize some aspects of the plot
+print("A warning message is to be expected when customizing axis scales.")
 mortality_uncertainty$plot <- mortality_uncertainty$plot +
   scale_x_continuous(breaks = log(c(1000,10000,100000)),
                      labels = function(x) paste0(exp(x) / 1000,"k")) +
@@ -81,8 +85,7 @@ scatter_with_line <- scatter_no_line +
   ggsave("figures/mortality_scatter.pdf",
          height = 4.55, width = 5.5)
 
-# SLIDE VERSIONS
-
+# Tall version for use in slides
 mortality$plot +
   scale_x_continuous(breaks = log(c(1000,10000,100000)),
                      labels = function(x) paste0(exp(x) / 1000,"k")) +
@@ -90,5 +93,3 @@ mortality$plot +
   xlab("GDP Per Capita\n(Log Scale)") +
   ggsave("figures/mortality_gdp_tall.pdf",
          height = 4.55, width = 5.5)
-
-

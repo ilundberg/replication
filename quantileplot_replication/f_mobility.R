@@ -1,13 +1,16 @@
 
-library(tidyverse)
-library(reshape2)
-library(haven)
-library(foreach)
-library(quantileplot)
+# Replication code for
+# "Smooth quantile visualizations enhance understanding of bivariate population distributions"
+# Robin C. Lee, Ian Lundberg, and Brandon M. Stewart
 
-setwd("/users/iandl/Dropbox/quantileplot_me/")
+# This file: Conducts the mortality example
+# Prerequisite: Run a_prepare_environment.R
 
-# First part taken from comment_summarizing_income_mobility.R
+# Note: The first part taken of this code is taken from
+# comment_summarizing_income_mobility.R
+# which was written for Lundberg and Stewart (2021).
+# Paper: https://doi.org/10.1177%2F0081175020931126
+# Replication package: https://doi.org/10.7910/DVN/JERJ0C
 
 #####################
 # Analyze PSID data #
@@ -119,7 +122,8 @@ d <- clean("[68]ER30004 [69]ER30023 [70]ER30046 [71]ER30070 [72]ER30094 [73]ER30
             age = mean(age),
             observations = n(),
             # This mean simply aggregates since the num is constant
-            num_observedInChildhood = mean(num_observedInChildhood)) %>%
+            num_observedInChildhood = mean(num_observedInChildhood),
+            .groups = "drop") %>%
   # Restrict to those observed in childhood and adulthood
   group_by(person) %>%
   filter(n() == 2) %>%
@@ -159,6 +163,8 @@ log_log_plot <- quantileplot(log_offspring_familyIncome ~ s(log_parent_familyInc
                              ylab = "Family Income Attained as an Adult\n(Log Scale)",
                              quantile_notation = "legend",
                              y_bw = .25)
+
+print("When customizing the plot, we are changing layers that are already present. Warnings about this are to be expected.")
 log_log_plot$plot +
   scale_x_continuous(breaks = log(c(5000,20000,40000,80000,160000)),
                      labels = function(x) paste0("$",round(exp(x) / 1000),"k")) +
@@ -181,6 +187,7 @@ mobility_uncertainty <- do.call(
 )
 
 # Customize axis labels in the log-log plot
+print("When customizing the plot, we are changing layers that are already present. Warnings about this are to be expected.")
 log_log_plot_uncertainty$plot <- log_log_plot_uncertainty$plot +
   scale_x_continuous(breaks = log(c(12500,50000,200000)),
                      labels = function(x) paste0("$",exp(x) / 1000,"k")) +

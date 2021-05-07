@@ -1,20 +1,38 @@
 
-library(tidyverse)
-library(reshape2)
-library(haven)
-library(quantileplot)
+# Replication code for
+# "Smooth quantile visualizations enhance understanding of bivariate population distributions"
+# Robin C. Lee, Ian Lundberg, and Brandon M. Stewart
 
-setwd("/users/iandl/Dropbox/quantileplot_me/")
+# This file: Conducts the spatial inequality example with poverty over Census tracts
+# Prerequisite: Run a_prepare_environment.R
 
 # These data come from Social Explorer for the 2015--2019 5-year ACS.
-# Incomes are adjusted to 2019 dollars
-d <- read_tsv("data/R12807816_SL140.txt") %>%
+
+# To access the data, visit https://www.socialexplorer.com/
+# You will need credentials to access, likely through your university.
+# Select "Tables"
+# Select "American Community Surveys (5-Year Estimates)
+# Click "Begin Report" next to "American Community Survey (ACS) 2015"
+# The top of the screen will say "ACS 2019 (5-Year Estimates)" because this is the pooled 2015-2019 ACS.
+# For "Select a geographic type" choose "140 Census Tract"
+# Add "All census tracts" to your selections and click "Proceed to Tables"
+# Select variables
+# A00002. Population Density (Per Sq. Mile)
+# A13002. Poverty Status in of Families by Family Type by Presence of Children Under 18 Years
+# Click "Show Results"
+# Click "Data Download"
+# Check the box for "Output percents"
+# Cick "Census Tract data (CSV)
+# Your file will have a different name from the file below.
+
+# Incomes are already adjusted to 2019 dollars in the data
+
+d <- read_csv("data/R12822111_SL140.csv") %>%
   transmute(population_density = SE_A00002_002,
             log_population_density = log(population_density),
             total_population = SE_A00002_001,
-            percent_poverty = PCT_SE_A13002_002,
-            median_income = SE_A14010_001,
-            log_median_income = log(median_income))
+            percent_poverty = PCT_SE_A13002_002) %>%
+  filter(!is.na(percent_poverty) & !is.na(log_population_density) & log_population_density > -Inf)
 
 # Produce the plot
 poverty <- quantileplot(percent_poverty ~ s(log_population_density),
@@ -23,6 +41,7 @@ poverty <- quantileplot(percent_poverty ~ s(log_population_density),
                         y_range = c(0,50),
                         quantile_notation = "legend")
 
+print("When customizing the plot, we are changing layers that are already present. Warnings about this are to be expected.")
 plot <- poverty$plot +
   scale_x_continuous(breaks = log(c(10,100,1000,10000)),
                      labels = exp,
