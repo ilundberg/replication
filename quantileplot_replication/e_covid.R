@@ -57,7 +57,8 @@ covid <- quantileplot(cases_rate ~ s(numeric_date),
                       data = d,
                       quantiles = c(.1,.25,.5,.75,.9),
                       y_range = c(0,150),
-                      x_bw = 25)
+                      x_bw = 25,
+                      quantile_notation = "legend")
 
 print("When customizing the plot, we are changing layers that are already present. Warnings about this are to be expected.")
 covid$plot +
@@ -120,4 +121,20 @@ d %>%
   ylab("Cumulative Covid Cases Per Thousand") +
   ggsave("figures/covid_scatter.pdf",
          height = 4.55, width = 5.5)
+
+d %>%
+  sample_frac(.1) %>%
+  ggplot(aes(x = jitter(numeric_date,1),
+             y = cases_rate)) +
+  geom_point(size = .1) +
+  geom_smooth(method = "lm", se = F) +
+  theme_bw() +
+  coord_cartesian(ylim = c(-25,150)) +
+  scale_x_continuous(breaks = sapply(c("2020-07-01","2020-10-01","2021-01-01","2021-04-01"),
+                                     function(x) difftime(x,"2020-01-01",units = "days")),
+                     labels = c("1 Jul\n2020","1 Oct\n2020","1 Jan\n2021","1 Apr\n2021")) +
+  xlab("Date") +
+  ylab("Cumulative Covid Cases Per Thousand") +
+  ggsave("figures/covid_scatter_slide.pdf",
+         height = 3.5, width = 5.2)
 

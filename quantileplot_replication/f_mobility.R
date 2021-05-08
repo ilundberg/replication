@@ -215,6 +215,7 @@ dev.off()
 d %>%
   ggplot(aes(x = parent_familyIncome, y = offspring_familyIncome)) +
   geom_point(size = .5) +
+  geom_smooth(method = "lm", se = F) +
   theme_bw() +
   scale_x_continuous(breaks = seq(0,200000,50000),
                      labels = function(x) paste0("$",x / 1000,"k"),
@@ -222,11 +223,11 @@ d %>%
   scale_y_continuous(breaks = seq(0,300000,100000),
                      labels = function(x) paste0("$",x / 1000,"k"),
                      limits = c(0,350000)) +
-  geom_smooth(method = "lm", se = F) +
   xlab(mobility$call$xlab) +
   ylab(mobility$call$ylab) +
   ggsave("figures/mobility_scatter.pdf",
          height = 4.55, width = 5.5)
+
 d %>%
   ggplot(aes(x = parent_familyIncome, y = offspring_familyIncome)) +
   geom_point(size = .5) +
@@ -244,3 +245,90 @@ d %>%
   ylab(log_log_plot$call$ylab) +
   ggsave("figures/log_log_scatter.pdf",
          height = 4.55, width = 5.5)
+
+###############################################
+# For slides, build up the quantile plot idea #
+###############################################
+base_plot <- d %>%
+  ggplot(aes(x = parent_familyIncome, y = offspring_familyIncome)) +
+  theme_bw() +
+  scale_x_continuous(breaks = seq(0,200000,50000),
+                     labels = function(x) paste0("$",x / 1000,"k"),
+                     limits = c(500,200000)) +
+  scale_y_continuous(breaks = seq(0,300000,100000),
+                     labels = function(x) paste0("$",x / 1000,"k"),
+                     limits = c(c(-7e4, 3.5e5))) +
+  xlab(mobility$call$xlab) +
+  ylab(mobility$call$ylab)
+p1 <- base_plot +
+  geom_point(size = .5, color = "gray") +
+  ggsave("figures/mobility1.pdf",
+         height = 4.55, width = 4.53)
+p2 <- p1 +
+  geom_smooth(method = "lm", se = F) +
+  ggsave("figures/mobility2.pdf",
+         height = 4.55, width = 4.53)
+p3 <- p1 +
+  geom_line(data = mobility$curves,
+            aes(x = x, y = estimate, color = percentile)) +
+  ggthemes::scale_color_colorblind(
+    guide = ggplot2::guide_legend(reverse = TRUE, label.position = "left",
+                                  title = "Percentile")
+  ) +
+  ggsave("figures/mobility3.pdf",
+         height = 4.55, width = 5.5)
+
+# A bit taken from the package source code
+densities <- mobility$densities
+# Modify the conditional density estimates to prepare for use with geom_polygon()
+x_spacing <- .9*diff(sort(unique(densities$conditional$x)))[1]
+conditional <- densities$conditional %>%
+  # Make the highest point of the highest conditional density
+  # equal the amount of space between vertical slices
+  mutate(density = density / max(density) * x_spacing) %>%
+  # Begin modifying the dataset to have density = 0 at the endpoints
+  # to faciliate polygon plotting
+  group_by(x) %>%
+  arrange(x,y) %>%
+  mutate(index = 1:n()) %>%
+  group_by() %>%
+  bind_rows(densities$conditional %>%
+              group_by(x) %>%
+              arrange(x,y) %>%
+              mutate(num = n()) %>%
+              # Keep only the first and last observations
+              filter(1:n() %in% c(1,n())) %>%
+              # Assign them densities of zero and new indices
+              mutate(density = 0,
+                     index = ifelse(1:n() == 1, 0, num + 1)) %>%
+              select(-num) %>%
+              group_by()) %>%
+  arrange(x,index)
+
+p4 <- base_plot +
+  geom_polygon(data = conditional,
+               aes(x = x + density, y = y, group = x),
+               fill = "gray", alpha = .8) +
+  geom_line(data = mobility$curves,
+            aes(x = x, y = estimate, color = percentile)) +
+  ggthemes::scale_color_colorblind(
+    guide = ggplot2::guide_legend(reverse = TRUE, label.position = "left",
+                                  title = "Percentile")
+  ) +
+  ggsave("figures/mobility4.pdf",
+         height = 4.55, width = 5.5)
+
+p5 <- p4 +
+  geom_ribbon(data = densities$marginal %>%
+                mutate(x = x,
+                       ymin = -7e4,
+                       ymax = -7e4 + .8 * 7e4 * density / max(density),
+                       offspring_familyIncome = density),
+              aes(x = x, ymin = ymin, ymax =  ymax),
+              fill = "gray", alpha = .8 ) +
+  ggsave("figures/mobility5.pdf",
+         height = 4.55, width = 5.5)
+
+
+
+

@@ -76,3 +76,15 @@ d %>%
   ggsave("figures/citations_scatter.pdf",
          height = 4.55, width = 5.5)
 
+d %>%
+  ggplot(aes(x = jitter(Years_Since_Publication,.9),
+             y = Citations)) +
+  geom_point(size = .5) +
+  geom_smooth(method = "lm", se = F) +
+  theme_bw() +
+  coord_cartesian(ylim = c(-25,155)) +
+  ylab("Cumulative Citations\nin Web of Science") +
+  xlab("Years Since Publication") +
+  ggsave("figures/citations_scatter_slide.pdf",
+         height = 3.5, width = 5.6)
+
