@@ -14,14 +14,14 @@ library(nnet)
 disparity_estimator <- function(weight_name) {
   # Estimate the overall prevalence in the population
   prevalence <- full_population %>%
-    rename_at(.vars = vars(weight_name), .funs = function(x) "weight") %>%
+    rename_at(.vars = all_of(weight_name), .funs = function(x) "weight") %>%
     filter(!is.na(weight)) %>%
     group_by(RACE) %>%
     summarize(estimate = weighted.mean(y, w = weight)) %>%
     mutate(estimand = "prevalence")
   # Estimate the disparity in onset among the employed
   onset <- d_onset %>%
-    rename_at(.vars = vars(weight_name), .funs = function(x) "weight") %>%
+    rename_at(.vars = all_of(weight_name), .funs = function(x) "weight") %>%
     filter(!is.na(weight)) %>%
     group_by(RACE) %>%
     summarize(estimate = weighted.mean(y, w = weight)) %>%
@@ -43,7 +43,7 @@ counterfactual_estimator <- function(
   interactions = "with_race"
 ) {
   data <- data %>%
-    rename_at(.vars = vars(weight_name), .funs = function(x) "weight") %>%
+    rename_at(.vars = all_of(weight_name), .funs = function(x) "weight") %>%
     # Now that we have renamed, remove all the replicate weights to drop memory
     select(-starts_with("REPWTP")) %>%
     # For the GAM, we want the weight normalized to sum to the number of observations
@@ -57,10 +57,12 @@ counterfactual_estimator <- function(
                data = data,
                weights = weight)
     if (weight_name == "ASECWT" & save_intermediate) {
-      save(fit, file = paste0("intermediate/prop_",gsub("-| ","",race_case),"_fit.Rdata"))
+      saveRDS(fit, file = paste0("intermediate/prop_",gsub("-| ","",race_case),"_fit.Rds"))
     }
-    return(data.frame(prop = fitted(fit)) %>%
-             rename_all(.funs = function(x) paste0("prop_",gsub(" |-","",race_case))))
+    fitted <- data.frame(prop = fitted(fit)) %>%
+      rename_all(.funs = function(x) paste0("prop_",gsub(" |-","",race_case)))
+    rm(fit)
+    return(fitted)
   }
   # Append those to the dataset
   data <- data %>%
@@ -128,7 +130,7 @@ counterfactual_estimator <- function(
       }
       return(fitted_this_case)
     }
-    save(fitted_m, file = "intermediate/fitted_m.Rdata")
+    saveRDS(fitted_m, file = "intermediate/fitted_m.Rds")
     print("Spent on fitting m:")
     print(difftime(Sys.time(),t0_m_fit))
     
@@ -143,7 +145,7 @@ counterfactual_estimator <- function(
       group_by() %>%
       mutate(counterfactual_weight = ifelse(pi_hat > 0, weight * pi_hat / m_hat, 0))
     
-    save(data, file = "intermediate/data_with_counterfactual_weight.Rdata")
+    saveRDS(data, file = "intermediate/data_with_counterfactual_weight.Rds")
   }
 
   # If no interactions, fit one outcome model and one treatment model that we will reference several times
@@ -152,7 +154,7 @@ counterfactual_estimator <- function(
                weights = weight,
                data = data)
     if (weight_name == "ASECWT" & save_intermediate) {
-      save(fit, file = "intermediate/outcome_pooled_fit.Rdata")
+      saveRDS(fit, file = "intermediate/outcome_pooled_fit.Rds")
     }
   }
   
@@ -167,7 +169,7 @@ counterfactual_estimator <- function(
                  weights = weight,
                  data = this_case)
       if (weight_name == "ASECWT" & save_intermediate) {
-        save(fit, file = paste0("intermediate/outcome_",gsub("-| ","",r),"_fit.Rdata"))
+        saveRDS(fit, file = paste0("intermediate/outcome_",gsub("-| ","",r),"_fit.Rds"))
       }
     }
     
@@ -241,9 +243,10 @@ counterfactual_estimator <- function(
       } else if (interactions == "with_race") {
         # Load the white fit for comparison
         fit_this_case <- fit
-        load("intermediate/outcome_NonHispanicWhite_fit.Rdata")
+        fit <- readRDS("intermediate/outcome_NonHispanicWhite_fit.Rds")
         conditional_disparity <- predict(fit_this_case, newdata = this_case) -
           predict(fit, newdata = this_case)
+        rm(fit_this_case)
       } else if (interactions == "none") {
         conditional_disparity <- rep(
           ifelse(r == "Hispanic", 0 - coef(fit)["RACENon-Hispanic White"],
@@ -252,6 +255,7 @@ counterfactual_estimator <- function(
         )
       }
     }
+    rm(fit)
     
     # Predict the predicted counterfactual outcome by each equalization rule
     if (is.null(treatment_formula)) {
@@ -276,7 +280,7 @@ counterfactual_estimator <- function(
   # Save those for all replicates in case you later want to produce
   # an estimate for a subgroup
   if (save_intermediate) {
-    save(counterfactual_predictions,file = "intermediate/counterfactual_predictions_race_interactions.Rdata")
+    saveRDS(counterfactual_predictions,file = "intermediate/counterfactual_predictions_race_interactions.Rds")
   }
   
   # Aggregate to counterfactual means in each race/ethnicity category

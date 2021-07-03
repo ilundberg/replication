@@ -1,56 +1,54 @@
 
-# Main code file for
-# Occupational segregation contributes to racial disparities in health: A counterfactual perspective
+# Quantifying the contribution of occupational
+# segregation to racial disparities in health:
+# A gap-closing perspective
+
 # Ian Lundberg
 # ilundberg@princeton.edu
 
-setwd("C:/Users/iandl/Documents/health_disparities")
+# Main code file. Calls all individual code files.
 
-# This code calls the following packages
-library(tidyverse)
-library(labelled)
-library(reshape2)
-library(ipumsr)
-library(mgcv)
-library(foreach)
-library(doParallel)
-library(ggrepel)
-library(nnet)
+setwd("/home/ubuntu/aws_output")
 
-sink("figures/session_info.txt")
-print("Date and time of code run:")
-print(Sys.time())
-print("R VERSION:")
-print(data.frame(R.Version()) %>% melt(id = NULL))
-print("PACKAGE VERSIONS:")
-for (package_name in c("tidyverse","labelled","reshape2","ipumsr","mgcv","foreach","doParallel","ggrepel")) {
-  print(paste(package_name,packageVersion(package_name)))
-}
-sink()
+print("Prepare the R environment")
+source("code/prepare_environment.R")
 
-# ESTIMATE THE MAIN RESULTS
-# This requires the data:
-# - data/cps_00050.xml
-# - data/cps_00050.dat
-# This code internally calls:
-# - prepare_data.R
-# - estimator_functions.R
-source("code/cps_disability_estimation.R")
+print("Prepare data")
+source("code/prepare_data.R")
 
-# PRODUCE FIGURES
-# These files require:
-# - The raw data exists in the data folder
-# - The code (e.g. prepare_data.R) exists in the code folder
-# - The intermediate results (output from estimation) exist in the intermediate folder
-source("code/proportion_figure.R")
-source("code/disparity_figure.R")
-source("code/descriptive_figures.R")
-source("code/occupation_scatters.R")
-source("code/lottery_illustrations.R")
-source("code/model_summaries.R")
-source("code/alternative_specifications_figure.R")
-source("code/year_specific_estimates.R")
-source("code/occupational_hazards_within_between.R")
+print("Note sample restrictions in a text log")
+source("code/sample_restrictions.R")
+
+print("Estimate. Each file internally calls estimator_functions.R.")
+
+print("Descriptive estimates")
+source("code/estimate_descriptive.R")
+
+print("Scatters")
+source("code/estimate_scatters.R")
+
+print("Counterfactual estimates")
+source("code/estimate_counterfactual.R")
+
+print("Alternative specifications")
+source("code/estimate_additionalControls.R")
+source("code/estimate_withoutImmigrants.R")
+source("code/estimate_forwardLinkingWeight.R")
+source("code/estimate_from1988.R")
+source("code/estimate_beforeRedesign.R")
+source("code/estimate_afterRedesign.R")
+source("code/estimate_doublyRobust.R")
+
+print("Figures")
+# Note: Some figures are entirely LaTeX and thus have no R code.
+source("code/fig01.R")
+source("code/fig03.R")
+source("code/fig06.R")
+source("code/fig07.R")
+source("code/fig10.R")
+source("code/fig14.R")
+source("code/fig15.R")
+source("code/fig16.R")
 
 print("Finished at")
 print(Sys.time())
