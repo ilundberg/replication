@@ -1,4 +1,5 @@
-data
-intermediate
-figures
+data/
+figures/
+intermediate/
+.Rhistory
 .DS_Store
