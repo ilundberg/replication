@@ -1,5 +1,8 @@
-data/
-figures/
-intermediate/
-.Rhistory
 .DS_Store
+.Rhistory
+data/*
+!data/README.md
+figures/*
+!figures/README.md
+intermediate/*
+!intermediate/README.md
