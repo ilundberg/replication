@@ -1,5 +1,4 @@
-data
-intermediate
-figures
+data/.
+intermediate/.
+figures/.
 .DS_Store
-before_accept_code.zip
