@@ -1,4 +1,4 @@
-data/.
-intermediate/.
-figures/.
+data
+intermediate
+figures
 .DS_Store
