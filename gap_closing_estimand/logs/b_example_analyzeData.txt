@@ -1,0 +1,499 @@
+[1] "Time began:"
+[1] "2021-08-27 14:13:07 PDT"
+── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+✔ ggplot2 3.3.5     ✔ purrr   0.3.4
+✔ tibble  3.1.4     ✔ dplyr   1.0.7
+✔ tidyr   1.1.3     ✔ stringr 1.4.0
+✔ readr   2.0.1     ✔ forcats 0.5.1
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: grid
+Loading required package: Matrix
+
+Attaching package: ‘Matrix’
+
+The following objects are masked from ‘package:tidyr’:
+
+    expand, pack, unpack
+
+Loading required package: survival
+
+Attaching package: ‘survey’
+
+The following object is masked from ‘package:graphics’:
+
+    dotchart
+
+
+Attaching package: ‘foreach’
+
+The following objects are masked from ‘package:purrr’:
+
+    accumulate, when
+
+Loading required package: iterators
+Loading required package: parallel
+Loading required package: rngtools
+Loading required package: Rcpp
+## 
+## Amelia II: Multiple Imputation
+## (Version 1.8.0, built: 2021-05-26)
+## Copyright (C) 2005-2021 James Honaker, Gary King and Matthew Blackwell
+## Refer to http://gking.harvard.edu/amelia/ for more information
+## 
+R version 4.1.1 (2021-08-10)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Big Sur 11.5.2
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] parallel  grid      stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] gapclosing_0.0.3  xtable_1.8-4      Amelia_1.8.0      Rcpp_1.0.7       
+ [5] doRNG_1.8.2       rngtools_1.5      doParallel_1.0.16 iterators_1.0.13 
+ [9] foreach_1.5.1     survey_4.1-1      survival_3.2-12   Matrix_1.3-4     
+[13] haven_2.4.3       ggridges_0.5.3    reshape2_1.4.4    forcats_0.5.1    
+[17] stringr_1.4.0     dplyr_1.0.7       purrr_0.3.4       readr_2.0.1      
+[21] tidyr_1.1.3       tibble_3.1.4      ggplot2_3.3.5     tidyverse_1.3.1  
+
+loaded via a namespace (and not attached):
+ [1] lubridate_1.7.10 lattice_0.20-44  assertthat_0.2.1 digest_0.6.27   
+ [5] utf8_1.2.2       R6_2.5.1         cellranger_1.1.0 plyr_1.8.6      
+ [9] backports_1.2.1  reprex_2.0.1     httr_1.4.2       pillar_1.6.2    
+[13] rlang_0.4.11     readxl_1.3.1     rstudioapi_0.13  splines_4.1.1   
+[17] foreign_0.8-81   munsell_0.5.0    broom_0.7.9      compiler_4.1.1  
+[21] modelr_0.1.8     pkgconfig_2.0.3  mitools_2.4      tidyselect_1.1.1
+[25] codetools_0.2-18 fansi_0.5.0      crayon_1.4.1     tzdb_0.1.2      
+[29] dbplyr_2.1.1     withr_2.4.2      jsonlite_1.7.2   gtable_0.3.0    
+[33] lifecycle_1.0.0  DBI_1.1.1        magrittr_2.0.1   scales_1.1.1    
+[37] cli_3.0.1        stringi_1.7.3    fs_1.5.0         xml2_1.3.2      
+[41] ellipsis_0.3.2   generics_0.1.0   vctrs_0.3.8      tools_4.1.1     
+[45] glue_1.4.2       hms_1.1.0        colorspace_2.0-2 rvest_1.0.1     
+[1] "Number in age range:"
+[1] 19617
+[1] "Number not NA on parent occupation:"
+[1] 15929
+[1] "Number not NA on own occupation:"
+[1] 15502
+[1] "Number reporting positive incomes:"
+[1] 12328
+[1] "Weighted proportion missing"
+  variable       value
+1  outcome 0.000000000
+2  treated 0.014752155
+3        X 0.028373341
+4     RACE 0.000000000
+5   DEGREE 0.001052626
+6      SEX 0.000000000
+7      AGE 0.000000000
+-- Imputation 1 --
+
+  1  2
+
+-- Imputation 1 --
+
+  1  2
+
+-- Imputation 1 --
+
+  1  2
+
+-- Imputation 1 --
+
+  1  2
+
+-- Imputation 1 --
+
+  1  2
+
+-- Imputation 1 --
+
+  1  2
+
+-- Imputation 1 --
+
+  1  2
+
+-- Imputation 1 --
+
+  1  2
+
+-- Imputation 1 --
+
+  1  2
+
+-- Imputation 1 --
+
+  1  2
+
+-- Imputation 1 --
+
+  1  2
+
+[1] "Proportion upper class"
+          X   treated
+1 0.1018248 0.0961357
+% latex table generated in R 4.1.1 by xtable 1.8-4 package
+% Fri Aug 27 14:13:10 2021
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrr}
+  \hline
+ & upperOrigin & lowerOrigin \\ 
+  \hline
+Log.income & 9.97 & 9.65 \\ 
+  Race..White & 0.87 & 0.83 \\ 
+  Race..White.1 & 0.87 & 0.83 \\ 
+  Race..Black & 0.04 & 0.11 \\ 
+  Race..Other & 0.08 & 0.06 \\ 
+  Degree..Less.than.high.school & 0.02 & 0.12 \\ 
+  Degree..High.school & 0.27 & 0.54 \\ 
+  Degree..Junior.college & 0.07 & 0.08 \\ 
+  Degree..Bachelor.s & 0.38 & 0.18 \\ 
+  Degree..Graduate & 0.26 & 0.09 \\ 
+  Female & 0.45 & 0.48 \\ 
+  Age & 37.22 & 37.31 \\ 
+   \hline
+\end{tabular}
+\end{table}
+[1] "Time spent on BRR estimates"
+Time difference of 1.520163 hours
+[1] "DOUBLE-ROBUST GLM: UNDER TREATMENT"
+Gap-closing estimates using doubly_robust estimation on one sample.
+
+Treatment model was glm estimation with model formula:
+formula(treated ~ X + RACE + DEGREE + SEX + AGE)
+
+Outcome model was lm estimation with model formula:
+formula(outcome ~ treated * X + RACE + DEGREE + SEX + AGE)
+
+Factual estimates are means within and disparities across X.
+Counterfactual estimates are under an intervention to set  to 1.
+
+Factual mean outcomes:
+# A tibble: 2 × 5
+  counterfactual  model         X     estimate     se
+  <chr>           <chr>         <chr>    <dbl>  <dbl>
+1 under_treatment glm_estimates FALSE     9.65 0.0118
+2 under_treatment glm_estimates TRUE      9.97 0.0320
+
+Counterfactual mean outcomes (post-intervention means):
+# A tibble: 2 × 5
+  counterfactual  model         X     estimate     se
+  <chr>           <chr>         <chr>    <dbl>  <dbl>
+1 under_treatment glm_estimates FALSE     10.1 0.0553
+2 under_treatment glm_estimates TRUE      10.4 0.0619
+
+Factual disparities:
+# A tibble: 2 × 5
+  counterfactual  model         X            estimate     se
+  <chr>           <chr>         <chr>           <dbl>  <dbl>
+1 under_treatment glm_estimates FALSE - TRUE   -0.322 0.0345
+2 under_treatment glm_estimates TRUE - FALSE    0.322 0.0345
+
+Counterfactual disparities (gap-closing estimands):
+# A tibble: 2 × 5
+  counterfactual  model         X            estimate     se
+  <chr>           <chr>         <chr>           <dbl>  <dbl>
+1 under_treatment glm_estimates FALSE - TRUE   -0.269 0.0824
+2 under_treatment glm_estimates TRUE - FALSE    0.269 0.0824
+
+Additive gap closed: Counterfactual - Factual
+# A tibble: 2 × 5
+  counterfactual  model         X            estimate     se
+  <chr>           <chr>         <chr>           <dbl>  <dbl>
+1 under_treatment glm_estimates FALSE - TRUE  -0.0528 0.0802
+2 under_treatment glm_estimates TRUE - FALSE   0.0528 0.0802
+
+Proportional gap closed: (Counterfactual - Factual) / Factual
+# A tibble: 2 × 5
+  counterfactual  model         X            estimate    se
+  <chr>           <chr>         <chr>           <dbl> <dbl>
+1 under_treatment glm_estimates FALSE - TRUE    0.164 0.250
+2 under_treatment glm_estimates TRUE - FALSE    0.164 0.250
+
+Type plot(name_of_this_object) to visualize results.
+[1] "DOUBLE-ROBUST GLM: UNDER CONTROL"
+Gap-closing estimates using doubly_robust estimation on one sample.
+
+Treatment model was glm estimation with model formula:
+formula(treated ~ X + RACE + DEGREE + SEX + AGE)
+
+Outcome model was lm estimation with model formula:
+formula(outcome ~ treated * X + RACE + DEGREE + SEX + AGE)
+
+Factual estimates are means within and disparities across X.
+Counterfactual estimates are under an intervention to set  to 0.
+
+Factual mean outcomes:
+# A tibble: 2 × 5
+  counterfactual model         X     estimate     se
+  <chr>          <chr>         <chr>    <dbl>  <dbl>
+1 under_control  glm_estimates FALSE     9.65 0.0118
+2 under_control  glm_estimates TRUE      9.97 0.0320
+
+Counterfactual mean outcomes (post-intervention means):
+# A tibble: 2 × 5
+  counterfactual model         X     estimate     se
+  <chr>          <chr>         <chr>    <dbl>  <dbl>
+1 under_control  glm_estimates FALSE     9.62 0.0122
+2 under_control  glm_estimates TRUE      9.85 0.0346
+
+Factual disparities:
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 under_control  glm_estimates FALSE - TRUE   -0.322 0.0345
+2 under_control  glm_estimates TRUE - FALSE    0.322 0.0345
+
+Counterfactual disparities (gap-closing estimands):
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 under_control  glm_estimates FALSE - TRUE   -0.233 0.0369
+2 under_control  glm_estimates TRUE - FALSE    0.233 0.0369
+
+Additive gap closed: Counterfactual - Factual
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 under_control  glm_estimates FALSE - TRUE  -0.0887 0.0172
+2 under_control  glm_estimates TRUE - FALSE   0.0887 0.0172
+
+Proportional gap closed: (Counterfactual - Factual) / Factual
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 under_control  glm_estimates FALSE - TRUE    0.275 0.0589
+2 under_control  glm_estimates TRUE - FALSE    0.275 0.0589
+
+Type plot(name_of_this_object) to visualize results.
+[1] "DOUBLE-ROBUST GLM: MARGINAL"
+Gap-closing estimates using doubly_robust estimation on one sample.
+
+Treatment model was glm estimation with model formula:
+formula(treated ~ X + RACE + DEGREE + SEX + AGE)
+
+Outcome model was lm estimation with model formula:
+formula(outcome ~ treated * X + RACE + DEGREE + SEX + AGE)
+
+Factual estimates are means within and disparities across X.
+Counterfactual estimates are under an intervention to set to 0.0964068438598843
+Factual mean outcomes:
+# A tibble: 2 × 5
+  counterfactual model         X     estimate     se
+  <chr>          <chr>         <chr>    <dbl>  <dbl>
+1 marginal       glm_estimates FALSE     9.65 0.0118
+2 marginal       glm_estimates TRUE      9.97 0.0320
+
+Counterfactual mean outcomes (post-intervention means):
+# A tibble: 2 × 5
+  counterfactual model         X     estimate     se
+  <chr>          <chr>         <chr>    <dbl>  <dbl>
+1 marginal       glm_estimates FALSE     9.67 0.0129
+2 marginal       glm_estimates TRUE      9.90 0.0324
+
+Factual disparities:
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 marginal       glm_estimates FALSE - TRUE   -0.322 0.0345
+2 marginal       glm_estimates TRUE - FALSE    0.322 0.0345
+
+Counterfactual disparities (gap-closing estimands):
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 marginal       glm_estimates FALSE - TRUE   -0.236 0.0349
+2 marginal       glm_estimates TRUE - FALSE    0.236 0.0349
+
+Additive gap closed: Counterfactual - Factual
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 marginal       glm_estimates FALSE - TRUE  -0.0862 0.0147
+2 marginal       glm_estimates TRUE - FALSE   0.0862 0.0147
+
+Proportional gap closed: (Counterfactual - Factual) / Factual
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 marginal       glm_estimates FALSE - TRUE    0.268 0.0496
+2 marginal       glm_estimates TRUE - FALSE    0.268 0.0496
+
+Type plot(name_of_this_object) to visualize results.
+[1] "DOUBLE-ROBUST GLM: CONDITIONAL"
+Gap-closing estimates using doubly_robust estimation on one sample.
+
+Treatment model was glm estimation with model formula:
+formula(treated ~ X + RACE + DEGREE + SEX + AGE)
+
+Outcome model was lm estimation with model formula:
+formula(outcome ~ treated * X + RACE + DEGREE + SEX + AGE)
+
+Factual estimates are means within and disparities across X.
+Counterfactual estimates are under an intervention to set  by a rule for counterfactual_assignments that varies across individuals.
+
+Factual mean outcomes:
+# A tibble: 2 × 5
+  counterfactual model         X     estimate     se
+  <chr>          <chr>         <chr>    <dbl>  <dbl>
+1 conditional    glm_estimates FALSE     9.65 0.0118
+2 conditional    glm_estimates TRUE      9.97 0.0320
+
+Counterfactual mean outcomes (post-intervention means):
+# A tibble: 2 × 5
+  counterfactual model         X     estimate     se
+  <chr>          <chr>         <chr>    <dbl>  <dbl>
+1 conditional    glm_estimates FALSE     9.66 0.0165
+2 conditional    glm_estimates TRUE      9.94 0.0333
+
+Factual disparities:
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 conditional    glm_estimates FALSE - TRUE   -0.322 0.0345
+2 conditional    glm_estimates TRUE - FALSE    0.322 0.0345
+
+Counterfactual disparities (gap-closing estimands):
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 conditional    glm_estimates FALSE - TRUE   -0.282 0.0376
+2 conditional    glm_estimates TRUE - FALSE    0.282 0.0376
+
+Additive gap closed: Counterfactual - Factual
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 conditional    glm_estimates FALSE - TRUE  -0.0398 0.0169
+2 conditional    glm_estimates TRUE - FALSE   0.0398 0.0169
+
+Proportional gap closed: (Counterfactual - Factual) / Factual
+# A tibble: 2 × 5
+  counterfactual model         X            estimate     se
+  <chr>          <chr>         <chr>           <dbl>  <dbl>
+1 conditional    glm_estimates FALSE - TRUE    0.124 0.0533
+2 conditional    glm_estimates TRUE - FALSE    0.124 0.0533
+
+Type plot(name_of_this_object) to visualize results.
+[1] "NUISANCE FUNCTIONS"
+       model      variable    coef     se
+1  treatment   (Intercept) -5.3649 1.0611
+2  treatment         XTRUE  0.5040 0.0949
+3  treatment         RACE2 -0.4367 0.1631
+4  treatment         RACE3  0.3973 0.1341
+5  treatment       DEGREE1  2.2196 1.0057
+6  treatment       DEGREE2  3.0503 1.0087
+7  treatment       DEGREE3  4.0426 1.0004
+8  treatment       DEGREE4  5.1864 1.0037
+9  treatment           SEX -0.8007 0.0775
+10 treatment           AGE  0.0205 0.0087
+11   outcome   (Intercept)  9.3983 0.0803
+12   outcome       treated  0.3784 0.0326
+13   outcome         XTRUE -0.0053 0.0361
+14   outcome         RACE2 -0.0222 0.0266
+15   outcome         RACE3 -0.1464 0.0448
+16   outcome       DEGREE1  0.4616 0.0349
+17   outcome       DEGREE2  0.6226 0.0446
+18   outcome       DEGREE3  0.8675 0.0383
+19   outcome       DEGREE4  1.0585 0.0457
+20   outcome           SEX -0.7134 0.0191
+21   outcome           AGE  0.0200 0.0020
+22   outcome treated:XTRUE  0.0880 0.0679
+[1] "COMPARISON MODELS COEFFICIENT ON X"
+                         comparison variable       coef         se      pval
+1                  given_predictors    XTRUE 0.01301843 0.03110446 0.6755531
+2 given_predictors_except_treatment    XTRUE 0.03967419 0.03164361 0.2099212
+[1] "FULL COMPARISON MODELS"
+                          comparison    variable   coef    se
+1                   given_predictors (Intercept)  9.398 0.080
+2                   given_predictors       XTRUE  0.013 0.031
+3                   given_predictors     treated  0.398 0.029
+4                   given_predictors       RACE2 -0.022 0.027
+5                   given_predictors       RACE3 -0.145 0.045
+6                   given_predictors     DEGREE1  0.461 0.035
+7                   given_predictors     DEGREE2  0.621 0.045
+8                   given_predictors     DEGREE3  0.865 0.038
+9                   given_predictors     DEGREE4  1.058 0.046
+10                  given_predictors         SEX -0.713 0.019
+11                  given_predictors         AGE  0.020 0.002
+12 given_predictors_except_treatment (Intercept)  9.407 0.080
+13 given_predictors_except_treatment       XTRUE  0.040 0.032
+14 given_predictors_except_treatment       RACE2 -0.030 0.027
+15 given_predictors_except_treatment       RACE3 -0.130 0.045
+16 given_predictors_except_treatment     DEGREE1  0.474 0.035
+17 given_predictors_except_treatment     DEGREE2  0.649 0.045
+18 given_predictors_except_treatment     DEGREE3  0.930 0.038
+19 given_predictors_except_treatment     DEGREE4  1.211 0.044
+20 given_predictors_except_treatment         SEX -0.736 0.019
+21 given_predictors_except_treatment         AGE  0.021 0.002
+[1] "Outcome and treatment coefficients arranged for placement in a table"
+        variable quantity outcome treatment
+1          XTRUE     coef   -0.01      0.50
+2          XTRUE       se    0.04      0.09
+3  treated:XTRUE     coef    0.09        NA
+4  treated:XTRUE       se    0.07        NA
+5        treated     coef    0.38        NA
+6        treated       se    0.03        NA
+7            AGE     coef    0.02      0.02
+8            AGE       se    0.00      0.01
+9        DEGREE1     coef    0.46      2.22
+10       DEGREE1       se    0.03      1.01
+11       DEGREE2     coef    0.62      3.05
+12       DEGREE2       se    0.04      1.01
+13       DEGREE3     coef    0.87      4.04
+14       DEGREE3       se    0.04      1.00
+15       DEGREE4     coef    1.06      5.19
+16       DEGREE4       se    0.05      1.00
+17         RACE2     coef   -0.02     -0.44
+18         RACE2       se    0.03      0.16
+19         RACE3     coef   -0.15      0.40
+20         RACE3       se    0.04      0.13
+21           SEX     coef   -0.71     -0.80
+22           SEX       se    0.02      0.08
+23   (Intercept)     coef    9.40     -5.36
+24   (Intercept)       se    0.08      1.06
+[1] "Comparison coefficients arranged for placement in a table"
+      variable quantity given_predictors given_predictors_except_treatment
+1        XTRUE     coef             0.01                              0.04
+2        XTRUE       se             0.03                              0.03
+3      treated     coef             0.40                                NA
+4      treated       se             0.03                                NA
+5          AGE     coef             0.02                              0.02
+6          AGE       se             0.00                              0.00
+7      DEGREE1     coef             0.46                              0.47
+8      DEGREE1       se             0.03                              0.03
+9      DEGREE2     coef             0.62                              0.65
+10     DEGREE2       se             0.04                              0.04
+11     DEGREE3     coef             0.86                              0.93
+12     DEGREE3       se             0.04                              0.04
+13     DEGREE4     coef             1.06                              1.21
+14     DEGREE4       se             0.05                              0.04
+15       RACE2     coef            -0.02                             -0.03
+16       RACE2       se             0.03                              0.03
+17       RACE3     coef            -0.15                             -0.13
+18       RACE3       se             0.04                              0.05
+19         SEX     coef            -0.71                             -0.74
+20         SEX       se             0.02                              0.02
+21 (Intercept)     coef             9.40                              9.41
+22 (Intercept)       se             0.08                              0.08
+[1] "2021-08-27 15:44:54 PDT"
+[1] "Time spent:"
+Time difference of 1.524395 hours

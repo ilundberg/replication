@@ -29,18 +29,20 @@ if (!has_all_subdirectories) {
 }
 # You will need all the code files (including this one) in the code subdirectory
 files_in_code <- list.files("code/")
-has_all_code <- all(c("run_all.R",
-                      "class_gap_example.R","class_gap_plots.R",
-                      "sim_parametric_double_robust.R","sim_parametric_double_robust_complex_sample.R",
-                      "sim_cross_fitting_helps.R") %in% files_in_code)
+has_all_code <- all(c("a_example_prepareData.R",
+                      "b_example_analyzeData.R",
+                      "c_example_produceFigures.R",
+                      "d_sim_double_robust.R",
+                      "e_sim_complex_sample.R",
+                      "f_sim_cross_fitting.R",
+                      "g_slide_animated_figures.R",
+                      "prepare_environment.R") %in% files_in_code)
 if (!has_all_code) {
   stop("Your code subdirectory does not have the required code files.")
 }
 # You will need the private files in a data/ directory
 files_in_data <- list.files("data/")
-has_all_data_files <- all(c("occ10-to-egp-class-crosswalk.csv",
-                            "GSS.dat",
-                            "GSS.dct") %in% files_in_data)
+has_all_data_files <- all(c("GSS.dat","GSS.dct","GSS.r") %in% files_in_data)
 if (!has_all_data_files) {
   stop("Your data subdirectory does not have the required files.")
 }

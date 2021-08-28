@@ -1,0 +1,162 @@
+[1] "Time began:"
+[1] "2021-08-27 14:02:03 PDT"
+── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+✔ ggplot2 3.3.5     ✔ purrr   0.3.4
+✔ tibble  3.1.4     ✔ dplyr   1.0.7
+✔ tidyr   1.1.3     ✔ stringr 1.4.0
+✔ readr   2.0.1     ✔ forcats 0.5.1
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: grid
+Loading required package: Matrix
+
+Attaching package: ‘Matrix’
+
+The following objects are masked from ‘package:tidyr’:
+
+    expand, pack, unpack
+
+Loading required package: survival
+
+Attaching package: ‘survey’
+
+The following object is masked from ‘package:graphics’:
+
+    dotchart
+
+
+Attaching package: ‘foreach’
+
+The following objects are masked from ‘package:purrr’:
+
+    accumulate, when
+
+Loading required package: iterators
+Loading required package: parallel
+Loading required package: rngtools
+Loading required package: Rcpp
+## 
+## Amelia II: Multiple Imputation
+## (Version 1.8.0, built: 2021-05-26)
+## Copyright (C) 2005-2021 James Honaker, Gary King and Matthew Blackwell
+## Refer to http://gking.harvard.edu/amelia/ for more information
+## 
+R version 4.1.1 (2021-08-10)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Big Sur 11.5.2
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] parallel  grid      stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] gapclosing_0.0.3  xtable_1.8-4      Amelia_1.8.0      Rcpp_1.0.7       
+ [5] doRNG_1.8.2       rngtools_1.5      doParallel_1.0.16 iterators_1.0.13 
+ [9] foreach_1.5.1     survey_4.1-1      survival_3.2-12   Matrix_1.3-4     
+[13] haven_2.4.3       ggridges_0.5.3    reshape2_1.4.4    forcats_0.5.1    
+[17] stringr_1.4.0     dplyr_1.0.7       purrr_0.3.4       readr_2.0.1      
+[21] tidyr_1.1.3       tibble_3.1.4      ggplot2_3.3.5     tidyverse_1.3.1  
+
+loaded via a namespace (and not attached):
+ [1] lubridate_1.7.10 lattice_0.20-44  assertthat_0.2.1 digest_0.6.27   
+ [5] utf8_1.2.2       R6_2.5.1         cellranger_1.1.0 plyr_1.8.6      
+ [9] backports_1.2.1  reprex_2.0.1     httr_1.4.2       pillar_1.6.2    
+[13] rlang_0.4.11     readxl_1.3.1     rstudioapi_0.13  splines_4.1.1   
+[17] foreign_0.8-81   munsell_0.5.0    broom_0.7.9      compiler_4.1.1  
+[21] modelr_0.1.8     pkgconfig_2.0.3  mitools_2.4      tidyselect_1.1.1
+[25] codetools_0.2-18 fansi_0.5.0      crayon_1.4.1     tzdb_0.1.2      
+[29] dbplyr_2.1.1     withr_2.4.2      jsonlite_1.7.2   gtable_0.3.0    
+[33] lifecycle_1.0.0  DBI_1.1.1        magrittr_2.0.1   scales_1.1.1    
+[37] cli_3.0.1        stringi_1.7.3    fs_1.5.0         xml2_1.3.2      
+[41] ellipsis_0.3.2   generics_0.1.0   vctrs_0.3.8      tools_4.1.1     
+[45] glue_1.4.2       hms_1.1.0        colorspace_2.0-2 rvest_1.0.1     
+Rows: 539 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (2): title, egp_label
+dbl (2): occ10, egp10_10
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+[1] "Note some Class I occupations"
+ [1] "Chief executives"                                                  
+ [2] "Legislators"                                                       
+ [3] "Computer and information systems managers"                         
+ [4] "Education administrators"                                          
+ [5] "Architectural and engineering managers"                            
+ [6] "Medical and health services managers"                              
+ [7] "Natural sciences managers"                                         
+ [8] "Management analysts"                                               
+ [9] "Accountants and auditors"                                          
+[10] "Budget analysts"                                                   
+[11] "Financial analysts"                                                
+[12] "Computer and information research scientists"                      
+[13] "Software developers, applications and systems software"            
+[14] "Actuaries"                                                         
+[15] "Mathematicians"                                                    
+[16] "Operations research analysts"                                      
+[17] "Statisticians"                                                     
+[18] "Miscellaneous mathematical science occupations"                    
+[19] "Architects, except naval"                                          
+[20] "Aerospace engineers"                                               
+[21] "Agricultural engineers"                                            
+[22] "Biomedical engineers"                                              
+[23] "Chemical engineers"                                                
+[24] "Civil engineers"                                                   
+[25] "Computer hardware engineers"                                       
+[26] "Electrical and electronics engineers"                              
+[27] "Environmental engineers"                                           
+[28] "Industrial engineers, including health and safety"                 
+[29] "Marine engineers and naval architects"                             
+[30] "Materials engineers"                                               
+[31] "Mechanical engineers"                                              
+[32] "Mining and geological engineers, including mining safety engineers"
+[33] "Nuclear engineers"                                                 
+[34] "Petroleum engineers"                                               
+[35] "Engineers, all other"                                              
+[36] "Agricultural and food scientists"                                  
+[37] "Biological scientists"                                             
+[38] "Conservation scientists and foresters"                             
+[39] "Medical scientists"                                                
+[40] "Life scientists, all other"                                        
+[41] "Astronomers and physicists"                                        
+[42] "Atmospheric and space scientists"                                  
+[43] "Chemists and materials scientists"                                 
+[44] "Environmental scientists and geoscientists"                        
+[45] "Physical scientists, all other"                                    
+[46] "Economists"                                                        
+[47] "Psychologists"                                                     
+[48] "Urban and regional planners"                                       
+[49] "Lawyers"                                                           
+[50] "Judicial law clerks"                                               
+[51] "Judges, magistrates, and other judicial workers"                   
+[52] "Postsecondary teachers"                                            
+[53] "Chiropractors"                                                     
+[54] "Dentists"                                                          
+[55] "Optometrists"                                                      
+[56] "Pharmacists"                                                       
+[57] "Physicians and surgeons"                                           
+[58] "Podiatrists"                                                       
+[59] "Veterinarians"                                                     
+# A tibble: 1 × 2
+  num_lone_psu mean_lone_psu
+         <int>         <dbl>
+1            3     0.0000439
+[1] "2021-08-27 14:06:21 PDT"
+[1] "Time spent:"
+Time difference of 4.287452 mins
