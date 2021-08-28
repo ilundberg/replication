@@ -2,7 +2,5 @@
 .Rhistory
 data/*
 !data/README.md
-figures/*
-!figures/README.md
 intermediate/*
 !intermediate/README.md
