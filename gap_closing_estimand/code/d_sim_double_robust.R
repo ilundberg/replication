@@ -104,7 +104,8 @@ simulation_wrong_g <- giant_sample %>%
   xlab("Confounding Variable L") +
   scale_y_continuous(name = ("Expected Potential Outcome"),
                      breaks = seq(0,10,2)) +
-  facet_wrap(~true_or_estimated, ncol = 2)
+  facet_wrap(~true_or_estimated, ncol = 2) +
+  theme_bw()
 ggsave(plot = simulation_wrong_g,
        file = "figures/simulation_wrong_g.pdf",
        height = 3, width = 6.5)
@@ -126,7 +127,8 @@ simulation_wrong_m <- giant_sample %>%
   geom_line() +
   xlab("Confounding Variable L") +
   ylab("Probability of Treatment") +
-  facet_wrap(~true_or_estimated, ncol = 2)
+  facet_wrap(~true_or_estimated, ncol = 2) +
+  theme_bw()
 ggsave(plot = simulation_wrong_m,
        file = "figures/simulation_wrong_m.pdf",
        height = 3, width = 6.43)

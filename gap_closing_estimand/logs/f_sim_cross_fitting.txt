@@ -92,3 +92,8 @@ loaded via a namespace (and not attached):
 [1] "Starting n 1250"
 [1] "Starting n 1500"
 [1] "Starting n 2000"
+[1] "Starting n 3000"
+[1] "Starting n 5000"
+[1] "2021-08-27 19:04:51 PDT"
+[1] "Time spent:"
+Time difference of 2.880932 hours

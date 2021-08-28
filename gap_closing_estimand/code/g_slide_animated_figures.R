@@ -60,15 +60,15 @@ ggsave(plot = p,
        filename = paste0("figures/empirical_example_slide_2.pdf"),
        height = 4, width = 6.5)
 
-# Slide 3: Causal effect among professional
-p$layers[[1]]$aes_params$alpha <- c(1,1,0,1)
-p$layers[[6]]$aes_params$alpha <- c(1,0)
-p$layers[[7]]$aes_params$alpha <- c(1,1,0,0)
+# Slide 3: Causal effect among working class
+p$layers[[1]]$aes_params$alpha <- c(1,1,1,0)
+p$layers[[6]]$aes_params$alpha <- c(0,1)
+p$layers[[7]]$aes_params$alpha <- c(0,0,1,1)
 ggsave(plot = p,
        filename = paste0("figures/empirical_example_slide_3.pdf"),
        height = 4, width = 6.5)
 
-# Slide 4: Causal effect among working class
+# Slide 4: Causal effect among professional class
 p$layers[[1]]$aes_params$alpha <- 1
 p$layers[[6]]$aes_params$alpha <- 1
 p$layers[[7]]$aes_params$alpha <- 1

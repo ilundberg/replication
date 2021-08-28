@@ -33,7 +33,7 @@ registerDoParallel(cl)
 r <- 1000
 
 # Set the sequence of sample sizes for simulations
-n_vals <- c(250,500,750,1000,1250,1500,2000,3000,5000)
+n_vals <- c(250,500,1000,1500,2000,3000,5000,10000)
 
 # Define the data generating process
 make_sample <- function(n) {
@@ -110,10 +110,12 @@ sim_cross_fitting_aggregated <- sim_cross_fitting %>%
             mse = mean((estimate  - truth) ^ 2),
             mse_se = sd((estimate - truth) ^ 2) / sqrt(n()),
             .groups = "drop") %>%
+  # Drop the singly-robust sample split estimators because no one would choose those estimators
+  filter(estimator == "doubly_robust" | sample_split == "single_sample") %>%
   mutate(estimator_label = case_when(estimator == "doubly_robust" & sample_split == "cross_fit" ~ "Doubly robust estimator\n+ cross fitting",
                                      estimator == "doubly_robust" & sample_split == "single_sample" ~ "Doubly robust estimator",
-                                     estimator == "outcome_modeling" ~ "Estimator with\npredicted outcomes",
-                                     estimator == "treatment_modeling" ~ "Estimator with\npredicted treatment\nprobabilities"),
+                                     estimator == "outcome_modeling" & sample_split == "single_sample" ~ "Estimator with\npredicted outcomes",
+                                     estimator == "treatment_modeling" & sample_split == "single_sample" ~ "Estimator with\npredicted treatment\nprobabilities"),
          estimator_label = fct_relevel(estimator_label,"Estimator with\npredicted outcomes","Estimator with\npredicted treatment\nprobabilities","Doubly robust estimator","Doubly robust estimator\n+ cross fitting"))
 saveRDS(sim_cross_fitting_aggregated, file = "intermediate/sim_cross_fitting_aggregated.Rds")
 
@@ -122,7 +124,7 @@ saveRDS(sim_cross_fitting_aggregated, file = "intermediate/sim_cross_fitting_agg
 ####################
 
 sim_cross_fitting_convergence <- sim_cross_fitting_aggregated %>%
-  filter(estimator_label %in% c("Estimator with\npredicted outcomes","Doubly robust estimator","Doubly robust estimator\n+ cross fitting")) %>%
+  filter(n %in% c(250,500,1000,1500,2000,3000,5000,10000)) %>%
   ggplot(aes(x = n, y = sqrt(mse),
              color = estimator_label, shape = estimator_label,
              alpha = estimator_label)) +
@@ -131,7 +133,7 @@ sim_cross_fitting_convergence <- sim_cross_fitting_aggregated %>%
   geom_line() +
   scale_y_continuous(name = "Root Mean Squared Error") +
   scale_x_continuous(name = "Sample Size") +
-  scale_alpha_manual(values = rep(1,3)) +
+  scale_alpha_manual(values = rep(1,4)) +
   theme_bw() +
   theme(legend.title = element_blank(),
         legend.key.height = unit(36,"pt"),
