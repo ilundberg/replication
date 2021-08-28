@@ -1,4 +1,5 @@
-This directory contains replication code for "[The Gap-Closing Estimand: A Causal Approach to Study Interventions that Close Disparities Across Social Categories](https://doi.org/10.31235/osf.io/gx4y3)." When the manuscript is accepted for publication, the latest version of these files will be archived on [Dataverse](https://dataverse.harvard.edu/dataverse/ilundberg).
+This directory contains replication code for
+>Lundberg, Ian. Forthcoming. "[The Gap-Closing Estimand: A Causal Approach to Study Interventions that Close Disparities Across Social Categories](https://doi.org/10.31235/osf.io/gx4y3)." _Sociological Methods and Research_. These files will soon be archived on [Dataverse](https://dataverse.harvard.edu/dataverse/ilundberg).
 
 The code uses the [gapclosing package](https://ilundberg.github.io/gapclosing/) (version 1.0.0). To use the code, you will first need to install the package: <pre>devtools::install_github("ilundberg/gapclosing")</pre>
 
