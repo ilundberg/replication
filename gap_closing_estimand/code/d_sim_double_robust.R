@@ -26,7 +26,9 @@ source("code/prepare_environment.R")
 print(sessionInfo())
 
 # Prepare for parallel computing
-cl <- makeCluster(4)
+cores_to_use <- round(detectCores() / 2)
+print(paste("Running in parallel over",cores_to_use,"cores"))
+cl <- makeCluster(cores_to_use)
 registerDoParallel(cl)
 
 # Set the number of simulations

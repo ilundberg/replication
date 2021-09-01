@@ -22,6 +22,9 @@ set.seed(08544)
 # Load packages
 source("code/prepare_environment.R")
 
+# Print the computing environment information
+print(sessionInfo())
+
 ###############################################
 # Main empirical example plot: Slide versions #
 ###############################################
@@ -88,7 +91,7 @@ ggsave(plot = p,
 # Parametric double robust simulation: Slide versions #
 #######################################################
 
-sim_densities <- readRDS("intermediate/sims_densities.Rds")
+sim_densities <- readRDS("intermediate/sim_densities.Rds")
 for (slide_number in 0:3) {
   p <- sim_densities  +
     scale_alpha_manual(values = c(rep(0,3 - slide_number),rep(1,slide_number))) +
@@ -103,12 +106,12 @@ for (slide_number in 0:3) {
 ########################################################
 
 sim_cross_fitting_convergence <- readRDS("intermediate/sim_cross_fitting_convergence.Rds")
-for (slide_number in 0:3) {
+for (slide_number in 0:4) {
   p <- sim_cross_fitting_convergence  +
-    scale_alpha_manual(values = c(rep(1,slide_number),rep(0,3 - slide_number)))
+    scale_alpha_manual(values = c(rep(1,slide_number),rep(0,4 - slide_number)))
   ggsave(plot = p,
          file = paste0("figures/sim_cross_fitting_convergence_",slide_number,".pdf"),
-         height = 2, width = 8)
+         height = 4, width = 6.5)
 }
 
 # Close the sink

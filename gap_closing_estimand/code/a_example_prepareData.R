@@ -74,7 +74,6 @@ GSS <- GSS  %>%
 saveRDS(GSS, file = "intermediate/GSS_merged.Rds")
 
 # Define balanced repeated replicates that will be used for uncertainty.
-set.seed(08544)
 # Define the survey design in the survey package
 gss_svydesign <- svydesign(ids = ~ cluster_id,
                            strata = ~ VSTRAT,

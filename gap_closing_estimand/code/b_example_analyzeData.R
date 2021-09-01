@@ -101,7 +101,6 @@ sample_restrictions <- function(raw_data, print_summaries = F) {
 # Produce the main data set for the analyses
 d <- sample_restrictions(GSS_merged, print_summaries = T)
 # Repeat that several times to average over randomness, and produce descriptive statistics
-set.seed(08544)
 many_imputations <- foreach(i = 1:10, .combine = "rbind") %do% sample_restrictions(GSS_merged)
 
 #############################
@@ -222,7 +221,9 @@ saveRDS(point, file = "intermediate/point.Rds")
 ###########################################################
 
 # Calculate estimates on balanced repeated replicates
-cl <- makeCluster(4)
+cores_to_use <- round(detectCores() / 2)
+print(paste("Running in parallel over",cores_to_use,"cores"))
+cl <- makeCluster(cores_to_use)
 registerDoParallel(cl)
 t0 <- Sys.time()
 brr_estimates <- foreach(

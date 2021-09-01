@@ -26,14 +26,16 @@ source("code/prepare_environment.R")
 print(sessionInfo())
 
 # Prepare for parallel computing
-cl <- makeCluster(4)
+cores_to_use <- round(detectCores() / 2)
+print(paste("Running in parallel over",cores_to_use,"cores"))
+cl <- makeCluster(cores_to_use)
 registerDoParallel(cl)
 
 # Set the number of simulations to draw for each setting
 r <- 1000
 
 # Set the sequence of sample sizes for simulations
-n_vals <- c(250,500,1000,1500,2000,3000,5000,10000)
+n_vals <- c(100,seq(250,2000,250))
 
 # Define the data generating process
 make_sample <- function(n) {
@@ -46,17 +48,17 @@ make_sample <- function(n) {
     mutate(x = sample(rep(0:1, n / 2)),
            # Treatment probabilities: True propensity score is a
            # logit with coefficient 0.3 on each confounder
-           m = plogis(.3*rowSums(L)),
+           m = plogis(case_when(x == 0 ~ .3 * rowSums(L),
+                                x == 1 ~ .1 * rowSums(L))),
            # Treatment assignment
            d = rbinom(n,1,m),
            # Outcome function: Truth is OLS with a coefficient 1
            # on each confounder, plus a treatment effect that is
            # 1 in category X = 1 and -1 in category X = 0
-           g = rowSums(L) + ifelse(x == 1, d, -d),
-           # Outcome is a normal with high variance.
-           # SD of noise here equals 10 times the treatment effect,
-           # which may be a realistic setting
-           y = rnorm(n, g, sd = 10),
+           g = case_when(x == 1 ~ d + 1 * rowSums(L),
+                         x == 0 ~ -d + 1 * rowSums(L)),
+           # Outcome is a normal
+           y = rnorm(n, g, sd = 5),
            # I am not simulating a complex sample, so all units
            # have the same sampling weight.
            weight = 1)
@@ -72,7 +74,7 @@ truth <- 2
 
 # Note: This simulation takes several hours
 
-sim_cross_fitting <- foreach(n = n_vals,.combine = "rbind") %do% {
+sim_cross_fitting <- foreach(n = n_vals,.combine = "rbind", .packages = c("tidyverse","gapclosing","foreach")) %do% {
   print(paste("Starting n",n))
   foreach(rep = 1:r, .combine = "rbind", .packages = c("tidyverse","gapclosing","foreach")) %dorng% {
     sim_data <- make_sample(n)
@@ -124,7 +126,6 @@ saveRDS(sim_cross_fitting_aggregated, file = "intermediate/sim_cross_fitting_agg
 ####################
 
 sim_cross_fitting_convergence <- sim_cross_fitting_aggregated %>%
-  filter(n %in% c(250,500,1000,1500,2000,3000,5000,10000)) %>%
   ggplot(aes(x = n, y = sqrt(mse),
              color = estimator_label, shape = estimator_label,
              alpha = estimator_label)) +
@@ -138,11 +139,12 @@ sim_cross_fitting_convergence <- sim_cross_fitting_aggregated %>%
   theme(legend.title = element_blank(),
         legend.key.height = unit(36,"pt"),
         legend.text = element_text(size = 10))
+
 saveRDS(sim_cross_fitting_convergence,
         file = "intermediate/sim_cross_fitting_convergence.Rds")
 ggsave(plot = sim_cross_fitting_convergence,
        file = "figures/sim_cross_fitting_convergence.pdf",
-       height = 3, width = 6.5)
+       height = 4, width = 6.5)
 
 # Close the sink
 print(Sys.time())
