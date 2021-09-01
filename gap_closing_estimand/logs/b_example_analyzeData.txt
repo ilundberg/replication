@@ -1,11 +1,11 @@
 [1] "Time began:"
-[1] "2021-09-01 02:03:30 UTC"
-── Attaching packages ────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.1 ──
+[1] "2021-09-01 15:26:29 UTC"
+── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
 ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
 ✔ tibble  3.1.4     ✔ dplyr   1.0.7
 ✔ tidyr   1.1.3     ✔ stringr 1.4.0
 ✔ readr   2.0.1     ✔ forcats 0.5.1
-── Conflicts ───────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
 
@@ -153,23 +153,23 @@ loaded via a namespace (and not attached):
           X    treated
 1 0.1017078 0.09605791
 % latex table generated in R 4.1.1 by xtable 1.8-4 package
-% Wed Sep  1 02:03:37 2021
+% Wed Sep  1 15:26:36 2021
 \begin{table}[ht]
 \centering
 \begin{tabular}{rrr}
   \hline
  & upperOrigin & lowerOrigin \\ 
   \hline
-Log.income & 9.97 & 9.65 \\ 
-  Race..White & 0.87 & 0.83 \\ 
-  Race..White.1 & 0.87 & 0.83 \\ 
-  Race..Black & 0.04 & 0.11 \\ 
-  Race..Other & 0.08 & 0.06 \\ 
-  Degree..Less.than.high.school & 0.02 & 0.12 \\ 
-  Degree..High.school & 0.27 & 0.54 \\ 
-  Degree..Junior.college & 0.07 & 0.08 \\ 
-  Degree..Bachelor.s & 0.38 & 0.18 \\ 
-  Degree..Graduate & 0.26 & 0.09 \\ 
+Log income (1986 dollars) & 9.97 & 9.65 \\ 
+  Professional class destination (own occupation) & 0.24 & 0.08 \\ 
+  Race White & 0.87 & 0.83 \\ 
+  Race Black & 0.04 & 0.11 \\ 
+  Race Other & 0.08 & 0.06 \\ 
+  Degree Less than high school & 0.02 & 0.12 \\ 
+  Degree High school & 0.27 & 0.54 \\ 
+  Degree Junior college & 0.07 & 0.08 \\ 
+  Degree Bachelor's & 0.38 & 0.18 \\ 
+  Degree Graduate & 0.26 & 0.09 \\ 
   Female & 0.45 & 0.48 \\ 
   Age & 37.22 & 37.31 \\ 
    \hline
@@ -177,7 +177,7 @@ Log.income & 9.97 & 9.65 \\
 \end{table}
 [1] "Running in parallel over 24 cores"
 [1] "Time spent on BRR estimates"
-Time difference of 24.36352 mins
+Time difference of 24.01858 mins
 [1] "DOUBLE-ROBUST GLM: UNDER TREATMENT"
 Gap-closing estimates using doubly_robust estimation on one sample.
 
@@ -397,107 +397,80 @@ Proportional gap closed: (Counterfactual - Factual) / Factual
 2 conditional    glm_estimates TRUE - FALSE    0.124 0.0533
 
 Type plot(name_of_this_object) to visualize results.
-[1] "NUISANCE FUNCTIONS"
-       model      variable    coef     se
-1  treatment   (Intercept) -5.3649 1.1243
-2  treatment         XTRUE  0.5040 0.0949
-3  treatment         RACE2 -0.4367 0.1645
-4  treatment         RACE3  0.3973 0.1335
-5  treatment       DEGREE1  2.2196 1.0799
-6  treatment       DEGREE2  3.0503 1.0804
-7  treatment       DEGREE3  4.0426 1.0723
-8  treatment       DEGREE4  5.1864 1.0740
-9  treatment           SEX -0.8007 0.0778
-10 treatment           AGE  0.0205 0.0087
-11   outcome   (Intercept)  9.3983 0.0804
-12   outcome       treated  0.3784 0.0327
-13   outcome         XTRUE -0.0053 0.0362
-14   outcome         RACE2 -0.0222 0.0266
-15   outcome         RACE3 -0.1464 0.0448
-16   outcome       DEGREE1  0.4616 0.0348
-17   outcome       DEGREE2  0.6226 0.0446
-18   outcome       DEGREE3  0.8675 0.0383
-19   outcome       DEGREE4  1.0585 0.0457
-20   outcome           SEX -0.7134 0.0191
-21   outcome           AGE  0.0200 0.0020
-22   outcome treated:XTRUE  0.0880 0.0685
-[1] "COMPARISON MODELS COEFFICIENT ON X"
+[1] "NUISANCE FUNCTIONS FOR PLACEMENT IN A TABLE"
+% latex table generated in R 4.1.1 by xtable 1.8-4 package
+% Wed Sep  1 15:51:15 2021
+\begin{table}[ht]
+\centering
+\begin{tabular}{lll}
+  \hline
+variable & outcome & treatment \\ 
+  \hline
+Professional class origin & -0.01 &  0.50 \\ 
+   & (0.04) & (0.09) \\ 
+  Professional origin x Professional destination &  0.09 &    NA \\ 
+   & (0.07) & (NA) \\ 
+  Professional class destination (own occupation) &  0.38 &    NA \\ 
+   & (0.03) & (NA) \\ 
+  Age &  0.02 &  0.02 \\ 
+   & (0.00) & (0.01) \\ 
+  Degree High school &  0.46 &  2.22 \\ 
+   & (0.03) & (1.08) \\ 
+  Degree Junior college &  0.62 &  3.05 \\ 
+   & (0.04) & (1.08) \\ 
+  Degree Bachelor's &  0.87 &  4.04 \\ 
+   & (0.04) & (1.07) \\ 
+  Degree Graduate &  1.06 &  5.19 \\ 
+   & (0.05) & (1.07) \\ 
+  Race Black & -0.02 & -0.44 \\ 
+   & (0.03) & (0.16) \\ 
+  Race Other & -0.15 &  0.40 \\ 
+   & (0.04) & (0.13) \\ 
+  Female & -0.71 & -0.80 \\ 
+   & (0.02) & (0.08) \\ 
+  (Intercept) &  9.40 & -5.36 \\ 
+   & (0.08) & (1.12) \\ 
+   \hline
+\end{tabular}
+\end{table}
+[1] "COMPARISON COEFFICIENTS FOR CONDITIONAL ESTIMANDS"
+% latex table generated in R 4.1.1 by xtable 1.8-4 package
+% Wed Sep  1 15:51:15 2021
+\begin{table}[ht]
+\centering
+\begin{tabular}{lll}
+  \hline
+variable & not\_conditional\_on\_treatment & conditional\_on\_treatment \\ 
+  \hline
+Professional class origin &  0.04 &  0.01 \\ 
+   & (0.03) & (0.03) \\ 
+  Professional class destination (own occupation) &    NA &  0.40 \\ 
+   & (NA) & (0.03) \\ 
+  Age &  0.02 &  0.02 \\ 
+   & (0.00) & (0.00) \\ 
+  Degree High school &  0.47 &  0.46 \\ 
+   & (0.03) & (0.03) \\ 
+  Degree Junior college &  0.65 &  0.62 \\ 
+   & (0.04) & (0.04) \\ 
+  Degree Bachelor's &  0.93 &  0.86 \\ 
+   & (0.04) & (0.04) \\ 
+  Degree Graduate &  1.21 &  1.06 \\ 
+   & (0.04) & (0.05) \\ 
+  Race Black & -0.03 & -0.02 \\ 
+   & (0.03) & (0.03) \\ 
+  Race Other & -0.13 & -0.15 \\ 
+   & (0.05) & (0.04) \\ 
+  Female & -0.74 & -0.71 \\ 
+   & (0.02) & (0.02) \\ 
+  (Intercept) &  9.41 &  9.40 \\ 
+   & (0.08) & (0.08) \\ 
+   \hline
+\end{tabular}
+\end{table}
+[1] "COMPARISON MODELS COEFFICIENT ON CATEGORY, WITH P-VALUES"
                          comparison variable       coef         se      pval
 1                  given_predictors    XTRUE 0.01301843 0.03122323 0.6767172
 2 given_predictors_except_treatment    XTRUE 0.03967419 0.03184788 0.2128596
-[1] "FULL COMPARISON MODELS"
-                          comparison    variable   coef    se
-1                   given_predictors (Intercept)  9.398 0.080
-2                   given_predictors       XTRUE  0.013 0.031
-3                   given_predictors     treated  0.398 0.029
-4                   given_predictors       RACE2 -0.022 0.027
-5                   given_predictors       RACE3 -0.145 0.045
-6                   given_predictors     DEGREE1  0.461 0.035
-7                   given_predictors     DEGREE2  0.621 0.045
-8                   given_predictors     DEGREE3  0.865 0.038
-9                   given_predictors     DEGREE4  1.058 0.046
-10                  given_predictors         SEX -0.713 0.019
-11                  given_predictors         AGE  0.020 0.002
-12 given_predictors_except_treatment (Intercept)  9.407 0.080
-13 given_predictors_except_treatment       XTRUE  0.040 0.032
-14 given_predictors_except_treatment       RACE2 -0.030 0.027
-15 given_predictors_except_treatment       RACE3 -0.130 0.045
-16 given_predictors_except_treatment     DEGREE1  0.474 0.035
-17 given_predictors_except_treatment     DEGREE2  0.649 0.045
-18 given_predictors_except_treatment     DEGREE3  0.930 0.038
-19 given_predictors_except_treatment     DEGREE4  1.211 0.044
-20 given_predictors_except_treatment         SEX -0.736 0.019
-21 given_predictors_except_treatment         AGE  0.021 0.002
-[1] "Outcome and treatment coefficients arranged for placement in a table"
-        variable quantity outcome treatment
-1          XTRUE     coef   -0.01      0.50
-2          XTRUE       se    0.04      0.09
-3  treated:XTRUE     coef    0.09        NA
-4  treated:XTRUE       se    0.07        NA
-5        treated     coef    0.38        NA
-6        treated       se    0.03        NA
-7            AGE     coef    0.02      0.02
-8            AGE       se    0.00      0.01
-9        DEGREE1     coef    0.46      2.22
-10       DEGREE1       se    0.03      1.08
-11       DEGREE2     coef    0.62      3.05
-12       DEGREE2       se    0.04      1.08
-13       DEGREE3     coef    0.87      4.04
-14       DEGREE3       se    0.04      1.07
-15       DEGREE4     coef    1.06      5.19
-16       DEGREE4       se    0.05      1.07
-17         RACE2     coef   -0.02     -0.44
-18         RACE2       se    0.03      0.16
-19         RACE3     coef   -0.15      0.40
-20         RACE3       se    0.04      0.13
-21           SEX     coef   -0.71     -0.80
-22           SEX       se    0.02      0.08
-23   (Intercept)     coef    9.40     -5.36
-24   (Intercept)       se    0.08      1.12
-[1] "Comparison coefficients arranged for placement in a table"
-      variable quantity given_predictors given_predictors_except_treatment
-1        XTRUE     coef             0.01                              0.04
-2        XTRUE       se             0.03                              0.03
-3      treated     coef             0.40                                NA
-4      treated       se             0.03                                NA
-5          AGE     coef             0.02                              0.02
-6          AGE       se             0.00                              0.00
-7      DEGREE1     coef             0.46                              0.47
-8      DEGREE1       se             0.03                              0.03
-9      DEGREE2     coef             0.62                              0.65
-10     DEGREE2       se             0.04                              0.04
-11     DEGREE3     coef             0.86                              0.93
-12     DEGREE3       se             0.04                              0.04
-13     DEGREE4     coef             1.06                              1.21
-14     DEGREE4       se             0.05                              0.04
-15       RACE2     coef            -0.02                             -0.03
-16       RACE2       se             0.03                              0.03
-17       RACE3     coef            -0.15                             -0.13
-18       RACE3       se             0.04                              0.05
-19         SEX     coef            -0.71                             -0.74
-20         SEX       se             0.02                              0.02
-21 (Intercept)     coef             9.40                              9.41
-22 (Intercept)       se             0.08                              0.08
-[1] "2021-09-01 02:28:36 UTC"
+[1] "2021-09-01 15:51:15 UTC"
 [1] "Time spent:"
-Time difference of 24.70371 mins
+Time difference of 24.35855 mins

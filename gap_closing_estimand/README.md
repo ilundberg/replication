@@ -31,4 +31,4 @@ The cost of running this platform was approximately \$3 per hour. If you choose 
 
 # Runtime
 
-The code carries out parallel processes using half of the available cores (in this case, 24 cores running in parallel). Runtime for all of the code was just over 1 hour. In previous runs using 4 cores on a 2021 Macbook Pro, the runtime was on the order of 8 hours.
+The code carries out parallel processes using half of the available cores (in this case, 24 cores running in parallel). Runtime for all of the code was about 52 minutes. In previous runs using 4 cores on a 2021 Macbook Pro, the runtime was on the order of 8 hours.
