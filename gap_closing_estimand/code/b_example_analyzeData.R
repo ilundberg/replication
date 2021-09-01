@@ -117,32 +117,37 @@ print(many_imputations %>%
 # Make table of descriptive statistics by X
 matrix_of_variables <- model.matrix(~-1 + outcome + treated + RACE + DEGREE + SEX + AGE,
                                     data = many_imputations)
+# Add omitted degree category
+matrix_of_variables <- cbind(matrix_of_variables[,1:5],
+                             apply(matrix_of_variables[,6:9],1,function(x) 1 - sum(x)),
+                             matrix_of_variables[,6:11])
+colnames(matrix_of_variables)[6] <- "DEGREE0"
+# Make Sex coded as 0 = male, 1 = female instead of 1 = male, 2 = female
+matrix_of_variables[,"SEX"] <- matrix_of_variables[,"SEX"] - 1
+# Calculate the weighted mean in each category
 descriptives_upperOrigin <- apply(matrix_of_variables[many_imputations$X,], 2, weighted.mean, w = many_imputations$weight[many_imputations$X])
 descriptives_lowerOrigin <- apply(matrix_of_variables[!many_imputations$X,], 2, weighted.mean, w = many_imputations$weight[!many_imputations$X])
 descriptives <- cbind(upperOrigin = descriptives_upperOrigin,
                       lowerOrigin = descriptives_lowerOrigin)
-# Add the omitted categories
-descriptives <- rbind(descriptives[1:3,], RACE1 = 1 - colSums(descriptives[4:5,]), descriptives[4:11,])
-# Make sex 0 = male, 1 = female instead of 1 and 2
-descriptives["SEX",] <- descriptives["SEX",] - 1
-# Update names for the table
-descriptives <- rbind(descriptives[1:6,], DEGREE0 = 1 - colSums(descriptives[7:10,]), descriptives[7:12,])
-# Remove the redundant lower class occupation
-descriptives <- descriptives[-2,]
-rownames(descriptives) <- sapply(rownames(descriptives), function(x) {
-  case_when(x == "outcome" ~ "Log income",
-            x == "treatedTRUE" ~ "Upper class occupation",
-            x == "RACE1" ~ "Race: White",
-            x == "RACE2" ~ "Race: Black",
-            x == "RACE3" ~ "Race: Other",
-            x == "DEGREE0" ~ "Degree: Less than high school",
-            x == "DEGREE1" ~ "Degree: High school",
-            x == "DEGREE2" ~ "Degree: Junior college",
-            x == "DEGREE3" ~ "Degree: Bachelor's",
-            x == "DEGREE4" ~ "Degree: Graduate",
+# Write a function to rename variables
+rename_variables <- function(x) {
+  case_when(x == "outcome" ~ "Log income (1986 dollars)",
+            x == "XTRUE" ~ "Professional class origin",
+            x == "treated:XTRUE" ~ "Professional origin x Professional destination",
+            x == "treatedTRUE" | x == "treated" ~ "Professional class destination (own occupation)",
+            x == "RACE1" ~ "Race White",
+            x == "RACE2" ~ "Race Black",
+            x == "RACE3" ~ "Race Other",
+            x == "DEGREE0" ~ "Degree Less than high school",
+            x == "DEGREE1" ~ "Degree High school",
+            x == "DEGREE2" ~ "Degree Junior college",
+            x == "DEGREE3" ~ "Degree Bachelor's",
+            x == "DEGREE4" ~ "Degree Graduate",
             x == "SEX" ~ "Female",
-            x == "AGE" ~ "Age")
-})
+            x == "AGE" ~ "Age",
+            T ~ x)
+}
+rownames(descriptives) <- sapply(rownames(descriptives), rename_variables)
 print(xtable::xtable(descriptives))
 
 ################################
@@ -373,44 +378,58 @@ summary(aggregated_estimates$marginal$glm_estimates)
 print("DOUBLE-ROBUST GLM: CONDITIONAL")
 summary(aggregated_estimates$conditional$glm_estimates)
 
-print("NUISANCE FUNCTIONS")
-print(coef_aggregated, digits = 2)
+print("NUISANCE FUNCTIONS FOR PLACEMENT IN A TABLE")
+print(xtable::xtable(data.frame(coef_aggregated %>%
+                                  mutate(variable = fct_reorder(factor(variable),1:n())) %>%
+                                  select(variable, coef, se, model) %>%
+                                  melt(id = c("variable","model"), variable.name = "quantity") %>%
+                                  spread(key = model, value = value) %>%
+                                  mutate(variable = fct_relevel(variable,
+                                                                "XTRUE","treated:XTRUE","treated","AGE",
+                                                                "DEGREE1","DEGREE2","DEGREE3","DEGREE4",
+                                                                "RACE2","RACE3","SEX")) %>%
+                                  arrange(variable, quantity) %>%
+                                  mutate(variable = rename_variables(as.character(variable))) %>%
+                                  mutate(outcome = format(round(outcome,2),nsmall = 2),
+                                         treatment = format(round(treatment,2),nsmall = 2),
+                                         outcome = case_when(quantity == "coef" ~ outcome,
+                                                             quantity == "se" ~ paste0("(",gsub(" ","",outcome),")")),
+                                         treatment = case_when(quantity == "coef" ~ treatment,
+                                                               quantity == "se" ~ paste0("(",gsub(" ","",treatment),")")),
+                                         variable = case_when(quantity == "coef" ~ variable,
+                                                              quantity == "se" ~ "")) %>%
+                                  select(-quantity))),
+      include.rownames = F)
 
-print("COMPARISON MODELS COEFFICIENT ON X")
-print(comparison_coef_aggregated %>%
-        filter(variable == "XTRUE") %>%
-        mutate(pval = 2*pnorm(-abs(coef / se))))
+print("COMPARISON COEFFICIENTS FOR CONDITIONAL ESTIMANDS")
+print(xtable::xtable(data.frame(comparison_coef_aggregated %>%
+                                  mutate(variable = fct_reorder(factor(variable),1:n())) %>%
+                                  select(variable, coef, se, comparison) %>%
+                                  melt(id = c("variable","comparison"), variable.name = "quantity") %>%
+                                  spread(key = comparison, value = value) %>%
+                                  mutate(variable = fct_relevel(variable,
+                                                                "XTRUE","treated","AGE",
+                                                                "DEGREE1","DEGREE2","DEGREE3","DEGREE4",
+                                                                "RACE2","RACE3","SEX")) %>%
+                                  arrange(variable, quantity) %>%
+                                  mutate(variable = rename_variables(as.character(variable))) %>%
+                                  mutate(given_predictors = format(round(given_predictors,2),nsmall = 2),
+                                         given_predictors_except_treatment = format(round(given_predictors_except_treatment,2),nsmall = 2),
+                                         given_predictors = case_when(quantity == "coef" ~ given_predictors,
+                                                                      quantity == "se" ~ paste0("(",gsub(" ","",given_predictors),")")),
+                                         given_predictors_except_treatment = case_when(quantity == "coef" ~ given_predictors_except_treatment,
+                                                                                       quantity == "se" ~ paste0("(",gsub(" ","",given_predictors_except_treatment),")")),
+                                         variable = case_when(quantity == "coef" ~ variable,
+                                                              quantity == "se" ~ "")) %>%
+                                  select(variable, given_predictors_except_treatment, given_predictors) %>%
+                                  rename(not_conditional_on_treatment = given_predictors_except_treatment,
+                                         conditional_on_treatment = given_predictors))),
+      include.rownames = F)
 
-print("FULL COMPARISON MODELS")
-print(comparison_coef_aggregated, digits = 2)
-
-print("Outcome and treatment coefficients arranged for placement in a table")
-print(data.frame(coef_aggregated %>%
-                   mutate(variable = fct_reorder(factor(variable),1:n())) %>%
-                   select(variable, coef, se, model) %>%
-                   melt(id = c("variable","model"), variable.name = "quantity") %>%
-                   spread(key = model, value = value) %>%
-                   mutate(variable = fct_relevel(variable,
-                                                  "XTRUE","treated:XTRUE","treated","AGE",
-                                                  "DEGREE1","DEGREE2","DEGREE3","DEGREE4",
-                                                  "RACE2","RACE3","SEX")) %>%
-                   arrange(variable, quantity) %>%
-                   mutate(outcome = format(round(outcome,2),nsmall = 2),
-                          treatment = format(round(treatment,2),nsmall = 2))))
-
-print("Comparison coefficients arranged for placement in a table")
+print("COMPARISON MODELS COEFFICIENT ON CATEGORY, WITH P-VALUES")
 print(data.frame(comparison_coef_aggregated %>%
-                   mutate(variable = fct_reorder(factor(variable),1:n())) %>%
-                   select(variable, coef, se, comparison) %>%
-                   melt(id = c("variable","comparison"), variable.name = "quantity") %>%
-                   spread(key = comparison, value = value) %>%
-                   mutate(variable = fct_relevel(variable,
-                                                  "XTRUE","treated","AGE",
-                                                  "DEGREE1","DEGREE2","DEGREE3","DEGREE4",
-                                                  "RACE2","RACE3","SEX")) %>%
-                   arrange(variable, quantity) %>%
-                   mutate(across(c("given_predictors","given_predictors_except_treatment"),
-                                 function(x) format(round(x,2), nsmall = 2)))))
+                   filter(variable == "XTRUE") %>%
+                   mutate(pval = 2*pnorm(-abs(coef / se)))))
 
 # Close the sink
 print(Sys.time())
