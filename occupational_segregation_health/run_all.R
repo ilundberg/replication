@@ -50,5 +50,8 @@ source("code/fig14.R")
 source("code/fig15.R")
 source("code/fig16.R")
 
+print("Create confidence intervals for factual to counterfactual changes in gaps")
+source("code/change_confidence_intervals")
+
 print("Finished at")
 print(Sys.time())
