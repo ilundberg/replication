@@ -1,7 +1,7 @@
 
 This directory contains replication code for
 
->Lundberg, Ian, Jennie E. Brand, and Nanum Jeon. 2022. "[Researcher reasoning meets computational capacity: Machine learning for social science](https://doi.org/10.31235/osf.io/s5zc8)." Working paper.
+>Lundberg, Ian, Jennie E. Brand, and Nanum Jeon. 2022. "[Researcher reasoning meets computational capacity: Machine learning for social science](https://doi.org/10.31235/osf.io/s5zc8)." Social Science Research.
 
 This replication package reproduces Figures 4, 5, and 6, all of which involve simulated data. The data are generated within the code files.
 
