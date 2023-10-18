@@ -1,5 +1,10 @@
 # Function to estimate quantiles with sampling weights
-weighted.quantile <- function(x, q = .5, w = rep(1,length(x))) {
+weighted.quantile <- function(x, q = .5, w = rep(1,length(x)), na.rm = T) {
+  if (na.rm) {
+    valid <- !is.na(x) & !is.na(w)
+    w <- w[valid]
+    x <- x[valid]
+  }
   # Sort the weights by x
   w <- w[order(x)]
   # Sort x by x
