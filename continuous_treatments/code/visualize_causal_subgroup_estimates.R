@@ -1,3 +1,6 @@
+
+source("code/shorten_race.R")
+
 for (outcome in outcomes) {
   print(toupper(outcome))
   
@@ -72,7 +75,7 @@ for (outcome in outcomes) {
       mutate(
         group_label = paste0(
           gsub("[\n]"," ",educJoint),"\n",
-          race,"\n",
+          shorten_race(race),"\n",
           "Wealth ",gsub("[\n]"," ",tolower(label_wealth)),"\n",
           "Income ",gsub("[\n]"," ",tolower(label_income))
         ),

@@ -28,15 +28,24 @@ binary_strong <- data.frame(L = rep(c(-Inf,Inf), each = n_samp / 2)) %>%
   mutate(A = rbinom(n(), size = 1, prob = plogis(2*L - 1))) %>%
   mutate(A = factor(A, labels = c("Control","Treated")),
          L = factor(L, labels = c("Disadvantaged","Advantaged"))) %>%
-  ggplot(aes(x = A, fill = L)) +
+  group_by(L) %>%
+  summarize(Treated = sum(A == "Treated"),
+            Control = sum(A == "Control")) %>%
+  pivot_longer(cols = c("Treated","Control"),
+               names_to = "A",
+               values_to = "n") %>%
+  ggplot(aes(x = A, y = n, fill = L)) +
   geom_bar(position = "dodge",
+           stat = "identity",
            alpha = .6,
            color = "black") +
-  xlab("Treatment") +
+  scale_fill_discrete(name = "Population\nSubgroup",
+                      drop = FALSE) +
+  scale_x_discrete(name = "Treatment",
+                   drop = FALSE) +
   scale_y_continuous(name = "Treatment Probability Within\nPopulation Subgroup",
                      labels = function(x) paste0(round(100*(x / (n_samp / 2))),"%"),
                      limits = c(0,n_samp / 2)) +
-  scale_fill_discrete(name = "Population\nSubgroup") +
   theme(legend.position = "none")
 
 # Standard confounding, continuous

@@ -1,4 +1,6 @@
 
+source("code/shorten_race.R")
+
 for_visualize_model <- readRDS("intermediate/for_visualize_model.RDS")
 
 for (outcome_val in unique(for_visualize_model$outcome)) {
@@ -9,7 +11,8 @@ for (outcome_val in unique(for_visualize_model$outcome)) {
                                            wealth == 200e3 ~ 3),
                                  labels = c("$25k","$100k","$200k")),
            wealth_label = fct_rev(wealth_label)) %>%
-    mutate(educJoint = fct_rev(educJoint)) %>%
+    mutate(educJoint = fct_rev(educJoint),
+           race = shorten_race(race)) %>%
     ggplot(aes(x = income, y = estimate, color = wealth_label)) +
     geom_line() +
     facet_grid(race ~ educJoint) +

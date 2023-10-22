@@ -1,6 +1,7 @@
 library(tidyverse)
 
 source("code/label_outcomes_treatments.R")
+source("code/shorten_race.R")
 
 inductive <- readRDS("intermediate/inductive.RDS")
 
@@ -26,7 +27,7 @@ for (estimand_value in c("big","small")) {
       forplot %>%
         filter(outcome == outcome_value & delta == delta_value) %>%
         mutate(yval = paste0(gsub("[\n]"," ",educJoint),"\n",
-                             race,"\n",
+                             shorten_race(race),"\n",
                              "Wealth ",gsub("[\n]"," ",tolower(label_wealth)),"\n",
                              "Income ",gsub("[\n]"," ",tolower(label_income))),
                yval = fct_reorder(yval, estimate_learning)) %>%

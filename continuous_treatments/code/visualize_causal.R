@@ -158,13 +158,18 @@ cate_all <- foreach(outcome_name = outcomes, .combine = "rbind") %do% {
 }
 cate_all %>%
   filter(delta == 10e3 & outcome == "enrolled_any") %>%
+  (function(.data) {
+    print(paste0("Below 0 dropped from histogram. Weighted prop: ",
+                 weighted.mean(.data$effect < 0, w = .data$w)))
+    return(.data %>%
+             filter(effect >= 0))
+  }) %>%
   ggplot(aes(x = effect, weight = w)) +
-  geom_histogram() +
-  xlab("Conditional Average Causal Effect\nof Extra $10,000 on College Enrollment") +
-  ylab("Weighted\nCount") +
-  geom_vline(xintercept = 0, linetype = "dashed")
+  geom_histogram(bins = 20, boundary = 0) +
+  xlab("Conditional Average Causal Effect\nof Additional $10,000 on College Enrollment") +
+  ylab("Weighted\nCount")
 ggsave("figures/effect_histogram.pdf",
-       height = 1.5, width = 4)
+       height = 2.5, width = 4)
 
 cate_all %>%
   ggplot(aes(x = effect, weight = w)) +
