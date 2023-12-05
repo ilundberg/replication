@@ -27,7 +27,7 @@ delta_values <- c(10e3,25e3)
 # Define the number of bootstrap samples
 bs_reps <- 1000
 # Define parallel computing cores
-num_cores <- 6
+num_cores <- detectCores()
 
 # Create cluster for parallel computing
 cl <- makeCluster(num_cores)
@@ -227,6 +227,12 @@ clear_environment()
 print(Sys.time())
 print("Visualize inductive")
 source("code/visualize_inductive.R")
+clear_environment()
+
+# Alternative specification: Super Learner
+print(Sys.time())
+print("Alternative specification: Super Learner")
+source("code/alternative_SuperLearner.R")
 clear_environment()
 
 print(sessionInfo())

@@ -1,5 +1,5 @@
-[1] "2023-10-17 14:59:32 EDT"
-[1] "2023-10-17 14:59:33 EDT"
+[1] "2023-11-28 22:29:22 EST"
+[1] "2023-11-28 22:29:23 EST"
 [1] "Prepare data"
 [1] "enrolled_any"
 [1] "8984 Total"
@@ -21,7 +21,7 @@
 [1] "6588 Valid treatment"
 [1] "6455 Treatment not top-coded"
 [1] "5772 Valid outcome"
-[1] "2023-10-17 14:59:40 EDT"
+[1] "2023-11-28 22:29:29 EST"
 [1] "Descriptive estimation"
 -- Imputation 1 --
 
@@ -55,57 +55,57 @@
 
   1  2
 
-[1] "2023-10-17 15:07:16 EDT"
+[1] "2023-11-28 22:36:17 EST"
 [1] "Extrapolation danger"
-[1] "2023-10-17 15:07:16 EDT"
+[1] "2023-11-28 22:36:17 EST"
 [1] "Extrapolation danger"
 -- Imputation 1 --
 
   1  2
 
-[1] "2023-10-17 15:07:17 EDT"
+[1] "2023-11-28 22:36:18 EST"
 [1] "Causal estimation"
 [1] "BEGIN OUTCOME 1 OF 4"
 
-Begin point estimate. 2023-10-17 15:07:17.430772-- Imputation 1 --
+Begin point estimate. 2023-11-28 22:36:18.168291-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 15:07:20.036168 
+Begin 1000 bootstrap replicates. 2023-11-28 22:36:20.56208 
 
-Estimated bootstrap completion time: 2023-10-17 15:14:34.287416 
+Estimated bootstrap completion time: 2023-11-28 22:39:40.05209 
 [1] "BEGIN OUTCOME 2 OF 4"
 
-Begin point estimate. 2023-10-17 15:16:52.480673-- Imputation 1 --
+Begin point estimate. 2023-11-28 23:13:06.678293-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 15:16:54.923237 
+Begin 1000 bootstrap replicates. 2023-11-28 23:13:08.880648 
 
-Estimated bootstrap completion time: 2023-10-17 15:23:42.035174 
+Estimated bootstrap completion time: 2023-11-28 23:16:12.417471 
 [1] "BEGIN OUTCOME 3 OF 4"
 
-Begin point estimate. 2023-10-17 15:26:23.444251-- Imputation 1 --
+Begin point estimate. 2023-11-28 23:18:18.547788-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 15:26:25.56258 
+Begin 1000 bootstrap replicates. 2023-11-28 23:18:20.485657 
 
-Estimated bootstrap completion time: 2023-10-17 15:32:18.634201 
+Estimated bootstrap completion time: 2023-11-28 23:21:01.982814 
 [1] "BEGIN OUTCOME 4 OF 4"
 
-Begin point estimate. 2023-10-17 15:35:10.264359-- Imputation 1 --
+Begin point estimate. 2023-11-28 23:22:59.365064-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 15:35:12.577247 
+Begin 1000 bootstrap replicates. 2023-11-28 23:23:01.221987 
 
-Estimated bootstrap completion time: 2023-10-17 15:41:38.078846 
-[1] "2023-10-17 15:43:23 EDT"
+Estimated bootstrap completion time: 2023-11-28 23:25:35.975085 
+[1] "2023-11-28 23:27:27 EST"
 [1] "Causal estimation within sample splits"
 [1] "BEGIN OUTCOME 1 OF 4"
 -- Imputation 1 --
@@ -113,128 +113,128 @@ Estimated bootstrap completion time: 2023-10-17 15:41:38.078846
   1  2
 
 
-Begin point estimate. 2023-10-17 15:43:24.132788-- Imputation 1 --
+Begin point estimate. 2023-11-28 23:27:27.503572-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 15:43:26.741142 
+Begin 1000 bootstrap replicates. 2023-11-28 23:27:29.900152 
 
-Estimated bootstrap completion time: 2023-10-17 15:50:41.486242 
+Estimated bootstrap completion time: 2023-11-28 23:30:49.622401 
 
-Begin point estimate. 2023-10-17 15:52:31.771613-- Imputation 1 --
+Begin point estimate. 2023-11-29 00:51:35.732537-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 15:52:34.3731 
+Begin 1000 bootstrap replicates. 2023-11-29 00:51:38.119983 
 
-Estimated bootstrap completion time: 2023-10-17 15:59:47.973673 
+Estimated bootstrap completion time: 2023-11-29 00:54:57.081142 
 [1] "BEGIN OUTCOME 2 OF 4"
 -- Imputation 1 --
 
   1  2
 
 
-Begin point estimate. 2023-10-17 16:01:41.494004-- Imputation 1 --
+Begin point estimate. 2023-11-29 02:34:06.395747-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 16:01:44.065735 
+Begin 1000 bootstrap replicates. 2023-11-29 02:34:08.658751 
 
-Estimated bootstrap completion time: 2023-10-17 16:08:52.706162 
+Estimated bootstrap completion time: 2023-11-29 02:37:17.356257 
 
-Begin point estimate. 2023-10-17 16:10:55.3408-- Imputation 1 --
+Begin point estimate. 2023-11-29 04:04:56.382712-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 16:10:57.710847 
+Begin 1000 bootstrap replicates. 2023-11-29 04:04:58.536923 
 
-Estimated bootstrap completion time: 2023-10-17 16:17:32.735077 
+Estimated bootstrap completion time: 2023-11-29 04:07:58.06166 
 [1] "BEGIN OUTCOME 3 OF 4"
 -- Imputation 1 --
 
   1  2
 
 
-Begin point estimate. 2023-10-17 16:20:15.302739-- Imputation 1 --
+Begin point estimate. 2023-11-29 05:45:26.840716-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 16:20:17.401097 
+Begin 1000 bootstrap replicates. 2023-11-29 05:45:28.695683 
 
-Estimated bootstrap completion time: 2023-10-17 16:26:07.144355 
+Estimated bootstrap completion time: 2023-11-29 05:48:03.283428 
 
-Begin point estimate. 2023-10-17 16:29:01.415528-- Imputation 1 --
+Begin point estimate. 2023-11-29 07:10:15.097247-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 16:29:03.507015 
+Begin 1000 bootstrap replicates. 2023-11-29 07:10:16.975821 
 
-Estimated bootstrap completion time: 2023-10-17 16:34:52.10575 
+Estimated bootstrap completion time: 2023-11-29 07:12:53.629314 
 [1] "BEGIN OUTCOME 4 OF 4"
 -- Imputation 1 --
 
   1  2
 
 
-Begin point estimate. 2023-10-17 16:37:30.45107-- Imputation 1 --
+Begin point estimate. 2023-11-29 08:17:37.256426-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 16:37:32.429543 
+Begin 1000 bootstrap replicates. 2023-11-29 08:17:39.054205 
 
-Estimated bootstrap completion time: 2023-10-17 16:43:02.192294 
+Estimated bootstrap completion time: 2023-11-29 08:20:08.876019 
 
-Begin point estimate. 2023-10-17 16:45:29.217613-- Imputation 1 --
+Begin point estimate. 2023-11-29 08:22:03.595807-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-10-17 16:45:31.215234 
+Begin 1000 bootstrap replicates. 2023-11-29 08:22:05.444231 
 
-Estimated bootstrap completion time: 2023-10-17 16:51:04.170177 
-[1] "2023-10-17 16:53:29 EDT"
+Estimated bootstrap completion time: 2023-11-29 08:24:39.487233 
+[1] "2023-11-29 08:26:25 EST"
 [1] "Visualize model: Analyze"
 [1] "BEGIN OUTCOME 1 OF 4"
 
-Begin point estimate. 2023-10-17 16:53:29.265371-- Imputation 1 --
+Begin point estimate. 2023-11-29 08:26:25.807031-- Imputation 1 --
 
   1  2
 
 [1] "BEGIN OUTCOME 2 OF 4"
 
-Begin point estimate. 2023-10-17 16:53:33.564163-- Imputation 1 --
+Begin point estimate. 2023-11-29 08:26:29.820687-- Imputation 1 --
 
   1  2
 
 [1] "BEGIN OUTCOME 3 OF 4"
 
-Begin point estimate. 2023-10-17 16:53:37.806063-- Imputation 1 --
+Begin point estimate. 2023-11-29 08:26:33.789096-- Imputation 1 --
 
   1  2
 
 [1] "BEGIN OUTCOME 4 OF 4"
 
-Begin point estimate. 2023-10-17 16:53:41.756892-- Imputation 1 --
+Begin point estimate. 2023-11-29 08:26:37.502397-- Imputation 1 --
 
   1  2
 
-[1] "2023-10-17 16:53:46 EDT"
+[1] "2023-11-29 08:26:42 EST"
 [1] "Visualize model: Visualize"
-[1] "2023-10-17 16:53:47 EDT"
+[1] "2023-11-29 08:26:42 EST"
 [1] "Descriptive visualization"
        outcome estimate    se ci.min ci.max
 1 enrolled_any    0.032 0.002  0.029  0.035
 2 enrolled_4yr    0.030 0.001  0.028  0.033
 3 completed_25    0.024 0.001  0.022  0.026
 4 completed_30    0.028 0.001  0.026  0.030
-[1] "2023-10-17 16:53:48 EDT"
+[1] "2023-11-29 08:26:43 EST"
 [1] "Deductive causal visualization"
 [1] "POPULATION AVERAGE EFFECT"
 # A tibble: 8 × 7
@@ -293,7 +293,8 @@ Begin point estimate. 2023-10-17 16:53:41.756892-- Imputation 1 --
  9 10000 High          0.00897 0.00172 0.00559 0.0123 enrolled_4yr 0.358
 10 25000 Low           0.0261  0.00388 0.0185  0.0337 enrolled_4yr 0.358
 # ℹ 14 more rows
-[1] "2023-10-17 16:55:40 EDT"
+[1] "Below 0 dropped from histogram. Weighted prop: 0.000718531534054633"
+[1] "2023-11-29 08:52:18 EST"
 [1] "Causal estimates in interactive subgroups"
 [1] "ENROLLED_ANY"
 [1] "Subgroups that are never seen"
@@ -432,11 +433,11 @@ Begin point estimate. 2023-10-17 16:53:41.756892-- Imputation 1 --
   prop_sample weighted
         <dbl>    <dbl>
 1       0.783    0.792
-[1] "2023-10-17 16:56:06 EDT"
+[1] "2023-11-29 08:53:36 EST"
 [1] "Covariates given effect size"
 [1] "ENROLLED_ANY 10000"
-% latex table generated in R 4.3.1 by xtable 1.8-4 package
-% Tue Oct 17 16:56:09 2023
+% latex table generated in R 4.3.2 by xtable 1.8-4 package
+% Wed Nov 29 08:53:39 2023
 \begin{table}[ht]
 \centering
 \begin{tabular}{llll}
@@ -461,8 +462,8 @@ finished college & 0.16 & 0.89 & 0.99 \\
 \caption{Characteristics of those with low, middle, and high causal effects} 
 \end{table}
 [1] "ENROLLED_ANY 25000"
-% latex table generated in R 4.3.1 by xtable 1.8-4 package
-% Tue Oct 17 16:56:13 2023
+% latex table generated in R 4.3.2 by xtable 1.8-4 package
+% Wed Nov 29 08:53:42 2023
 \begin{table}[ht]
 \centering
 \begin{tabular}{llll}
@@ -487,8 +488,8 @@ finished college & 0.15 & 0.90 & 1.00 \\
 \caption{Characteristics of those with low, middle, and high causal effects} 
 \end{table}
 [1] "ENROLLED_4YR 10000"
-% latex table generated in R 4.3.1 by xtable 1.8-4 package
-% Tue Oct 17 16:56:16 2023
+% latex table generated in R 4.3.2 by xtable 1.8-4 package
+% Wed Nov 29 08:54:50 2023
 \begin{table}[ht]
 \centering
 \begin{tabular}{llll}
@@ -513,8 +514,8 @@ finished college & 0.13 & 0.92 & 0.98 \\
 \caption{Characteristics of those with low, middle, and high causal effects} 
 \end{table}
 [1] "ENROLLED_4YR 25000"
-% latex table generated in R 4.3.1 by xtable 1.8-4 package
-% Tue Oct 17 16:56:20 2023
+% latex table generated in R 4.3.2 by xtable 1.8-4 package
+% Wed Nov 29 08:54:54 2023
 \begin{table}[ht]
 \centering
 \begin{tabular}{llll}
@@ -539,8 +540,8 @@ finished college & 0.12 & 0.92 & 0.98 \\
 \caption{Characteristics of those with low, middle, and high causal effects} 
 \end{table}
 [1] "COMPLETED_25 10000"
-% latex table generated in R 4.3.1 by xtable 1.8-4 package
-% Tue Oct 17 16:56:24 2023
+% latex table generated in R 4.3.2 by xtable 1.8-4 package
+% Wed Nov 29 08:54:57 2023
 \begin{table}[ht]
 \centering
 \begin{tabular}{llll}
@@ -565,8 +566,8 @@ finished college & 0.08 & 0.94 & 0.99 \\
 \caption{Characteristics of those with low, middle, and high causal effects} 
 \end{table}
 [1] "COMPLETED_25 25000"
-% latex table generated in R 4.3.1 by xtable 1.8-4 package
-% Tue Oct 17 16:56:27 2023
+% latex table generated in R 4.3.2 by xtable 1.8-4 package
+% Wed Nov 29 08:55:00 2023
 \begin{table}[ht]
 \centering
 \begin{tabular}{llll}
@@ -591,8 +592,8 @@ finished college & 0.08 & 0.94 & 0.99 \\
 \caption{Characteristics of those with low, middle, and high causal effects} 
 \end{table}
 [1] "COMPLETED_30 10000"
-% latex table generated in R 4.3.1 by xtable 1.8-4 package
-% Tue Oct 17 16:56:30 2023
+% latex table generated in R 4.3.2 by xtable 1.8-4 package
+% Wed Nov 29 08:55:03 2023
 \begin{table}[ht]
 \centering
 \begin{tabular}{llll}
@@ -617,8 +618,8 @@ finished college & 0.15 & 0.90 & 0.99 \\
 \caption{Characteristics of those with low, middle, and high causal effects} 
 \end{table}
 [1] "COMPLETED_30 25000"
-% latex table generated in R 4.3.1 by xtable 1.8-4 package
-% Tue Oct 17 16:56:33 2023
+% latex table generated in R 4.3.2 by xtable 1.8-4 package
+% Wed Nov 29 08:55:06 2023
 \begin{table}[ht]
 \centering
 \begin{tabular}{llll}
@@ -642,11 +643,17 @@ finished college & 0.17 & 0.90 & 0.99 \\
 \end{tabular}
 \caption{Characteristics of those with low, middle, and high causal effects} 
 \end{table}
-[1] "2023-10-17 16:56:33 EDT"
+[1] "2023-11-29 08:55:06 EST"
 [1] "Visualize inductive"
-R version 4.3.1 (2023-06-16)
+[1] "2023-11-29 08:55:07 EST"
+[1] "Alternative specification: Super Learner"
+-- Imputation 1 --
+
+  1  2
+
+R version 4.3.2 (2023-10-31)
 Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Ventura 13.6
+Running under: macOS Ventura 13.6.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
@@ -659,34 +666,37 @@ time zone: America/New_York
 tzcode source: internal
 
 attached base packages:
-[1] grid      parallel  stats     graphics  grDevices utils     datasets 
-[8] methods   base     
+ [1] splines   grid      parallel  stats     graphics  grDevices utils    
+ [8] datasets  methods   base     
 
 other attached packages:
- [1] gridExtra_2.3     mgcv_1.8-42       nlme_3.1-162      doRNG_1.8.6      
- [5] rngtools_1.5.2    doParallel_1.0.17 iterators_1.0.14  foreach_1.5.2    
- [9] lubridate_1.9.2   forcats_1.0.0     stringr_1.5.0     dplyr_1.1.3      
-[13] purrr_1.0.2       readr_2.1.4       tidyr_1.3.0       tibble_3.2.1     
-[17] ggplot2_3.4.3     tidyverse_2.0.0  
+ [1] grf_2.3.1             SuperLearner_2.0-28.1 gam_1.22-2           
+ [4] nnls_1.5              gridExtra_2.3         mgcv_1.9-0           
+ [7] nlme_3.1-163          doRNG_1.8.6           rngtools_1.5.2       
+[10] doParallel_1.0.17     iterators_1.0.14      foreach_1.5.2        
+[13] lubridate_1.9.3       forcats_1.0.0         stringr_1.5.0        
+[16] dplyr_1.1.3           purrr_1.0.2           readr_2.1.4          
+[19] tidyr_1.3.0           tibble_3.2.1          ggplot2_3.4.4        
+[22] tidyverse_2.0.0      
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.3      rstatix_0.7.2     lattice_0.21-8    tzdb_0.4.0       
- [5] vctrs_0.6.4       tools_4.3.1       generics_0.1.3    fansi_1.0.5      
- [9] pkgconfig_2.0.3   Matrix_1.6-1.1    lifecycle_1.0.3   compiler_4.3.1   
-[13] farver_2.1.1      textshaping_0.3.7 munsell_0.5.0     codetools_0.2-19 
-[17] carData_3.0-5     Amelia_1.8.1      pillar_1.9.0      car_3.1-2        
-[21] ggpubr_0.6.0      crayon_1.5.2      abind_1.4-5       tidyselect_1.2.0 
-[25] digest_0.6.33     stringi_1.7.12    labeling_0.4.2    splines_4.3.1    
+ [1] gtable_0.3.4      rstatix_0.7.2     lattice_0.21-9    tzdb_0.4.0       
+ [5] vctrs_0.6.4       tools_4.3.2       generics_0.1.3    fansi_1.0.5      
+ [9] pkgconfig_2.0.3   Matrix_1.6-1.1    lifecycle_1.0.3   compiler_4.3.2   
+[13] farver_2.1.1      textshaping_0.3.7 munsell_0.5.0     DiceKriging_1.6.0
+[17] codetools_0.2-19  carData_3.0-5     Amelia_1.8.1      pillar_1.9.0     
+[21] car_3.1-2         ggpubr_0.6.0      crayon_1.5.2      abind_1.4-5      
+[25] tidyselect_1.2.0  digest_0.6.33     stringi_1.7.12    labeling_0.4.3   
 [29] cowplot_1.1.1     colorspace_2.1-0  cli_3.6.1         magrittr_2.0.3   
-[33] utf8_1.2.3        broom_1.0.5       foreign_0.8-84    withr_2.5.1      
+[33] utf8_1.2.3        broom_1.0.5       foreign_0.8-85    withr_2.5.1      
 [37] scales_1.2.1      backports_1.4.1   bit64_4.0.5       timechange_0.2.0 
 [41] bit_4.0.5         ggsignif_0.6.4    ragg_1.2.6        hms_1.1.3        
 [45] rlang_1.1.1       Rcpp_1.0.11       xtable_1.8-4      glue_1.6.2       
-[49] rstudioapi_0.15.0 vroom_1.6.3       R6_2.5.1          systemfonts_1.0.5
-[1] "FINISH TIME: 2023-10-17 16:56:35.692025"
+[49] vroom_1.6.4       R6_2.5.1          systemfonts_1.0.5
+[1] "FINISH TIME: 2023-11-29 08:58:18.851312"
 [1] "bs_reps: 1000"
 [1] "outcomes: enrolled_any enrolled_4yr completed_25 completed_30"
 [1] "delta_values: 10000 25000"
-[1] "num_cores: 6"
+[1] "num_cores: 12"
 [1] "TIME SPENT:"
-Time difference of 1.950855 hours
+Time difference of 10.48239 hours
