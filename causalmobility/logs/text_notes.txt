@@ -1,4 +1,4 @@
-[1] "2023-12-30 13:28:35 PST"
+[1] "2024-01-14 16:55:46 PST"
 [1] "Prevalence of secretaries"
 # A tibble: 4 × 3
 # Groups:   parental_educ [4]
@@ -83,26 +83,26 @@
 68 Routine Nonmanual College               Personnel clerks, except pay… 0.116  
 69 Routine Nonmanual College               Teachers, prekindergarten an… 0.0747 
 70 Routine Nonmanual College               Secretaries                   0.0655 
-71 Service           Less than high school Managers and administrators,… 0.611  
-72 Service           Less than high school Sales workers, other commodi… 0.198  
-73 Service           Less than high school Managers, marketing, adverti… 0.0594 
-74 Service           Less than high school Registered nurses             0.0218 
-75 Service           Less than high school Dietitians                    0.0182 
-76 Service           High school           Managers and administrators,… 0.463  
-77 Service           High school           Sales workers, other commodi… 0.255  
-78 Service           High school           Managers, marketing, adverti… 0.0652 
-79 Service           High school           Registered nurses             0.0457 
-80 Service           High school           Accountants and auditors      0.0211 
-81 Service           Some college          Managers and administrators,… 0.345  
-82 Service           Some college          Registered nurses             0.184  
-83 Service           Some college          Sales workers, other commodi… 0.0875 
-84 Service           Some college          Managers, marketing, adverti… 0.0506 
-85 Service           Some college          Social workers                0.0443 
-86 Service           College               Managers and administrators,… 0.171  
-87 Service           College               Teachers, elementary school   0.119  
-88 Service           College               Teachers, secondary school    0.0850 
-89 Service           College               Registered nurses             0.0489 
-90 Service           College               Physicians                    0.0473 
+71 Professional      Less than high school Managers and administrators,… 0.611  
+72 Professional      Less than high school Sales workers, other commodi… 0.198  
+73 Professional      Less than high school Managers, marketing, adverti… 0.0594 
+74 Professional      Less than high school Registered nurses             0.0218 
+75 Professional      Less than high school Dietitians                    0.0182 
+76 Professional      High school           Managers and administrators,… 0.463  
+77 Professional      High school           Sales workers, other commodi… 0.255  
+78 Professional      High school           Managers, marketing, adverti… 0.0652 
+79 Professional      High school           Registered nurses             0.0457 
+80 Professional      High school           Accountants and auditors      0.0211 
+81 Professional      Some college          Managers and administrators,… 0.345  
+82 Professional      Some college          Registered nurses             0.184  
+83 Professional      Some college          Sales workers, other commodi… 0.0875 
+84 Professional      Some college          Managers, marketing, adverti… 0.0506 
+85 Professional      Some college          Social workers                0.0443 
+86 Professional      College               Managers and administrators,… 0.171  
+87 Professional      College               Teachers, elementary school   0.119  
+88 Professional      College               Teachers, secondary school    0.0850 
+89 Professional      College               Registered nurses             0.0489 
+90 Professional      College               Physicians                    0.0473 
 [1] "Common occupations in population but which have with no college graduates"
 # A tibble: 120 × 5
    parental_occ_title         parental_hwsei prop_college prop_noHS total_weight
@@ -133,34 +133,17 @@
  9 Chemical                               70        0.929         0         18.9
 10 Clergy                                 46        0.667         0         18.5
 # ℹ 55 more rows
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.2.1
-
-Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
-
-locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-
-time zone: America/Los_Angeles
-tzcode source: internal
-
-attached base packages:
-[1] stats     graphics  grDevices datasets  utils     methods   base     
-
-other attached packages:
- [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.0   dplyr_1.1.3    
- [5] purrr_1.0.2     readr_2.1.4     tidyr_1.3.0     tibble_3.2.1   
- [9] ggplot2_3.4.4   tidyverse_2.0.0 here_1.0.1     
-
-loaded via a namespace (and not attached):
- [1] vctrs_0.6.4       cli_3.6.1         rlang_1.1.1       stringi_1.7.12   
- [5] renv_1.0.3        generics_0.1.3    glue_1.6.2        colorspace_2.1-0 
- [9] rprojroot_2.0.3   hms_1.1.3         scales_1.2.1      fansi_1.0.5      
-[13] grid_4.3.2        munsell_0.5.0     tzdb_0.4.0        yaml_2.3.7       
-[17] lifecycle_1.0.3   compiler_4.3.2    timechange_0.2.0  pkgconfig_2.0.3  
-[21] rstudioapi_0.15.0 R6_2.5.1          tidyselect_1.2.0  utf8_1.2.4       
-[25] pillar_1.9.0      magrittr_2.0.3    tools_4.3.2       withr_2.5.2      
-[29] gtable_0.3.4     
+[1] "Occupation examples reported in text"
+# A tibble: 7 × 4
+# Groups:   parental_occ_title, parental_egp [7]
+  parental_occ_title            parental_egp      parental_hwsei prop_hs
+  <fct>                         <fct>                      <dbl>   <dbl>
+1 Housekeepers and butlers      Unskilled Manual            13.9   0.230
+2 Sales counter clerks          Routine Nonmanual           24.9   0.4  
+3 Welders and cutters           Unskilled Manual            25.5   0.355
+4 Teachers' aides               Routine Nonmanual           26.7   0.489
+5 Secretaries                   Routine Nonmanual           30.3   0.695
+6 Mail carriers, postal service Unskilled Manual            40.6   0.596
+7 Physicians                    Professional                80.5   0    
+[1] "Joey and Fred"
+[1] "Sarah"

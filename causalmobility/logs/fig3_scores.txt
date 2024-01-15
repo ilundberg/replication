@@ -1,4 +1,4 @@
-[1] "2024-01-13 18:03:13 CST"
+[1] "2024-01-14 16:54:27 PST"
    resp_race         parental_educ      slope         se      ci.min    ci.max
 1   Hispanic Less than high school 0.16800275 0.02552750  0.11796977 0.2180357
 2      Black Less than high school 0.16800272 0.02552747  0.11796980 0.2180356
