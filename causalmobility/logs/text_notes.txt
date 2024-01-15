@@ -1,4 +1,4 @@
-[1] "2024-01-14 16:55:46 PST"
+[1] "2024-01-14 17:38:58 PST"
 [1] "Prevalence of secretaries"
 # A tibble: 4 × 3
 # Groups:   parental_educ [4]
