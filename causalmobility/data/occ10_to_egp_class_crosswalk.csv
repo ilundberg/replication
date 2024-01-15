@@ -1,0 +1,540 @@
+occ10,title,egp_label,egp10_10
+10,Chief executives,I,1
+20,General and operations managers,II,2
+30,Legislators,I,1
+40,Advertising and promotions managers,II,2
+50,Marketing and sales managers,II,2
+60,Public relations and fundraising managers,II,2
+100,Administrative services managers,IIIa,3
+110,Computer and information systems managers,I,1
+120,Financial managers,II,2
+135,Compensation and benefits managers,II,2
+136,Human resources managers,II,2
+137,Training and development managers,II,2
+140,Industrial production managers,II,2
+150,Purchasing managers,II,2
+160,"Transportation, storage, and distribution managers",V,8
+205,"Farmers, ranchers, and other agricultural managers",IVc,7
+220,Construction managers,V,8
+230,Education administrators,I,1
+300,Architectural and engineering managers,I,1
+310,Food service managers,IIIb,4
+325,Funeral service managers,II,2
+330,Gaming managers,V,8
+340,Lodging managers,IIIa,3
+350,Medical and health services managers,I,1
+360,Natural sciences managers,I,1
+400,Postmasters and mail superintendents,II,2
+410,"Property, real estate, and community association managers",V,8
+420,Social and community service managers,II,2
+425,Emergency management directors,II,2
+430,"Managers, all other",II,2
+500,"Agents and business managers of artists, performers, and athletes",II,2
+510,"Buyers and purchasing agents, farm products",V,8
+520,"Wholesale and retail buyers, except farm products",IIIb,4
+530,"Purchasing agents, except wholesale, retail, and farm products",II,2
+540,"Claims adjusters, appraisers, examiners, and investigators",IIIa,3
+565,Compliance officers,II,2
+600,Cost estimators,V,8
+630,Human resources workers,IIIa,3
+640,"Compensation, benefits, and job analysis specialists",II,2
+650,Training and development specialists,II,2
+700,Logisticians,II,2
+710,Management analysts,I,1
+725,"Meeting, convention, and event planners",IIIa,3
+726,Fundraisers,II,2
+735,Market research analysts and marketing specialists,II,2
+740,"Business operations specialists, all other",II,2
+800,Accountants and auditors,I,1
+810,Appraisers and assessors of real estate,IIIa,3
+820,Budget analysts,I,1
+830,Credit analysts,IIIa,3
+840,Financial analysts,I,1
+850,Personal financial advisors,II,2
+860,Insurance underwriters,II,2
+900,Financial examiners,II,2
+910,Credit counselors and loan officers,IIIa,3
+930,"Tax examiners and collectors, and revenue agents",IIIa,3
+940,Tax preparers,IIIa,3
+950,"Financial specialists, all other",II,2
+1005,Computer and information research scientists,I,1
+1006,Computer systems analysts,II,2
+1007,Information security analysts,II,2
+1010,Computer programmers,II,2
+1020,"Software developers, applications and systems software",I,1
+1030,Web developers,IIIa,3
+1050,Computer support specialists,IIIa,3
+1060,Database administrators,II,2
+1105,Network and computer systems administrators,II,2
+1106,Computer network architects,II,2
+1107,"Computer occupations, all other",II,2
+1200,Actuaries,I,1
+1210,Mathematicians,I,1
+1220,Operations research analysts,I,1
+1230,Statisticians,I,1
+1240,Miscellaneous mathematical science occupations,I,1
+1300,"Architects, except naval",I,1
+1310,"Surveyors, cartographers, and photogrammetrists",II,2
+1320,Aerospace engineers,I,1
+1330,Agricultural engineers,I,1
+1340,Biomedical engineers,I,1
+1350,Chemical engineers,I,1
+1360,Civil engineers,I,1
+1400,Computer hardware engineers,I,1
+1410,Electrical and electronics engineers,I,1
+1420,Environmental engineers,I,1
+1430,"Industrial engineers, including health and safety",I,1
+1440,Marine engineers and naval architects,I,1
+1450,Materials engineers,I,1
+1460,Mechanical engineers,I,1
+1500,"Mining and geological engineers, including mining safety engineers",I,1
+1510,Nuclear engineers,I,1
+1520,Petroleum engineers,I,1
+1530,"Engineers, all other",I,1
+1540,Drafters,V,8
+1550,"Engineering technicians, except drafters",V,8
+1560,Surveying and mapping technicians,V,8
+1600,Agricultural and food scientists,I,1
+1610,Biological scientists,I,1
+1640,Conservation scientists and foresters,I,1
+1650,Medical scientists,I,1
+1660,"Life scientists, all other",I,1
+1700,Astronomers and physicists,I,1
+1710,Atmospheric and space scientists,I,1
+1720,Chemists and materials scientists,I,1
+1740,Environmental scientists and geoscientists,I,1
+1760,"Physical scientists, all other",I,1
+1800,Economists,I,1
+1815,Survey researchers,II,2
+1820,Psychologists,I,1
+1830,Sociologists,II,2
+1840,Urban and regional planners,I,1
+1860,Miscellaneous social scientists and related workers,II,2
+1900,Agricultural and food science technicians,V,8
+1910,Biological technicians,V,8
+1920,Chemical technicians,V,8
+1930,Geological and petroleum technicians,V,8
+1940,Nuclear technicians,V,8
+1950,Social science research assistants,V,8
+1965,"Miscellaneous life, physical, and social science technicians",V,8
+2000,Counselors,II,2
+2010,Social workers,II,2
+2015,Probation officers and correctional treatment specialists,V,8
+2016,Social and human service assistants,IIIa,3
+2025,"Miscellaneous community and social service specialists, including health educators and community health workers",II,2
+2040,Clergy,II,2
+2050,"Directors, religious activities and education",II,2
+2060,"Religious workers, all other",IIIb,4
+2100,Lawyers,I,1
+2105,Judicial law clerks,I,1
+2110,"Judges, magistrates, and other judicial workers",I,1
+2145,Paralegals and legal assistants,IIIa,3
+2160,Miscellaneous legal support workers,IIIa,3
+2200,Postsecondary teachers,I,1
+2300,Preschool and kindergarten teachers,IIIb,4
+2310,Elementary and middle school teachers,II,2
+2320,Secondary school teachers,II,2
+2330,Special education teachers,II,2
+2340,Other teachers and instructors,IIIa,3
+2400,"Archivists, curators, and museum technicians",II,2
+2430,Librarians,II,2
+2440,Library technicians,IIIa,3
+2540,Teacher assistants,IIIa,3
+2550,"Other education, training, and library workers",II,2
+2600,Artists and related workers,V,8
+2630,Designers,V,8
+2700,Actors,V,8
+2710,Producers and directors,II,2
+2720,"Athletes, coaches, umpires, and related workers",V,8
+2740,Dancers and choreographers,V,8
+2750,"Musicians, singers, and related workers",V,8
+2760,"Entertainers and performers, sports and related workers, all other",V,8
+2800,Announcers,V,8
+2810,"News analysts, reporters and correspondents",II,2
+2825,Public relations specialists,II,2
+2830,Editors,II,2
+2840,Technical writers,II,2
+2850,Writers and authors,II,2
+2860,Miscellaneous media and communication workers,V,8
+2900,Broadcast and sound engineering technicians and radio operators,V,8
+2910,Photographers,V,8
+2920,"Television, video, and motion picture camera operators and editors",V,8
+2960,"Media and communication equipment workers, all other",V,8
+3000,Chiropractors,I,1
+3010,Dentists,I,1
+3030,Dietitians and nutritionists,II,2
+3040,Optometrists,I,1
+3050,Pharmacists,I,1
+3060,Physicians and surgeons,I,1
+3110,Physician assistants,II,2
+3120,Podiatrists,I,1
+3140,Audiologists,II,2
+3150,Occupational therapists,II,2
+3160,Physical therapists,II,2
+3200,Radiation therapists,IIIa,3
+3210,Recreational therapists,II,2
+3220,Respiratory therapists,IIIa,3
+3230,Speech-language pathologists,II,2
+3235,Exercise physiologists,II,2
+3245,"Therapists, all other",II,2
+3250,Veterinarians,I,1
+3255,Registered nurses,II,2
+3256,Nurse anesthetists,II,2
+3257,Nurse midwives,II,2
+3258,Nurse practitioners,II,2
+3260,"Health diagnosing and treating practitioners, all other",II,2
+3300,Clinical laboratory technologists and technicians,V,8
+3310,Dental hygienists,V,8
+3320,Diagnostic related technologists and technicians,V,8
+3400,Emergency medical technicians and paramedics,V,8
+3420,Health practitioner support technologists and technicians,V,8
+3500,Licensed practical and licensed vocational nurses,IIIa,3
+3510,Medical records and health information technicians,IIIa,3
+3520,"Opticians, dispensing",V,8
+3535,Miscellaneous health technologists and technicians,V,8
+3540,Other healthcare practitioners and technical occupations,II,2
+3600,"Nursing, psychiatric, and home health aides",IIIb,4
+3610,Occupational therapy assistants and aides,IIIb,4
+3620,Physical therapist assistants and aides,IIIb,4
+3630,Massage therapists,IIIb,4
+3640,Dental assistants,IIIb,4
+3645,Medical assistants,IIIb,4
+3646,Medical transcriptionists,IIIb,4
+3647,Pharmacy aides,IIIb,4
+3648,Veterinary assistants and laboratory animal caretakers,IIIb,4
+3649,Phlebotomists,IIIb,4
+3655,"Miscellaneous healthcare support occupations, including medical equipment preparers",IIIb,4
+3700,First-line supervisors of correctional officers,V,8
+3710,First-line supervisors of police and detectives,V,8
+3720,First-line supervisors of fire fighting and prevention workers,V,8
+3730,"First-line supervisors of protective service workers, all other",V,8
+3740,Firefighters,V,8
+3750,Fire inspectors,V,8
+3800,"Bailiffs, correctional officers, and jailers",V,8
+3820,Detectives and criminal investigators,V,8
+3830,Fish and game wardens,V,8
+3840,Parking enforcement workers,V,8
+3850,Police and sheriff's patrol officers,V,8
+3860,Transit and railroad police,V,8
+3900,Animal control workers,IIIb,4
+3910,Private detectives and investigators,V,8
+3930,Security guards and gaming surveillance officers,IIIb,4
+3940,Crossing guards,VIIa,10
+3945,Transportation security screeners,IIIb,4
+3955,"Lifeguards and other recreational, and all other protective service workers",IIIb,4
+4000,Chefs and head cooks,V,8
+4010,First-line supervisors of food preparation and serving workers,IIIb,4
+4020,Cooks,VIIa,10
+4030,Food preparation workers,VIIa,10
+4040,Bartenders,IIIb,4
+4050,"Combined food preparation and serving workers, including fast food",IIIb,4
+4060,"Counter attendants, cafeteria, food concession, and coffee shop",IIIb,4
+4110,Waiters and waitresses,IIIb,4
+4120,"Food servers, nonrestaurant",IIIb,4
+4130,Dining room and cafeteria attendants and bartender helpers,IIIb,4
+4140,Dishwashers,VIIa,10
+4150,"Hosts and hostesses, restaurant, lounge, and coffee shop",IIIb,4
+4160,"Food preparation and serving related workers, all other",IIIb,4
+4200,First-line supervisors of housekeeping and janitorial workers,IIIb,4
+4210,"First-line supervisors of landscaping, lawn service, and groundskeeping workers",V,8
+4220,Janitors and building cleaners,VIIa,10
+4230,Maids and housekeeping cleaners,VIIa,10
+4240,Pest control workers,IIIb,4
+4250,Grounds maintenance workers,VIIa,10
+4300,First-line supervisors of gaming workers,IIIb,4
+4320,First-line supervisors of personal service workers,IIIb,4
+4340,Animal trainers,VIIb,11
+4350,Nonfarm animal caretakers,IIIb,4
+4400,Gaming services workers,IIIb,4
+4410,Motion picture projectionists,IIIb,4
+4420,"Ushers, lobby attendants, and ticket takers",IIIb,4
+4430,Miscellaneous entertainment attendants and related workers,IIIb,4
+4460,Embalmers and funeral attendants,IIIb,4
+4465,"Morticians, undertakers, and funeral directors",IIIb,4
+4500,Barbers,IIIb,4
+4510,"Hairdressers, hairstylists, and cosmetologists",IIIb,4
+4520,Miscellaneous personal appearance workers,IIIb,4
+4530,"Baggage porters, bellhops, and concierges",IIIb,4
+4540,Tour and travel guides,IIIa,3
+4600,Childcare workers,IIIb,4
+4610,Personal care aides,IIIb,4
+4620,Recreation and fitness workers,IIIb,4
+4640,Residential advisors,IIIb,4
+4650,"Personal care and service workers, all other",IIIb,4
+4700,First-line supervisors of retail sales workers,IIIb,4
+4710,First-line supervisors of non-retail sales workers,V,8
+4720,Cashiers,IIIb,4
+4740,Counter and rental clerks,IIIb,4
+4750,Parts salespersons,IIIb,4
+4760,Retail salespersons,IIIb,4
+4800,Advertising sales agents,IIIa,3
+4810,Insurance sales agents,IIIa,3
+4820,"Securities, commodities, and financial services sales agents",II,2
+4830,Travel agents,IIIa,3
+4840,"Sales representatives, services, all other",IIIa,3
+4850,"Sales representatives, wholesale and manufacturing",IIIa,3
+4900,"Models, demonstrators, and product promoters",IIIb,4
+4920,Real estate brokers and sales agents,IIIa,3
+4930,Sales engineers,II,2
+4940,Telemarketers,IIIb,4
+4950,"Door-to-door sales workers, news and street vendors, and related workers",IIIb,4
+4965,"Sales and related workers, all other",IIIa,3
+5000,First-line supervisors of office and administrative support workers,IIIa,3
+5010,"Switchboard operators, including answering service",IIIa,3
+5020,Telephone operators,IIIa,3
+5030,"Communications equipment operators, all other",IIIa,3
+5100,Bill and account collectors,IIIa,3
+5110,Billing and posting clerks,IIIa,3
+5120,"Bookkeeping, accounting, and auditing clerks",IIIa,3
+5130,Gaming cage workers,IIIb,4
+5140,Payroll and timekeeping clerks,IIIa,3
+5150,Procurement clerks,IIIa,3
+5160,Tellers,IIIa,3
+5165,"Financial clerks, all other",IIIa,3
+5200,Brokerage clerks,IIIa,3
+5210,Correspondence clerks,IIIa,3
+5220,"Court, municipal, and license clerks",IIIa,3
+5230,"Credit authorizers, checkers, and clerks",IIIa,3
+5240,Customer service representatives,IIIa,3
+5250,"Eligibility interviewers, government programs",IIIa,3
+5260,File Clerks,IIIa,3
+5300,"Hotel, motel, and resort desk clerks",IIIa,3
+5310,"Interviewers, except eligibility and loan",IIIa,3
+5320,"Library assistants, clerical",IIIa,3
+5330,Loan interviewers and clerks,IIIa,3
+5340,New accounts clerks,IIIa,3
+5350,Order clerks,IIIa,3
+5360,"Human resources assistants, except payroll and timekeeping",IIIa,3
+5400,Receptionists and information clerks,IIIb,4
+5410,Reservation and transportation ticket agents and travel clerks,IIIa,3
+5420,"Information and record clerks, all other",IIIa,3
+5500,Cargo and freight agents,IIIa,3
+5510,Couriers and messengers,IIIb,4
+5520,Dispatchers,IIIa,3
+5530,"Meter readers, utilities",IIIa,3
+5540,Postal service clerks,IIIa,3
+5550,Postal service mail carriers,VIIa,10
+5560,"Postal service mail sorters, processors, and processing machine operators",VIIa,10
+5600,"Production, planning, and expediting clerks",IIIa,3
+5610,"Shipping, receiving, and traffic clerks",VIIa,10
+5620,Stock clerks and order fillers,VIIa,10
+5630,"Weighers, measurers, checkers, and samplers, recordkeeping",IIIa,3
+5700,Secretaries and administrative assistants,IIIa,3
+5800,Computer operators,IIIa,3
+5810,Data entry keyers,IIIa,3
+5820,Word processors and typists,IIIa,3
+5830,Desktop publishers,IIIa,3
+5840,Insurance claims and policy processing clerks,IIIa,3
+5850,"Mail clerks and mail machine operators, except postal service",VIIa,10
+5860,"Office clerks, general",IIIa,3
+5900,"Office machine operators, except computer",IIIa,3
+5910,Proofreaders and copy markers,IIIa,3
+5920,Statistical assistants,IIIa,3
+5940,"Office and administrative support workers, all other",IIIa,3
+6005,"First-line supervisors of farming, fishing, and forestry workers",VIIb,11
+6010,Agricultural inspectors,VIIb,11
+6020,Animal breeders,VIIb,11
+6040,"Graders and sorters, agricultural products",VIIb,11
+6050,Miscellaneous agricultural workers,VIIb,11
+6100,Fishers and related fishing workers,VIIb,11
+6110,Hunters and trappers,VIIb,11
+6120,Forest and conservation workers,VI,9
+6130,Logging workers,VIIa,10
+6200,First-line supervisors of construction trades and extraction workers,V,8
+6210,Boilermakers,VI,9
+6220,"Brickmasons, blockmasons, and stonemasons",VI,9
+6230,Carpenters,VI,9
+6240,"Carpet, floor, and tile installers and finishers",VI,9
+6250,"Cement masons, concrete finishers, and terrazzo workers",VIIa,10
+6260,Construction laborers,VIIa,10
+6300,"Paving, surfacing, and tamping equipment operators",VIIa,10
+6310,Pile-driver operators,VI,9
+6320,Operating engineers and other construction equipment operators,VI,9
+6330,"Drywall installers, ceiling tile installers, and tapers",VI,9
+6355,Electricians,VI,9
+6360,Glaziers,VIIa,10
+6400,Insulation workers,VI,9
+6420,"Painters, construction and maintenance",VI,9
+6430,Paperhangers,VI,9
+6440,"Pipelayers, plumbers, pipefitters, and steamfitters",VI,9
+6460,Plasterers and stucco masons,VIIa,10
+6500,Reinforcing iron and rebar workers,VI,9
+6515,Roofers,VIIa,10
+6520,Sheet metal workers,VI,9
+6530,Structural iron and steel workers,VI,9
+6540,Solar photovoltaic installers,VIIa,10
+6600,"Helpers, construction trades",VIIa,10
+6660,Construction and building inspectors,V,8
+6700,Elevator installers and repairers,V,8
+6710,Fence erectors,VIIa,10
+6720,Hazardous materials removal workers,VI,9
+6730,Highway maintenance workers,VIIa,10
+6740,Rail-track laying and maintenance equipment operators,VIIa,10
+6750,Septic tank servicers and sewer pipe cleaners,VIIa,10
+6765,Miscellaneous construction and related workers,VIIa,10
+6800,"Derrick, rotary drill, and service unit operators, oil, gas, and mining",VIIa,10
+6820,"Earth drillers, except oil and gas",VIIa,10
+6830,"Explosives workers, ordnance handling experts, and blasters",VI,9
+6840,Mining machine operators,VIIa,10
+6910,"Roof bolters, mining",VIIa,10
+6920,"Roustabouts, oil and gas",VIIa,10
+6930,Helpers--extraction workers,VIIa,10
+6940,Other extraction workers,VIIa,10
+7000,"First-line supervisors of mechanics, installers, and repairers",V,8
+7010,"Computer, automated teller, and office machine repairers",VI,9
+7020,Radio and telecommunications equipment installers and repairers,V,8
+7030,Avionics technicians,V,8
+7040,"Electric motor, power tool, and related repairers",V,8
+7050,"Electrical and electronics installers and repairers, transportation equipment",V,8
+7100,"Electrical and electronics repairers, industrial and utility",V,8
+7110,"Electronic equipment installers and repairers, motor vehicles",V,8
+7120,Electronic home entertainment equipment installers and repairers,V,8
+7130,Security and fire alarm systems installers,VI,9
+7140,Aircraft mechanics and service technicians,VI,9
+7150,Automotive body and related repairers,VIIa,10
+7160,Automotive glass installers and repairers,VIIa,10
+7200,Automotive service technicians and mechanics,VI,9
+7210,Bus and truck mechanics and diesel engine specialists,VI,9
+7220,Heavy vehicle and mobile equipment service technicians and mechanics,VI,9
+7240,Small engine mechanics,VI,9
+7260,"Miscellaneous vehicle and mobile equipment mechanics, installers, and repairers",VIIa,10
+7300,Control and valve installers and repairers,VI,9
+7315,"Heating, air conditioning, and refrigeration mechanics and installers",VI,9
+7320,Home appliance repairers,VI,9
+7330,Industrial and refractory machinery mechanics,VI,9
+7340,"Maintenance and repair workers, general",VI,9
+7350,"Maintenance workers, machinery",VI,9
+7360,Millwrights,VI,9
+7410,Electrical power-line installers and repairers,VI,9
+7420,Telecommunications line installers and repairers,V,8
+7430,Precision instrument and equipment repairers,VI,9
+7440,Wind turbine service technicians,VI,9
+7510,"Coin, vending, and amusement machine servicers and repairers",IIIb,4
+7520,Commercial divers,VI,9
+7540,Locksmiths and safe repairers,VI,9
+7550,Manufactured building and mobile home installers,VI,9
+7560,Riggers,VIIa,10
+7600,Signal and track switch repairers,VI,9
+7610,"Helpers--installation, maintenance, and repair workers",VIIa,10
+7630,"Other installation, maintenance, and repair workers",VI,9
+7700,First-line supervisors of production and operating workers,V,8
+7710,"Aircraft structure, surfaces, rigging, and systems assemblers",VIIa,10
+7720,"Electrical, electronics, and electromechanical assemblers",VIIa,10
+7730,Engine and other machine assemblers,VIIa,10
+7740,Structural metal fabricators and fitters,VI,9
+7750,Miscellaneous assemblers and fabricators,VIIa,10
+7800,Bakers,VIIa,10
+7810,"Butchers and other meat, poultry, and fish processing workers",VIIa,10
+7830,"Food and tobacco roasting, baking, and drying machine operators and tenders",VIIa,10
+7840,Food batchmakers,VIIa,10
+7850,Food cooking machine operators and tenders,VIIa,10
+7855,"Food processing workers, all other",VIIa,10
+7900,Computer control programmers and operators,V,8
+7920,"Extruding and drawing machine setters, operators, and tenders, metal and plastic",VIIa,10
+7930,"Forging machine setters, operators, and tenders, metal and plastic",VIIa,10
+7940,"Rolling machine setters, operators, and tenders, metal and plastic",VIIa,10
+7950,"Cutting, punching, and press machine setters, operators, and tenders, metal and plastic",VIIa,10
+7960,"Drilling and boring machine tool setters, operators, and tenders, metal and plastic",VIIa,10
+8000,"Grinding, lapping, polishing, and buffing machine tool setters, operators, and tenders, metal and plastic",VIIa,10
+8010,"Lathe and turning machine tool setters, operators, and tenders, metal and plastic",VIIa,10
+8020,"Milling and planing machine setters, operators, and tenders, metal and plastic",VIIa,10
+8030,Machinists,VI,9
+8040,"Metal furnace operators, tenders, pourers, and casters",VIIa,10
+8060,"Model makers and patternmakers, metal and plastic",VI,9
+8100,"Molders and molding machine setters, operators, and tenders, metal and plastic",VI,9
+8120,"Multiple machine tool setters, operators, and tenders, metal and plastic",VIIa,10
+8130,Tool and die makers,VI,9
+8140,"Welding, soldering, and brazing workers",VIIa,10
+8150,"Heat treating equipment setters, operators, and tenders, metal and plastic",VIIa,10
+8160,"Layout workers, metal and plastic",VIIa,10
+8200,"Plating and coating machine setters, operators, and tenders, metal and plastic",VIIa,10
+8210,"Tool grinders, filers, and sharpeners",VIIa,10
+8220,"Metal workers and plastic workers, all other",VIIa,10
+8250,Prepress technicians and workers,VI,9
+8255,Printing press operators,VI,9
+8256,Print binding and finishing workers,VIIa,10
+8300,Laundry and dry-cleaning workers,VIIa,10
+8310,"Pressers, textile, garment, and related materials",VIIa,10
+8320,Sewing machine operators,VIIa,10
+8330,Shoe and leather workers and repairers,VIIa,10
+8340,Shoe machine operators and tenders,VIIa,10
+8350,"Tailors, dressmakers, and sewers",VI,9
+8360,Textile bleaching and dyeing machine operators and tenders,VIIa,10
+8400,"Textile cutting machine setters, operators, and tenders",VIIa,10
+8410,"Textile knitting and weaving machine setters, operators, and tenders",VIIa,10
+8420,"Textile winding, twisting, and drawing out machine setters, operators, and tenders",VIIa,10
+8430,"Extruding and forming machine setters, operators, and tenders, synthetic and glass fibers",VIIa,10
+8440,Fabric and apparel patternmakers,VIIa,10
+8450,Upholsterers,VIIa,10
+8460,"Textile, apparel, and furnishings workers, all other",VIIa,10
+8500,Cabinetmakers and bench carpenters,VI,9
+8510,Furniture finishers,VIIa,10
+8520,"Model makers and patternmakers, wood",VI,9
+8530,"Sawing machine setters, operators, and tenders, wood",VIIa,10
+8540,"Woodworking machine setters, operators, and tenders, except sawing",VIIa,10
+8550,"Woodworkers, all other",VI,9
+8600,"Power plant operators, distributors, and dispatchers",VI,9
+8610,Stationary engineers and boiler operators,VI,9
+8620,Water and wastewater treatment plant and system operators,VI,9
+8630,Miscellaneous plant and system operators,VI,9
+8640,"Chemical processing machine setters, operators, and tenders",VIIa,10
+8650,"Crushing, grinding, polishing, mixing, and blending workers",VIIa,10
+8710,Cutting workers,VIIa,10
+8720,"Extruding, forming, pressing, and compacting machine setters, operators, and tenders",VIIa,10
+8730,"Furnace, kiln, oven, drier, and kettle operators and tenders",VIIa,10
+8740,"Inspectors, testers, sorters, samplers, and weighers",VIIa,10
+8750,Jewelers and precious stone and metal workers,VI,9
+8760,"Medical, dental, and ophthalmic laboratory technicians",VI,9
+8800,Packaging and filling machine operators and tenders,VIIa,10
+8810,Painting workers,VIIa,10
+8830,Photographic process workers and processing machine operators,VIIa,10
+8840,Semiconductor processors,VIIa,10
+8850,Adhesive bonding machine operators and tenders,VIIa,10
+8860,"Cleaning, washing, and metal pickling equipment operators and tenders",VIIa,10
+8900,Cooling and freezing equipment operators and tenders,VIIa,10
+8910,Etchers and engravers,VI,9
+8920,"Molders, shapers, and casters, except metal and plastic",VI,9
+8930,"Paper goods machine setters, operators, and tenders",VIIa,10
+8940,Tire builders,VIIa,10
+8950,Helpers--production workers,VIIa,10
+8965,"Production workers, all other",VIIa,10
+9000,Supervisors of transportation and material moving workers,V,8
+9030,Aircraft pilots and flight engineers,II,2
+9040,Air traffic controllers and airfield operations specialists,IIIa,3
+9050,Flight attendants,IIIa,3
+9110,"Ambulance drivers and attendants, except emergency medical technicians",IIIb,4
+9120,Bus drivers,IIIb,4
+9130,Driver/sales workers and truck drivers,VIIa,10
+9140,Taxi drivers and chauffeurs,VIIa,10
+9150,"Motor vehicle operators, all other",VIIa,10
+9200,Locomotive engineers and operators,VI,9
+9230,"Railroad brake, signal, and switch operators",VI,9
+9240,Railroad conductors and yardmasters,V,8
+9260,"Subway, streetcar, and other rail transportation workers",VI,9
+9300,Sailors and marine oilers,VI,9
+9310,Ship and boat captains and operators,V,8
+9330,Ship engineers,VI,9
+9340,Bridge and lock tenders,IIIb,4
+9350,Parking lot attendants,IIIb,4
+9360,Automotive and watercraft service attendants,IIIb,4
+9410,Transportation inspectors,V,8
+9415,"Transportation attendants, except flight attendants",IIIb,4
+9420,Other transportation workers,IIIb,4
+9500,Conveyor operators and tenders,VIIa,10
+9510,Crane and tower operators,VI,9
+9520,"Dredge, excavating, and loading machine operators",VIIa,10
+9560,Hoist and winch operators,VIIa,10
+9600,Industrial truck and tractor operators,VIIa,10
+9610,Cleaners of vehicles and equipment,VIIa,10
+9620,"Laborers and freight, stock, and material movers, hand",VIIa,10
+9630,Machine feeders and offbearers,VIIa,10
+9640,"Packers and packagers, hand",VIIa,10
+9650,Pumping station operators,VIIa,10
+9720,Refuse and recyclable material collectors,VIIa,10
+9730,Mine shuttle car operators,VIIa,10
+9740,"Tank car, truck, and ship loaders",VIIa,10
+9750,"Material moving workers, all other",VIIa,10
+9800,Military officer special and tactical operations leaders,Military,12
+9810,First-line enlisted military supervisors,Military,12
+9820,Military enlisted tactical operations and air/weapons specialists and crew members,Military,12
+9830,"Military, rank not specified",Military,12

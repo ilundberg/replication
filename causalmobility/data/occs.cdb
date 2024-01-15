@@ -1,0 +1,3365 @@
+R00001.00    [CASEID]                                       Survey Year: 1979
+  PRIMARY VARIABLE
+
+ 
+             IDENTIFICATION CODE
+ 
+ORIGINAL QUESTION NAME: CASEID
+ 
+NOTE: THIS NUMBER WAS ASSIGNED ACCORDING TO THE RECORD NUMBER OF EACH RESPONDENT
+ON THE TAPE. THE FIRST RESPONDENT WAS ASSIGNED ID#1, THE SECOND WAS ASSIGNED 
+ID#2, ETC.
+ 
+ACTUAL NUMBER
+ 
+UNIVERSE: All
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:          12686        Mean:              6343.5
+ 
+Lead In: None.
+Default Next Question: R00001.49
+--------------------------------------------------------------------------------
+R00003.00    [Q1-3_A~M]                                     Survey Year: 1979
+  PRIMARY VARIABLE
+
+ 
+             DATE OF BIRTH - MONTH
+ 
+ORIGINAL QUESTION NAME: S01Q01A
+ 
+FIRST, WHEN WERE YOU BORN?
+ 
+1 THRU 12 ACTUAL MONTH
+ 
+UNIVERSE: All
+ 
+    1126           1
+     991           2
+    1028           3
+     970           4
+    1015           5
+    1053           6
+    1114           7
+    1223           8
+    1225           9
+    1010          10
+     954          11
+     977          12
+  -------
+   12686
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:             12        Mean:                6.49
+ 
+Lead In: R00001.66[Default]
+Default Next Question: R00005.00
+--------------------------------------------------------------------------------
+R00005.00    [Q1-3_A~Y]                                     Survey Year: 1979
+  PRIMARY VARIABLE
+
+ 
+             DATE OF BIRTH - YEAR
+ 
+ORIGINAL QUESTION NAME: S01Q01A
+ 
+SEE R(3.)
+ 
+ACTUAL YEAR
+ 
+UNIVERSE: All
+ 
+    1680          57
+    1677          58
+    1722          59
+    1662          60
+    1530          61
+    1600          62
+    1550          63
+    1265          64
+  -------
+   12686
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:             57        Max:             64        Mean:               60.34
+ 
+Lead In: R00003.00[Default]
+Default Next Question: R00006.00
+--------------------------------------------------------------------------------
+R00022.00    [FAM-9A]                                       Survey Year: 1979
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION OF ADULT FEMALE PRESENT IN HOUSEHOLD AT AGE 14 (CENSUS 3
+             DIGIT)
+ 
+ORIGINAL QUESTION NAME: S01Q09A
+ 
+WHAT KIND OF WORK (DOES/DID) SHE DO? WHAT (ARE/WERE) SOME OF HER MAIN ACTIVITIES
+OR DUTIES?  SEE ATTACHMENT 3 FOR DEFINITIONS
+ 
+UNIVERSE: R mother/mother figure worked for pay when R was 14
+ 
+     740           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+     246         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+     268         260 TO 285: 260-285 SALES WORKERS
+    1463         301 TO 395: 301-395 CLERICAL AND KINDRED
+     146         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+       5         580 TO 590: 580-590 ARMED FORCES
+    1256         601 TO 715: 601-715 OPERATIVES AND KINDRED
+      60         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+       9         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+     144         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+    1492         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+     360         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+  -------
+    6189
+ 
+Refusal(-1)            3
+Don't Know(-2)       146
+Invalid Skip(-3)     236
+TOTAL =========>    6574   VALID SKIP(-4)    6112     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:            984        Mean:              567.15
+ 
+Lead In: R00021.00[Default]
+Default Next Question: R00023.00
+--------------------------------------------------------------------------------
+R00025.00    [FAM-11A]                                      Survey Year: 1979
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION OF ADULT MALE PRESENT IN HOUSEHOLD AT AGE 14 (CENSUS 3 
+             DIGIT)
+ 
+ORIGINAL QUESTION NAME: S01Q11A
+ 
+WHAT KIND OF WORK (DOES/DID) HE DO? WHAT (ARE/WERE) SOME OF HIS MAIN ACTIVITIES 
+OR DUTIES? (PROBE FOR TWO MAIN ACTIVITIES.)
+ 
+SEE ATTACHMENT 3 FOR DEFINITIONS
+ 
+UNIVERSE: R father/father figure worked for pay when R was 14
+ 
+     999           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+    1086         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+     395         260 TO 285: 260-285 SALES WORKERS
+     366         301 TO 395: 301-395 CLERICAL AND KINDRED
+    2199         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+     240         580 TO 590: 580-590 ARMED FORCES
+    1774         601 TO 715: 601-715 OPERATIVES AND KINDRED
+     580         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+     258         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+     292         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+     621         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+       2         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+  -------
+    8812
+ 
+Refusal(-1)            9
+Don't Know(-2)       204
+Invalid Skip(-3)     507
+TOTAL =========>    9532   VALID SKIP(-4)    3154     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:            984        Mean:              499.62
+ 
+Lead In: R00024.00[Default]
+Default Next Question: R00027.00
+--------------------------------------------------------------------------------
+R00065.00    [HGC-MOTHER]                                   Survey Year: 1979
+  PRIMARY VARIABLE
+
+ 
+             HIGHEST GRADE COMPLETED BY R'S MOTHER
+ 
+ORIGINAL QUESTION NAME: S01Q16
+ 
+WHAT IS THE HIGHEST GRADE OR YEAR OF REGULAR SCHOOL THAT YOUR MOTHER EVER 
+COMPLETED?
+ 
+UNIVERSE: R with mother/mother figure
+ 
+     132       0 NONE
+      24       1 1ST GRADE
+      87       2 2ND GRADE
+     183       3 3RD GRADE
+     173       4 4TH GRADE
+     198       5 5TH GRADE
+     421       6 6TH GRADE
+     260       7 7TH GRADE
+     801       8 8TH GRADE
+     698       9 9TH GRADE
+     999      10 10TH GRADE
+    1107      11 11TH GRADE
+    4817      12 12TH GRADE
+     364      13 1ST YR COL
+     561      14 2ND YR COL
+     178      15 3RD YR COL
+     647      16 4TH YR COL
+     101      17 5TH YR COL
+      92      18 6TH YR COL
+      14      19 7TH YR COL
+      21      20 8TH YR COL OR MORE
+       0      95 UNGRADED
+  -------
+   11878
+ 
+Refusal(-1)            3
+Don't Know(-2)       527
+Invalid Skip(-3)     251
+TOTAL =========>   12659   VALID SKIP(-4)      27     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:             20        Mean:               10.87
+ 
+Lead In: R00061.00[Default]
+Default Next Question: R00066.00
+--------------------------------------------------------------------------------
+R00079.00    [HGC-FATHER]                                   Survey Year: 1979
+  PRIMARY VARIABLE
+
+ 
+             HIGHEST GRADE COMPLETED BY R'S FATHER
+ 
+ORIGINAL QUESTION NAME: S01Q23
+ 
+LET'S GO BACK TO YOUR FATHER NOW. WHAT IS THE HIGHEST GRADE OR YEAR OF REGULAR 
+SCHOOL THAT YOUR FATHER EVER COMPLETED?
+ 
+UNIVERSE: R with father/father figure
+ 
+     199       0 NONE
+      48       1 1ST GRADE
+     102       2 2ND GRADE
+     215       3 3RD GRADE
+     208       4 4TH GRADE
+     190       5 5TH GRADE
+     499       6 6TH GRADE
+     306       7 7TH GRADE
+     950       8 8TH GRADE
+     568       9 9TH GRADE
+     754      10 10TH GRADE
+     616      11 11TH GRADE
+    3694      12 12TH GRADE
+     286      13 1ST YR COL
+     558      14 2ND YR COL
+     162      15 3RD YR COL
+     899      16 4TH YR COL
+     151      17 5TH YR COL
+     209      18 6TH YR COL
+      56      19 7TH YR COL
+     210      20 8TH YR COL OR MORE
+       0      95 UNGRADED
+  -------
+   10880
+ 
+Refusal(-1)            3
+Don't Know(-2)      1150
+Invalid Skip(-3)     423
+TOTAL =========>   12456   VALID SKIP(-4)     230     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:             20        Mean:               10.95
+ 
+Lead In: R00077.00[Default]
+Default Next Question: R00080.00
+--------------------------------------------------------------------------------
+R01736.00    [SAMPLE_ID]                                    Survey Year: 1979
+  PRIMARY VARIABLE
+
+ 
+             SAMPLE IDENTIFICATION CODE
+ 
+ORIGINAL QUESTION NAME: S24Q01
+ 
+UNIVERSE: Entire Sample
+ 
+    2236       1 CROSS MALE WHITE
+     203       2 CROSS MALE WH. POOR
+     346       3 CROSS MALE BLACK
+     218       4 CROSS MALE HISPANIC
+    2279       5 CROSS FEMALE WHITE
+     198       6 CROSS FEMALE WH POOR
+     405       7 CROSS FEMALE BLACK
+     226       8 CROSS FEMALE HISPANIC
+     742       9 SUP MALE WH POOR
+    1105      10 SUP MALE BLACK
+     729      11 SUP MALE HISPANIC
+     901      12 SUP FEM WH POOR
+    1067      13 SUP FEMALE BLACK
+     751      14 SUP FEMALE HISPANIC
+     609      15 MIL MALE WHITE
+     162      16 MIL MALE BLACK
+      53      17 MIL MALE HISPANIC
+     342      18 MIL FEMALE WHITE
+      89      19 MIL FEMALE BLACK
+      25      20 MIL FEMALE HISPANIC
+  -------
+   12686
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:             20        Mean:                8.17
+ 
+
+
+NOTE: MARCH 1, 1986  NORC
+ 
+SEX CODE CHANGED ON 42 CASES
+ 
+Lead In: R01735.19[Default]
+Default Next Question: R01737.00
+--------------------------------------------------------------------------------
+R02147.00    [SAMPLE_RACE]                                  Survey Year: 78SCRN
+  PRIMARY VARIABLE
+
+ 
+             R'S RACIAL/ETHNIC COHORT FROM SCREENER
+ 
+UNIVERSE: Entire Sample
+ 
+    2002       1 HISPANIC
+    3174       2 BLACK
+    7510       3 NON-BLACK, NON-HISPANIC
+  -------
+   12686
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              3        Mean:                2.43
+ 
+
+
+NOTE: AUGUST 26, 1980  DENNIS GREY
+ 
+DESCRIPTION:
+COHORT=3;
+IF R(1736.)=4 ! R(1736.)=8 ! R(1736.)=11 ! R(1736.)=14 THEN COHORT=1;
+IF R(1736.)=17 ! R(1736.)=20 THEN COHORT=1;
+IF R(1736.)=3 ! R(1736.)=7 ! R(1736.)=10 ! R(1736.)=13 THEN COHORT=2;
+IF R(1736.)=16 ! R(1736.)=19 THEN COHORT=2;
+R(2147.)=COHORT;
+ 
+Lead In: R02146.00[Default]
+Default Next Question: R02148.00
+--------------------------------------------------------------------------------
+R02148.00    [SAMPLE_SEX]                                   Survey Year: 1979
+  PRIMARY VARIABLE
+
+ 
+             SEX OF R
+ 
+UNIVERSE: Entire sample
+ 
+    6403       1 MALE
+    6283       2 FEMALE
+  -------
+   12686
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              2        Mean:                 1.5
+ 
+
+
+NOTE: AUGUST 26, 1980  DENNIS GREY
+MARCH 1, 1986  NORC
+ 
+DESCRIPTION:
+IF (R(1736.)>0 & R(1736.)<=4) ! (R(1736.)>=9 & R(1736.)<=11) THEN SEX=1;
+IF R(1736.)>=15 & R(1736.)<=17 THEN SEX=1;
+IF (R(1736.)>=5 & R(1736.)<=8) ! (R(1736.)>=12 & R(1736.)<=14) THEN SEX=
+IF R(1736.)>=18 & R(1736.)<=20 THEN SEX=2;
+R(2148.)=SEX;
+SEX CODE CHANGED ON 42 CASES
+ 
+Lead In: R02147.00[Default]
+Default Next Question: R02149.00
+--------------------------------------------------------------------------------
+R04101.00    [Q1-3_A~M]                                     Survey Year: 1981
+  PRIMARY VARIABLE
+
+ 
+             DATE OF BIRTH - MONTH
+ 
+ORIGINAL QUESTION NAME: S01D0114
+ 
+WE WOULD LIKE TO BEGIN THIS YEAR'S INTERVIEW BY CHECKING OUR
+BIRTHDATE INFORMATION, WHEN WERE YOU BORN?
+ 
+1 THRU 12 ACTUAL MONTH
+ 
+UNIVERSE: All
+ 
+       0           0: < 1
+    1087           1
+     938           2
+     982           3
+     925           4
+     981           5
+    1003           6
+    1072           7
+    1191           8
+    1169           9
+     981          10
+     927          11
+     939          12
+       0          13
+       0          14
+       0          15
+       0          16
+       0          17 TO 99999: 17+
+  -------
+   12195
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12195   VALID SKIP(-4)       0     NON-INTERVIEW(-5)     491
+ 
+Min:              1        Max:             12        Mean:                6.51
+ 
+Lead In: None.
+Default Next Question: R04103.00
+--------------------------------------------------------------------------------
+R04103.00    [Q1-3_A~Y]                                     Survey Year: 1981
+  PRIMARY VARIABLE
+
+ 
+             DATE OF BIRTH - YEAR
+ 
+ORIGINAL QUESTION NAME: S01D0118
+ 
+SEE R(4101.)
+ 
+ACTUAL YEAR
+ 
+UNIVERSE: All
+ 
+       0           0 TO 54: < 55
+       1          55
+       2          56
+    1590          57
+    1593          58
+    1630          59
+    1597          60
+    1478          61
+    1552          62
+    1516          63
+    1234          64
+       2          65
+       0          66
+       0          67
+       0          68
+       0          69
+       0          70
+       0          71 TO 99999: 71+
+  -------
+   12195
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12195   VALID SKIP(-4)       0     NON-INTERVIEW(-5)     491
+ 
+Min:             55        Max:             65        Mean:               60.37
+ 
+Lead In: R04101.00[Default]
+Default Next Question: R04104.00
+--------------------------------------------------------------------------------
+R64726.00    [OCCALL-EMP.01]                                Survey Year: 1998
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL) JOB #01
+ 
+COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1496           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+    1070         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+     309         260 TO 285: 260-285 SALES WORKERS
+    1209         301 TO 395: 301-395 CLERICAL AND KINDRED
+     811         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+       9         580 TO 590: 580-590 ARMED FORCES
+     973         601 TO 715: 601-715 OPERATIVES AND KINDRED
+     417         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+      33         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+      37         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+    1078         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+      61         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+       9           0: 000     NONE
+       0         990
+       0         995: 995 OCCUPATION NOT REPORTED
+  -------
+    7512
+ 
+Refusal(-1)            2
+Don't Know(-2)         2
+Invalid Skip(-3)       1
+TOTAL =========>    7517   VALID SKIP(-4)     882     NON-INTERVIEW(-5)    4287
+ 
+Min:              0        Max:            984        Mean:               447.3
+ 
+Lead In: R64721.00[Default]
+Default Next Question: R64731.00
+--------------------------------------------------------------------------------
+R64727.00    [OCCALL-EMP.02]                                Survey Year: 1998
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL) JOB #02
+ 
+COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     387           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+     265         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+     139         260 TO 285: 260-285 SALES WORKERS
+     347         301 TO 395: 301-395 CLERICAL AND KINDRED
+     218         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+       2         580 TO 590: 580-590 ARMED FORCES
+     266         601 TO 715: 601-715 OPERATIVES AND KINDRED
+     151         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+       9         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+      17         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+     395         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+      12         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+       1           0: 000     NONE
+       0         990
+       1         995: 995 OCCUPATION NOT REPORTED
+  -------
+    2210
+ 
+Refusal(-1)            1
+Don't Know(-2)         3
+TOTAL =========>    2214   VALID SKIP(-4)    6185     NON-INTERVIEW(-5)    4287
+ 
+Min:              0        Max:            995        Mean:              475.68
+ 
+Lead In: R64722.00[Default]
+Default Next Question: R64732.00
+--------------------------------------------------------------------------------
+R64728.00    [OCCALL-EMP.03]                                Survey Year: 1998
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL) JOB #03
+ 
+COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     114           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+      86         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+      37         260 TO 285: 260-285 SALES WORKERS
+      96         301 TO 395: 301-395 CLERICAL AND KINDRED
+      79         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+       1         580 TO 590: 580-590 ARMED FORCES
+      92         601 TO 715: 601-715 OPERATIVES AND KINDRED
+      48         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+       1         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+       3         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+     139         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+       6         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+       0           0: 000     NONE
+       0         990
+       0         995: 995 OCCUPATION NOT REPORTED
+  -------
+     703
+ 
+Refusal(-1)            0
+Don't Know(-2)         1
+TOTAL =========>     704   VALID SKIP(-4)    7695     NON-INTERVIEW(-5)    4287
+ 
+Min:              1        Max:            984        Mean:              492.55
+ 
+Lead In: R64723.00[Default]
+Default Next Question: R64733.00
+--------------------------------------------------------------------------------
+R64729.00    [OCCALL-EMP.04]                                Survey Year: 1998
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL) JOB #04
+ 
+COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      27           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+      31         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+       6         260 TO 285: 260-285 SALES WORKERS
+      33         301 TO 395: 301-395 CLERICAL AND KINDRED
+      26         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+       0         580 TO 590: 580-590 ARMED FORCES
+      41         601 TO 715: 601-715 OPERATIVES AND KINDRED
+      13         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+       0         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+       1         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+      36         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+       2         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+       1           0: 000     NONE
+       0         990
+       0         995: 995 OCCUPATION NOT REPORTED
+  -------
+     217
+ 
+Refusal(-1)            0
+Don't Know(-2)         1
+TOTAL =========>     218   VALID SKIP(-4)    8181     NON-INTERVIEW(-5)    4287
+ 
+Min:              0        Max:            980        Mean:              503.53
+ 
+Lead In: R64724.00[Default]
+Default Next Question: R64734.00
+--------------------------------------------------------------------------------
+R64730.00    [OCCALL-EMP.05]                                Survey Year: 1998
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL) JOB #05
+ 
+COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      11           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+       5         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+       2         260 TO 285: 260-285 SALES WORKERS
+       7         301 TO 395: 301-395 CLERICAL AND KINDRED
+       7         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+       0         580 TO 590: 580-590 ARMED FORCES
+      11         601 TO 715: 601-715 OPERATIVES AND KINDRED
+       9         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+       0         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+       1         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+      10         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+       1         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+       0           0: 000     NONE
+       0         990
+       0         995: 995 OCCUPATION NOT REPORTED
+  -------
+      64
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      64   VALID SKIP(-4)    8335     NON-INTERVIEW(-5)    4287
+ 
+Min:              4        Max:            980        Mean:              530.69
+ 
+Lead In: R64725.00[Default]
+Default Next Question: R64735.00
+--------------------------------------------------------------------------------
+R65918.00    [OCCALL-EMP.01]                                Survey Year: 2000
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       4           0: 000     NONE
+    1383           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+    1159         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+     310         260 TO 285: 260-285 SALES WORKERS
+    1099         301 TO 395: 301-395 CLERICAL AND KINDRED
+     860         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+      11         580 TO 590: 580-590 ARMED FORCES
+     902         601 TO 715: 601-715 OPERATIVES AND KINDRED
+     387         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+      29         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+      33         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+    1005         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+      56         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+       0         990
+       0         995: 995 OCCUPATION NOT REPORTED
+  -------
+    7239
+ 
+Refusal(-1)            1
+Don't Know(-2)         0
+Invalid Skip(-3)       1
+TOTAL =========>    7241   VALID SKIP(-4)     791     NON-INTERVIEW(-5)    4654
+ 
+Min:              0        Max:            984        Mean:              442.72
+ 
+Lead In: R65913.00[Default]
+Default Next Question: R65923.00
+--------------------------------------------------------------------------------
+R65919.00    [OCCALL-EMP.02]                                Survey Year: 2000
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       9           0: 000     NONE
+     389           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+     272         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+     130         260 TO 285: 260-285 SALES WORKERS
+     399         301 TO 395: 301-395 CLERICAL AND KINDRED
+     242         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+       2         580 TO 590: 580-590 ARMED FORCES
+     293         601 TO 715: 601-715 OPERATIVES AND KINDRED
+     138         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+       7         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+      11         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+     361         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+      22         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+       0         990
+       0         995: 995 OCCUPATION NOT REPORTED
+  -------
+    2275
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    2275   VALID SKIP(-4)    5757     NON-INTERVIEW(-5)    4654
+ 
+Min:              0        Max:            984        Mean:              463.41
+ 
+Lead In: R65914.00[Default]
+Default Next Question: R65924.00
+--------------------------------------------------------------------------------
+R65920.00    [OCCALL-EMP.03]                                Survey Year: 2000
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       5           0: 000     NONE
+     105           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+      70         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+      36         260 TO 285: 260-285 SALES WORKERS
+     128         301 TO 395: 301-395 CLERICAL AND KINDRED
+      81         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+       1         580 TO 590: 580-590 ARMED FORCES
+      83         601 TO 715: 601-715 OPERATIVES AND KINDRED
+      50         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+       3         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+       4         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+     131         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+       3         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+       0         990
+       0         995: 995 OCCUPATION NOT REPORTED
+  -------
+     700
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     700   VALID SKIP(-4)    7332     NON-INTERVIEW(-5)    4654
+ 
+Min:              0        Max:            980        Mean:              487.17
+ 
+Lead In: R65915.00[Default]
+Default Next Question: R65925.00
+--------------------------------------------------------------------------------
+R65921.00    [OCCALL-EMP.04]                                Survey Year: 2000
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       1           0: 000     NONE
+      30           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+      12         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+       7         260 TO 285: 260-285 SALES WORKERS
+      38         301 TO 395: 301-395 CLERICAL AND KINDRED
+      29         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+       0         580 TO 590: 580-590 ARMED FORCES
+      33         601 TO 715: 601-715 OPERATIVES AND KINDRED
+      18         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+       0         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+       2         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+      36         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+       3         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+       0         990
+       0         995: 995 OCCUPATION NOT REPORTED
+  -------
+     209
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     209   VALID SKIP(-4)    7823     NON-INTERVIEW(-5)    4654
+ 
+Min:              0        Max:            984        Mean:              514.23
+ 
+Lead In: R65916.00[Default]
+Default Next Question: R65926.00
+--------------------------------------------------------------------------------
+R65922.00    [OCCALL-EMP.05]                                Survey Year: 2000
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       0           0: 000     NONE
+       8           1 TO 195: 001-195 PROFESSIONAL,TECHNICAL AND KINDRED
+       8         201 TO 245: 201-245 MANAGERS,OFFICIALS AND PROPRIETORS
+       1         260 TO 285: 260-285 SALES WORKERS
+       7         301 TO 395: 301-395 CLERICAL AND KINDRED
+      15         401 TO 575: 401-575 CRAFTSMEN,FOREMEN AND KINDRED
+       0         580 TO 590: 580-590 ARMED FORCES
+      17         601 TO 715: 601-715 OPERATIVES AND KINDRED
+       8         740 TO 785: 740-785 LABORERS, EXCEPT FARM
+       0         801 TO 802: 801-802 FARMERS AND FARM MANAGERS
+       1         821 TO 824: 821-824 FARM LABORERS AND FOREMAN
+      21         901 TO 965: 901-965 SERVICE WORKERS, EXCEPT PRIVATE HOUSEHOLD
+       0         980 TO 984: 980-984 PRIVATE HOUSEHOLD
+       0         990
+       0         995: 995 OCCUPATION NOT REPORTED
+  -------
+      86
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      86   VALID SKIP(-4)    7946     NON-INTERVIEW(-5)    4654
+ 
+Min:              1        Max:            962        Mean:              579.53
+ 
+Lead In: R65917.00[Default]
+Default Next Question: R65927.00
+--------------------------------------------------------------------------------
+R72096.00    [OCCALL-EMP.01]                                Survey Year: 2002
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 00 CODES) (ALL)
+ 
+2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     814           1 TO 43: Management
+     287          50 TO 95: Business and Financial Operations
+     173         100 TO 124: Computer and Mathematical
+     118         130 TO 156: Architecture and Engineering
+      48         160 TO 196: Life, Physical, and Social Services
+     121         200 TO 206: Community and Social Services
+      46         210 TO 215: Legal
+     345         220 TO 255: Education, Training, and Library
+     102         260 TO 296: Arts, Design, Entertainment, Sports, and Media
+     267         300 TO 354: Healthcare Practitioners and Technical
+     188         360 TO 365: Healthcare Support
+     179         370 TO 395: Protective Service
+     290         400 TO 416: Food Preparation and Serving Related
+     325         420 TO 425: Building and Grounds Cleaning and Maintenance
+     205         430 TO 465: Personal Care and Service
+     502         470 TO 496: Sales and Related
+     987         500 TO 593: Office and Administrative Support
+      34         600 TO 613: Farming, Forestry, and Fishing
+     441         620 TO 694: Construction and Extraction
+     298         700 TO 762: Installation, Repair, and Maintenance
+     608         770 TO 896: Production
+     504         900 TO 975: Transportation and Material Moving
+       1         980 TO 983: Military
+  -------
+    6886
+ 
+Refusal(-1)            1
+Don't Know(-2)         2
+Invalid Skip(-3)       1
+TOTAL =========>    6890   VALID SKIP(-4)     834     NON-INTERVIEW(-5)    4962
+ 
+Min:              1        Max:            999        Mean:              446.23
+ 
+Lead In: R72091.00[Default]
+Default Next Question: R72101.00
+--------------------------------------------------------------------------------
+R72097.00    [OCCALL-EMP.02]                                Survey Year: 2002
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 00 CODES) (ALL)
+ 
+2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     158           1 TO 43: Management
+      63          50 TO 95: Business and Financial Operations
+      44         100 TO 124: Computer and Mathematical
+      16         130 TO 156: Architecture and Engineering
+      16         160 TO 196: Life, Physical, and Social Services
+      40         200 TO 206: Community and Social Services
+       9         210 TO 215: Legal
+      74         220 TO 255: Education, Training, and Library
+      46         260 TO 296: Arts, Design, Entertainment, Sports, and Media
+      54         300 TO 354: Healthcare Practitioners and Technical
+      54         360 TO 365: Healthcare Support
+      43         370 TO 395: Protective Service
+     116         400 TO 416: Food Preparation and Serving Related
+     109         420 TO 425: Building and Grounds Cleaning and Maintenance
+      67         430 TO 465: Personal Care and Service
+     225         470 TO 496: Sales and Related
+     244         500 TO 593: Office and Administrative Support
+      13         600 TO 613: Farming, Forestry, and Fishing
+     135         620 TO 694: Construction and Extraction
+      76         700 TO 762: Installation, Repair, and Maintenance
+     134         770 TO 896: Production
+     166         900 TO 975: Transportation and Material Moving
+       1         980 TO 983: Military
+  -------
+    1913
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    1913   VALID SKIP(-4)    5811     NON-INTERVIEW(-5)    4962
+ 
+Min:              1        Max:            999        Mean:              470.97
+ 
+Lead In: R72092.00[Default]
+Default Next Question: R72102.00
+--------------------------------------------------------------------------------
+R72098.00    [OCCALL-EMP.03]                                Survey Year: 2002
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 00 CODES) (ALL)
+ 
+2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      30           1 TO 43: Management
+      17          50 TO 95: Business and Financial Operations
+       5         100 TO 124: Computer and Mathematical
+       2         130 TO 156: Architecture and Engineering
+       4         160 TO 196: Life, Physical, and Social Services
+      13         200 TO 206: Community and Social Services
+       2         210 TO 215: Legal
+      17         220 TO 255: Education, Training, and Library
+       9         260 TO 296: Arts, Design, Entertainment, Sports, and Media
+      19         300 TO 354: Healthcare Practitioners and Technical
+      13         360 TO 365: Healthcare Support
+       6         370 TO 395: Protective Service
+      39         400 TO 416: Food Preparation and Serving Related
+      31         420 TO 425: Building and Grounds Cleaning and Maintenance
+      22         430 TO 465: Personal Care and Service
+      61         470 TO 496: Sales and Related
+      70         500 TO 593: Office and Administrative Support
+       3         600 TO 613: Farming, Forestry, and Fishing
+      38         620 TO 694: Construction and Extraction
+      22         700 TO 762: Installation, Repair, and Maintenance
+      43         770 TO 896: Production
+      45         900 TO 975: Transportation and Material Moving
+       0         980 TO 983: Military
+  -------
+     514
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     514   VALID SKIP(-4)    7210     NON-INTERVIEW(-5)    4962
+ 
+Min:              1        Max:            999        Mean:              494.18
+ 
+Lead In: R72093.00[Default]
+Default Next Question: R72103.00
+--------------------------------------------------------------------------------
+R72099.00    [OCCALL-EMP.04]                                Survey Year: 2002
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 00 CODES) (ALL)
+ 
+2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       9           1 TO 43: Management
+       6          50 TO 95: Business and Financial Operations
+       2         100 TO 124: Computer and Mathematical
+       1         130 TO 156: Architecture and Engineering
+       0         160 TO 196: Life, Physical, and Social Services
+       3         200 TO 206: Community and Social Services
+       2         210 TO 215: Legal
+       5         220 TO 255: Education, Training, and Library
+       4         260 TO 296: Arts, Design, Entertainment, Sports, and Media
+       8         300 TO 354: Healthcare Practitioners and Technical
+       5         360 TO 365: Healthcare Support
+       4         370 TO 395: Protective Service
+      13         400 TO 416: Food Preparation and Serving Related
+       6         420 TO 425: Building and Grounds Cleaning and Maintenance
+       2         430 TO 465: Personal Care and Service
+      12         470 TO 496: Sales and Related
+      23         500 TO 593: Office and Administrative Support
+       1         600 TO 613: Farming, Forestry, and Fishing
+      13         620 TO 694: Construction and Extraction
+       7         700 TO 762: Installation, Repair, and Maintenance
+      10         770 TO 896: Production
+      11         900 TO 975: Transportation and Material Moving
+       0         980 TO 983: Military
+  -------
+     148
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     148   VALID SKIP(-4)    7576     NON-INTERVIEW(-5)    4962
+ 
+Min:              2        Max:            995        Mean:              479.11
+ 
+Lead In: R72094.00[Default]
+Default Next Question: R72104.00
+--------------------------------------------------------------------------------
+R72100.00    [OCCALL-EMP.05]                                Survey Year: 2002
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 3 DIGIT, 00 CODES) (ALL)
+ 
+2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       0           1 TO 43: Management
+       3          50 TO 95: Business and Financial Operations
+       1         100 TO 124: Computer and Mathematical
+       0         130 TO 156: Architecture and Engineering
+       1         160 TO 196: Life, Physical, and Social Services
+       0         200 TO 206: Community and Social Services
+       0         210 TO 215: Legal
+       0         220 TO 255: Education, Training, and Library
+       1         260 TO 296: Arts, Design, Entertainment, Sports, and Media
+       4         300 TO 354: Healthcare Practitioners and Technical
+       0         360 TO 365: Healthcare Support
+       0         370 TO 395: Protective Service
+       5         400 TO 416: Food Preparation and Serving Related
+       3         420 TO 425: Building and Grounds Cleaning and Maintenance
+       0         430 TO 465: Personal Care and Service
+       2         470 TO 496: Sales and Related
+       6         500 TO 593: Office and Administrative Support
+       0         600 TO 613: Farming, Forestry, and Fishing
+       3         620 TO 694: Construction and Extraction
+       4         700 TO 762: Installation, Repair, and Maintenance
+       3         770 TO 896: Production
+       5         900 TO 975: Transportation and Material Moving
+       0         980 TO 983: Military
+  -------
+      41
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      41   VALID SKIP(-4)    7683     NON-INTERVIEW(-5)    4962
+ 
+Min:             53        Max:            964        Mean:              527.32
+ 
+Lead In: R72095.00[Default]
+Default Next Question: R72105.00
+--------------------------------------------------------------------------------
+R78980.00    [OCCALL-EMP.01]                                Survey Year: 2004
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2002)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     762          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+     282         500 TO 950: Management Related Occupations
+     152        1000 TO 1240: Mathematical and Computer Scientists
+     107        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+      21        1600 TO 1760: Physical Scientists
+      14        1800 TO 1860: Social Scientists and Related Workers
+      19        1900 TO 1960: Life, Physical and Social Science Technicians
+     117        2000 TO 2060: Counselors, Sociala and Religious Workers
+      45        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+     274        2200 TO 2340: Teachers
+      83        2400 TO 2550: Education, Training and Library Workers
+      62        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      32        2800 TO 2960: Media and Communications Workers
+     177        3000 TO 3260: Health Diagnosing and Treating Practitioners
+     298        3300 TO 3650: Health Care Technical and Support Occupations
+     184        3700 TO 3950: Protective Service Occupations
+     265        4000 TO 4160: Food Preparation and Serving Related Occupations
+     298        4200 TO 4250: Cleaning and Building Service Occupations
+      26        4300 TO 4430: Entertainment Attendants and Related Workers
+       1        4460: Funeral Related Occupations
+     178        4500 TO 4650: Personal Care and Service Workers
+     492        4700 TO 4960: Sales and Related Workers
+     950        5000 TO 5930: Office and Administrative Support Workers
+      33        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     421        6200 TO 6940: Construction Trade and Extraction Workers
+     294        7000 TO 7620: Installation, Maintenance and Repairs Workers
+     166        7700 TO 7750: Production and Operating Workers
+      26        7800 TO 7850: Food Preparation Occupations
+     356        7900 TO 8960: Setters, Operators and Tenders
+     491        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       5        9840: Armed Forces
+       2        9950: Not in Labor Force (ACS Code)
+       6        9990: Uncodeable
+  -------
+    6639
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)       3
+TOTAL =========>    6642   VALID SKIP(-4)    1019     NON-INTERVIEW(-5)    5025
+ 
+Min:             10        Max:           9990        Mean:             4456.81
+ 
+Lead In: R78975.00[Default]
+Default Next Question: R78985.00
+--------------------------------------------------------------------------------
+R78981.00    [OCCALL-EMP.02]                                Survey Year: 2004
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2002)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     164          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      61         500 TO 950: Management Related Occupations
+      30        1000 TO 1240: Mathematical and Computer Scientists
+      17        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       2        1600 TO 1760: Physical Scientists
+       6        1800 TO 1860: Social Scientists and Related Workers
+       1        1900 TO 1960: Life, Physical and Social Science Technicians
+      31        2000 TO 2060: Counselors, Sociala and Religious Workers
+       8        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      65        2200 TO 2340: Teachers
+      12        2400 TO 2550: Education, Training and Library Workers
+      35        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      10        2800 TO 2960: Media and Communications Workers
+      40        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      81        3300 TO 3650: Health Care Technical and Support Occupations
+      42        3700 TO 3950: Protective Service Occupations
+     100        4000 TO 4160: Food Preparation and Serving Related Occupations
+      97        4200 TO 4250: Cleaning and Building Service Occupations
+      10        4300 TO 4430: Entertainment Attendants and Related Workers
+       1        4460: Funeral Related Occupations
+      63        4500 TO 4650: Personal Care and Service Workers
+     204        4700 TO 4960: Sales and Related Workers
+     174        5000 TO 5930: Office and Administrative Support Workers
+      11        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     118        6200 TO 6940: Construction Trade and Extraction Workers
+      67        7000 TO 7620: Installation, Maintenance and Repairs Workers
+      26        7700 TO 7750: Production and Operating Workers
+       8        7800 TO 7850: Food Preparation Occupations
+      72        7900 TO 8960: Setters, Operators and Tenders
+     142        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       0        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       1        9990: Uncodeable
+  -------
+    1699
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)       2
+TOTAL =========>    1701   VALID SKIP(-4)    5960     NON-INTERVIEW(-5)    5025
+ 
+Min:             10        Max:           9990        Mean:             4535.17
+ 
+Lead In: R78976.00[Default]
+Default Next Question: R78986.00
+--------------------------------------------------------------------------------
+R78982.00    [OCCALL-EMP.03]                                Survey Year: 2004
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2002)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      36          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      13         500 TO 950: Management Related Occupations
+       4        1000 TO 1240: Mathematical and Computer Scientists
+       7        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       0        1600 TO 1760: Physical Scientists
+       0        1800 TO 1860: Social Scientists and Related Workers
+       0        1900 TO 1960: Life, Physical and Social Science Technicians
+       3        2000 TO 2060: Counselors, Sociala and Religious Workers
+       5        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      17        2200 TO 2340: Teachers
+       5        2400 TO 2550: Education, Training and Library Workers
+      12        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       4        2800 TO 2960: Media and Communications Workers
+      14        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      29        3300 TO 3650: Health Care Technical and Support Occupations
+       9        3700 TO 3950: Protective Service Occupations
+      21        4000 TO 4160: Food Preparation and Serving Related Occupations
+      26        4200 TO 4250: Cleaning and Building Service Occupations
+       3        4300 TO 4430: Entertainment Attendants and Related Workers
+       0        4460: Funeral Related Occupations
+      19        4500 TO 4650: Personal Care and Service Workers
+      46        4700 TO 4960: Sales and Related Workers
+      40        5000 TO 5930: Office and Administrative Support Workers
+       1        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      35        6200 TO 6940: Construction Trade and Extraction Workers
+      16        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       9        7700 TO 7750: Production and Operating Workers
+       2        7800 TO 7850: Food Preparation Occupations
+      18        7900 TO 8960: Setters, Operators and Tenders
+      39        9000 TO 9750: Transportation and Material Moving Workers
+       1        9800 TO 9830: Military Specific Occupations
+       1        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       0        9990: Uncodeable
+  -------
+     435
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)       1
+TOTAL =========>     436   VALID SKIP(-4)    7225     NON-INTERVIEW(-5)    5025
+ 
+Min:             10        Max:           9840        Mean:             4664.07
+ 
+Lead In: R78977.00[Default]
+Default Next Question: R78987.00
+--------------------------------------------------------------------------------
+R78983.00    [OCCALL-EMP.04]                                Survey Year: 2004
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2002)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       8          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       2         500 TO 950: Management Related Occupations
+       1        1000 TO 1240: Mathematical and Computer Scientists
+       1        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       0        1600 TO 1760: Physical Scientists
+       1        1800 TO 1860: Social Scientists and Related Workers
+       0        1900 TO 1960: Life, Physical and Social Science Technicians
+       1        2000 TO 2060: Counselors, Sociala and Religious Workers
+       0        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+       9        2200 TO 2340: Teachers
+       0        2400 TO 2550: Education, Training and Library Workers
+       1        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       0        2800 TO 2960: Media and Communications Workers
+       5        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       3        3300 TO 3650: Health Care Technical and Support Occupations
+       7        3700 TO 3950: Protective Service Occupations
+       4        4000 TO 4160: Food Preparation and Serving Related Occupations
+       6        4200 TO 4250: Cleaning and Building Service Occupations
+       2        4300 TO 4430: Entertainment Attendants and Related Workers
+       0        4460: Funeral Related Occupations
+       6        4500 TO 4650: Personal Care and Service Workers
+      15        4700 TO 4960: Sales and Related Workers
+      10        5000 TO 5930: Office and Administrative Support Workers
+       2        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      12        6200 TO 6940: Construction Trade and Extraction Workers
+       4        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       0        7700 TO 7750: Production and Operating Workers
+       0        7800 TO 7850: Food Preparation Occupations
+       6        7900 TO 8960: Setters, Operators and Tenders
+      14        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       0        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       0        9990: Uncodeable
+  -------
+     120
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     120   VALID SKIP(-4)    7541     NON-INTERVIEW(-5)    5025
+ 
+Min:            120        Max:           9640        Mean:             4932.25
+ 
+Lead In: R78978.00[Default]
+Default Next Question: R78988.00
+--------------------------------------------------------------------------------
+R78984.00    [OCCALL-EMP.05]                                Survey Year: 2004
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2002)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       2          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       1         500 TO 950: Management Related Occupations
+       0        1000 TO 1240: Mathematical and Computer Scientists
+       2        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       0        1600 TO 1760: Physical Scientists
+       0        1800 TO 1860: Social Scientists and Related Workers
+       0        1900 TO 1960: Life, Physical and Social Science Technicians
+       2        2000 TO 2060: Counselors, Sociala and Religious Workers
+       0        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+       1        2200 TO 2340: Teachers
+       0        2400 TO 2550: Education, Training and Library Workers
+       0        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       2        2800 TO 2960: Media and Communications Workers
+       2        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       1        3300 TO 3650: Health Care Technical and Support Occupations
+       0        3700 TO 3950: Protective Service Occupations
+       1        4000 TO 4160: Food Preparation and Serving Related Occupations
+       3        4200 TO 4250: Cleaning and Building Service Occupations
+       0        4300 TO 4430: Entertainment Attendants and Related Workers
+       0        4460: Funeral Related Occupations
+       0        4500 TO 4650: Personal Care and Service Workers
+       1        4700 TO 4960: Sales and Related Workers
+       3        5000 TO 5930: Office and Administrative Support Workers
+       0        6000 TO 6130: Farming, Fishing and Forestry Occupations
+       6        6200 TO 6940: Construction Trade and Extraction Workers
+       1        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       2        7700 TO 7750: Production and Operating Workers
+       0        7800 TO 7850: Food Preparation Occupations
+       1        7900 TO 8960: Setters, Operators and Tenders
+       0        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       0        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       0        9990: Uncodeable
+  -------
+      31
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      31   VALID SKIP(-4)    7630     NON-INTERVIEW(-5)    5025
+ 
+Min:            310        Max:           8300        Mean:             4271.94
+ 
+Lead In: R78979.00[Default]
+Default Next Question: R78989.00
+--------------------------------------------------------------------------------
+T01384.00    [OCCALL-EMP.01]                                Survey Year: 2006
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2002)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     752          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+     263         500 TO 950: Management Related Occupations
+     148        1000 TO 1240: Mathematical and Computer Scientists
+     110        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+      17        1600 TO 1760: Physical Scientists
+      14        1800 TO 1860: Social Scientists and Related Workers
+      17        1900 TO 1960: Life, Physical and Social Science Technicians
+     120        2000 TO 2060: Counselors, Sociala and Religious Workers
+      44        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+     273        2200 TO 2340: Teachers
+      84        2400 TO 2550: Education, Training and Library Workers
+      57        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      30        2800 TO 2960: Media and Communications Workers
+     161        3000 TO 3260: Health Diagnosing and Treating Practitioners
+     292        3300 TO 3650: Health Care Technical and Support Occupations
+     177        3700 TO 3950: Protective Service Occupations
+     242        4000 TO 4160: Food Preparation and Serving Related Occupations
+     303        4200 TO 4250: Cleaning and Building Service Occupations
+      20        4300 TO 4430: Entertainment Attendants and Related Workers
+       0        4460: Funeral Related Occupations
+     192        4500 TO 4650: Personal Care and Service Workers
+     466        4700 TO 4960: Sales and Related Workers
+     985        5000 TO 5930: Office and Administrative Support Workers
+      30        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     438        6200 TO 6940: Construction Trade and Extraction Workers
+     272        7000 TO 7620: Installation, Maintenance and Repairs Workers
+     150        7700 TO 7750: Production and Operating Workers
+      13        7800 TO 7850: Food Preparation Occupations
+     364        7900 TO 8960: Setters, Operators and Tenders
+     474        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       9        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       3        9990: Uncodeable
+  -------
+    6520
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    6520   VALID SKIP(-4)    1133     NON-INTERVIEW(-5)    5033
+ 
+Min:             10        Max:           9990        Mean:             4455.49
+ 
+Lead In: T01379.00[Default]
+Default Next Question: T01389.00
+--------------------------------------------------------------------------------
+T01385.00    [OCCALL-EMP.02]                                Survey Year: 2006
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2002)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     192          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      76         500 TO 950: Management Related Occupations
+      30        1000 TO 1240: Mathematical and Computer Scientists
+      18        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       2        1600 TO 1760: Physical Scientists
+       4        1800 TO 1860: Social Scientists and Related Workers
+       2        1900 TO 1960: Life, Physical and Social Science Technicians
+      26        2000 TO 2060: Counselors, Sociala and Religious Workers
+       8        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      58        2200 TO 2340: Teachers
+       7        2400 TO 2550: Education, Training and Library Workers
+      37        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      15        2800 TO 2960: Media and Communications Workers
+      44        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      84        3300 TO 3650: Health Care Technical and Support Occupations
+      43        3700 TO 3950: Protective Service Occupations
+     103        4000 TO 4160: Food Preparation and Serving Related Occupations
+     118        4200 TO 4250: Cleaning and Building Service Occupations
+      10        4300 TO 4430: Entertainment Attendants and Related Workers
+       0        4460: Funeral Related Occupations
+      54        4500 TO 4650: Personal Care and Service Workers
+     188        4700 TO 4960: Sales and Related Workers
+     158        5000 TO 5930: Office and Administrative Support Workers
+      10        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     115        6200 TO 6940: Construction Trade and Extraction Workers
+      74        7000 TO 7620: Installation, Maintenance and Repairs Workers
+      25        7700 TO 7750: Production and Operating Workers
+       7        7800 TO 7850: Food Preparation Occupations
+      75        7900 TO 8960: Setters, Operators and Tenders
+     154        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       3        9840: Armed Forces
+       1        9950: Not in Labor Force (ACS Code)
+       3        9990: Uncodeable
+  -------
+    1744
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)       2
+TOTAL =========>    1746   VALID SKIP(-4)    5907     NON-INTERVIEW(-5)    5033
+ 
+Min:             10        Max:           9990        Mean:             4488.09
+ 
+Lead In: T01380.00[Default]
+Default Next Question: T01390.00
+--------------------------------------------------------------------------------
+T01386.00    [OCCALL-EMP.03]                                Survey Year: 2006
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2002)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      25          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      21         500 TO 950: Management Related Occupations
+       6        1000 TO 1240: Mathematical and Computer Scientists
+       4        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       1        1600 TO 1760: Physical Scientists
+       2        1800 TO 1860: Social Scientists and Related Workers
+       0        1900 TO 1960: Life, Physical and Social Science Technicians
+       7        2000 TO 2060: Counselors, Sociala and Religious Workers
+       1        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      14        2200 TO 2340: Teachers
+       4        2400 TO 2550: Education, Training and Library Workers
+       6        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       1        2800 TO 2960: Media and Communications Workers
+       6        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      22        3300 TO 3650: Health Care Technical and Support Occupations
+      11        3700 TO 3950: Protective Service Occupations
+      32        4000 TO 4160: Food Preparation and Serving Related Occupations
+      21        4200 TO 4250: Cleaning and Building Service Occupations
+       1        4300 TO 4430: Entertainment Attendants and Related Workers
+       1        4460: Funeral Related Occupations
+      18        4500 TO 4650: Personal Care and Service Workers
+      32        4700 TO 4960: Sales and Related Workers
+      37        5000 TO 5930: Office and Administrative Support Workers
+       1        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      27        6200 TO 6940: Construction Trade and Extraction Workers
+       8        7000 TO 7620: Installation, Maintenance and Repairs Workers
+      10        7700 TO 7750: Production and Operating Workers
+       3        7800 TO 7850: Food Preparation Occupations
+      19        7900 TO 8960: Setters, Operators and Tenders
+      44        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       0        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       2        9990: Uncodeable
+  -------
+     387
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)       1
+TOTAL =========>     388   VALID SKIP(-4)    7265     NON-INTERVIEW(-5)    5033
+ 
+Min:             10        Max:           9990        Mean:             4780.39
+ 
+Lead In: T01381.00[Default]
+Default Next Question: T01391.00
+--------------------------------------------------------------------------------
+T01387.00    [OCCALL-EMP.04]                                Survey Year: 2006
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2002)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       9          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       5         500 TO 950: Management Related Occupations
+       2        1000 TO 1240: Mathematical and Computer Scientists
+       0        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       0        1600 TO 1760: Physical Scientists
+       1        1800 TO 1860: Social Scientists and Related Workers
+       0        1900 TO 1960: Life, Physical and Social Science Technicians
+       2        2000 TO 2060: Counselors, Sociala and Religious Workers
+       0        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+       1        2200 TO 2340: Teachers
+       1        2400 TO 2550: Education, Training and Library Workers
+       2        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       0        2800 TO 2960: Media and Communications Workers
+       6        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       9        3300 TO 3650: Health Care Technical and Support Occupations
+       4        3700 TO 3950: Protective Service Occupations
+       8        4000 TO 4160: Food Preparation and Serving Related Occupations
+       4        4200 TO 4250: Cleaning and Building Service Occupations
+       1        4300 TO 4430: Entertainment Attendants and Related Workers
+       0        4460: Funeral Related Occupations
+       2        4500 TO 4650: Personal Care and Service Workers
+       9        4700 TO 4960: Sales and Related Workers
+      10        5000 TO 5930: Office and Administrative Support Workers
+       0        6000 TO 6130: Farming, Fishing and Forestry Occupations
+       7        6200 TO 6940: Construction Trade and Extraction Workers
+       6        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       2        7700 TO 7750: Production and Operating Workers
+       1        7800 TO 7850: Food Preparation Occupations
+       4        7900 TO 8960: Setters, Operators and Tenders
+      11        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       0        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       0        9990: Uncodeable
+  -------
+     107
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     107   VALID SKIP(-4)    7546     NON-INTERVIEW(-5)    5033
+ 
+Min:             10        Max:           9620        Mean:             4654.95
+ 
+Lead In: T01382.00[Default]
+Default Next Question: T01392.00
+--------------------------------------------------------------------------------
+T01388.00    [OCCALL-EMP.05]                                Survey Year: 2006
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2002)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       1          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       1         500 TO 950: Management Related Occupations
+       0        1000 TO 1240: Mathematical and Computer Scientists
+       2        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       0        1600 TO 1760: Physical Scientists
+       0        1800 TO 1860: Social Scientists and Related Workers
+       0        1900 TO 1960: Life, Physical and Social Science Technicians
+       1        2000 TO 2060: Counselors, Sociala and Religious Workers
+       0        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+       1        2200 TO 2340: Teachers
+       0        2400 TO 2550: Education, Training and Library Workers
+       0        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       0        2800 TO 2960: Media and Communications Workers
+       2        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       1        3300 TO 3650: Health Care Technical and Support Occupations
+       1        3700 TO 3950: Protective Service Occupations
+       1        4000 TO 4160: Food Preparation and Serving Related Occupations
+       2        4200 TO 4250: Cleaning and Building Service Occupations
+       0        4300 TO 4430: Entertainment Attendants and Related Workers
+       0        4460: Funeral Related Occupations
+       0        4500 TO 4650: Personal Care and Service Workers
+       3        4700 TO 4960: Sales and Related Workers
+       2        5000 TO 5930: Office and Administrative Support Workers
+       0        6000 TO 6130: Farming, Fishing and Forestry Occupations
+       2        6200 TO 6940: Construction Trade and Extraction Workers
+       0        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       0        7700 TO 7750: Production and Operating Workers
+       0        7800 TO 7850: Food Preparation Occupations
+       0        7900 TO 8960: Setters, Operators and Tenders
+       5        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       0        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       0        9990: Uncodeable
+  -------
+      25
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      25   VALID SKIP(-4)    7628     NON-INTERVIEW(-5)    5033
+ 
+Min:            430        Max:           9640        Mean:                4730
+ 
+Lead In: T01383.00[Default]
+Default Next Question: T01393.00
+--------------------------------------------------------------------------------
+T12980.00    [OCCALL-EMP.01]                                Survey Year: 2008
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     762          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+     275         500 TO 950: Management Related Occupations
+     143        1000 TO 1240: Mathematical and Computer Scientists
+      99        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+      15        1600 TO 1760: Physical Scientists
+      14        1800 TO 1860: Social Scientists and Related Workers
+      16        1900 TO 1960: Life, Physical and Social Science Technicians
+     123        2000 TO 2060: Counselors, Sociala and Religious Workers
+      44        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+     292        2200 TO 2340: Teachers
+      95        2400 TO 2550: Education, Training and Library Workers
+      52        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      34        2800 TO 2960: Media and Communications Workers
+     156        3000 TO 3260: Health Diagnosing and Treating Practitioners
+     287        3300 TO 3650: Health Care Technical and Support Occupations
+     168        3700 TO 3950: Protective Service Occupations
+     266        4000 TO 4160: Food Preparation and Serving Related Occupations
+     283        4200 TO 4250: Cleaning and Building Service Occupations
+      20        4300 TO 4430: Entertainment Attendants and Related Workers
+     177        4500 TO 4650: Personal Care and Service Workers
+     488        4700 TO 4960: Sales and Related Workers
+     943        5000 TO 5930: Office and Administrative Support Workers
+      33        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     404        6200 TO 6940: Construction Trade and Extraction Workers
+     257        7000 TO 7620: Installation, Maintenance and Repairs Workers
+     142        7700 TO 7750: Production and Operating Workers
+      15        7800 TO 7850: Food Preparation Occupations
+     365        7900 TO 8960: Setters, Operators and Tenders
+     464        9000 TO 9750: Transportation and Material Moving Workers
+       7        9840: Armed Forces
+       4        9990: Uncodeable
+  -------
+    6443
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    6443   VALID SKIP(-4)    1314     NON-INTERVIEW(-5)    4929
+ 
+Min:             10        Max:           9990        Mean:             4412.05
+ 
+Lead In: T12975.00[Default]
+Default Next Question: T12985.00
+--------------------------------------------------------------------------------
+T12981.00    [OCCALL-EMP.02]                                Survey Year: 2008
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     173          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      74         500 TO 950: Management Related Occupations
+      32        1000 TO 1240: Mathematical and Computer Scientists
+      20        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       2        1600 TO 1760: Physical Scientists
+       2        1800 TO 1860: Social Scientists and Related Workers
+       2        1900 TO 1960: Life, Physical and Social Science Technicians
+      33        2000 TO 2060: Counselors, Sociala and Religious Workers
+       5        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      54        2200 TO 2340: Teachers
+       8        2400 TO 2550: Education, Training and Library Workers
+      39        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      13        2800 TO 2960: Media and Communications Workers
+      44        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      64        3300 TO 3650: Health Care Technical and Support Occupations
+      33        3700 TO 3950: Protective Service Occupations
+      88        4000 TO 4160: Food Preparation and Serving Related Occupations
+      79        4200 TO 4250: Cleaning and Building Service Occupations
+       8        4300 TO 4430: Entertainment Attendants and Related Workers
+      74        4500 TO 4650: Personal Care and Service Workers
+     179        4700 TO 4960: Sales and Related Workers
+     222        5000 TO 5930: Office and Administrative Support Workers
+      10        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     113        6200 TO 6940: Construction Trade and Extraction Workers
+      60        7000 TO 7620: Installation, Maintenance and Repairs Workers
+      13        7700 TO 7750: Production and Operating Workers
+       9        7800 TO 7850: Food Preparation Occupations
+      68        7900 TO 8960: Setters, Operators and Tenders
+     134        9000 TO 9750: Transportation and Material Moving Workers
+       2        9840: Armed Forces
+       3        9990: Uncodeable
+  -------
+    1660
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    1660   VALID SKIP(-4)    6097     NON-INTERVIEW(-5)    4929
+ 
+Min:             10        Max:           9990        Mean:             4466.18
+ 
+Lead In: T12976.00[Default]
+Default Next Question: T12986.00
+--------------------------------------------------------------------------------
+T12982.00    [OCCALL-EMP.03]                                Survey Year: 2008
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      38          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      20         500 TO 950: Management Related Occupations
+       7        1000 TO 1240: Mathematical and Computer Scientists
+       1        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       1        1600 TO 1760: Physical Scientists
+       1        1800 TO 1860: Social Scientists and Related Workers
+       9        2000 TO 2060: Counselors, Sociala and Religious Workers
+      12        2200 TO 2340: Teachers
+       5        2400 TO 2550: Education, Training and Library Workers
+      11        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       2        2800 TO 2960: Media and Communications Workers
+      11        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      19        3300 TO 3650: Health Care Technical and Support Occupations
+       8        3700 TO 3950: Protective Service Occupations
+      19        4000 TO 4160: Food Preparation and Serving Related Occupations
+      18        4200 TO 4250: Cleaning and Building Service Occupations
+       1        4300 TO 4430: Entertainment Attendants and Related Workers
+       8        4500 TO 4650: Personal Care and Service Workers
+      44        4700 TO 4960: Sales and Related Workers
+      48        5000 TO 5930: Office and Administrative Support Workers
+       1        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      24        6200 TO 6940: Construction Trade and Extraction Workers
+      13        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       4        7700 TO 7750: Production and Operating Workers
+       1        7800 TO 7850: Food Preparation Occupations
+      19        7900 TO 8960: Setters, Operators and Tenders
+      36        9000 TO 9750: Transportation and Material Moving Workers
+       1        9990: Uncodeable
+  -------
+     382
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     382   VALID SKIP(-4)    7375     NON-INTERVIEW(-5)    4929
+ 
+Min:             10        Max:           9990        Mean:              4521.2
+ 
+Lead In: T12977.00[Default]
+Default Next Question: T12987.00
+--------------------------------------------------------------------------------
+T12983.00    [OCCALL-EMP.04]                                Survey Year: 2008
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      11          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       4         500 TO 950: Management Related Occupations
+       1        1000 TO 1240: Mathematical and Computer Scientists
+       1        1900 TO 1960: Life, Physical and Social Science Technicians
+       1        2000 TO 2060: Counselors, Sociala and Religious Workers
+       2        2200 TO 2340: Teachers
+       1        2400 TO 2550: Education, Training and Library Workers
+       3        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       6        3300 TO 3650: Health Care Technical and Support Occupations
+       4        4000 TO 4160: Food Preparation and Serving Related Occupations
+       4        4200 TO 4250: Cleaning and Building Service Occupations
+       5        4500 TO 4650: Personal Care and Service Workers
+       6        4700 TO 4960: Sales and Related Workers
+      14        5000 TO 5930: Office and Administrative Support Workers
+       6        6200 TO 6940: Construction Trade and Extraction Workers
+       3        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       4        7700 TO 7750: Production and Operating Workers
+       1        7800 TO 7850: Food Preparation Occupations
+      12        7900 TO 8960: Setters, Operators and Tenders
+       9        9000 TO 9750: Transportation and Material Moving Workers
+       2        9990: Uncodeable
+  -------
+     100
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     100   VALID SKIP(-4)    7657     NON-INTERVIEW(-5)    4929
+ 
+Min:             10        Max:           9990        Mean:              5143.1
+ 
+Lead In: T12978.00[Default]
+Default Next Question: T12988.00
+--------------------------------------------------------------------------------
+T12984.00    [OCCALL-EMP.05]                                Survey Year: 2008
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED IN 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       3         500 TO 950: Management Related Occupations
+       1        2200 TO 2340: Teachers
+       1        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       1        3300 TO 3650: Health Care Technical and Support Occupations
+       1        4000 TO 4160: Food Preparation and Serving Related Occupations
+       1        4200 TO 4250: Cleaning and Building Service Occupations
+       3        4500 TO 4650: Personal Care and Service Workers
+       4        4700 TO 4960: Sales and Related Workers
+       2        5000 TO 5930: Office and Administrative Support Workers
+       1        6000 TO 6130: Farming, Fishing and Forestry Occupations
+       2        6200 TO 6940: Construction Trade and Extraction Workers
+       1        7900 TO 8960: Setters, Operators and Tenders
+       5        9000 TO 9750: Transportation and Material Moving Workers
+  -------
+      26
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      26   VALID SKIP(-4)    7731     NON-INTERVIEW(-5)    4929
+ 
+Min:            530        Max:           9610        Mean:             5267.69
+ 
+Lead In: T12979.00[Default]
+Default Next Question: T12989.00
+--------------------------------------------------------------------------------
+T23265.00    [OCCALL-EMP.01]                                Survey Year: 2010
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+(UPDATED 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     713          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+     261         500 TO 950: Management Related Occupations
+     140        1000 TO 1240: Mathematical and Computer Scientists
+     101        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+      13        1600 TO 1760: Physical Scientists
+      13        1800 TO 1860: Social Scientists and Related Workers
+      12        1900 TO 1960: Life, Physical and Social Science Technicians
+     125        2000 TO 2060: Counselors, Sociala and Religious Workers
+      46        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+     298        2200 TO 2340: Teachers
+      92        2400 TO 2550: Education, Training and Library Workers
+      53        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      32        2800 TO 2960: Media and Communications Workers
+     151        3000 TO 3260: Health Diagnosing and Treating Practitioners
+     280        3300 TO 3650: Health Care Technical and Support Occupations
+     179        3700 TO 3950: Protective Service Occupations
+     231        4000 TO 4160: Food Preparation and Serving Related Occupations
+     294        4200 TO 4250: Cleaning and Building Service Occupations
+      22        4300 TO 4430: Entertainment Attendants and Related Workers
+     182        4500 TO 4650: Personal Care and Service Workers
+     464        4700 TO 4960: Sales and Related Workers
+     930        5000 TO 5930: Office and Administrative Support Workers
+      33        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     384        6200 TO 6940: Construction Trade and Extraction Workers
+     255        7000 TO 7620: Installation, Maintenance and Repairs Workers
+     131        7700 TO 7750: Production and Operating Workers
+      14        7800 TO 7850: Food Preparation Occupations
+     349        7900 TO 8960: Setters, Operators and Tenders
+     459        9000 TO 9750: Transportation and Material Moving Workers
+       7        9840: Armed Forces
+       8        9990: Uncodeable
+  -------
+    6272
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    6272   VALID SKIP(-4)    1293     NON-INTERVIEW(-5)    5121
+ 
+Min:             10        Max:           9990        Mean:              4428.7
+ 
+Lead In: T23260.00[Default]
+Default Next Question: T31865.00
+--------------------------------------------------------------------------------
+T23266.00    [OCCALL-EMP.02]                                Survey Year: 2010
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+(UPDATED 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     158          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      59         500 TO 950: Management Related Occupations
+      20        1000 TO 1240: Mathematical and Computer Scientists
+      16        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       1        1600 TO 1760: Physical Scientists
+       4        1800 TO 1860: Social Scientists and Related Workers
+       1        1900 TO 1960: Life, Physical and Social Science Technicians
+      35        2000 TO 2060: Counselors, Sociala and Religious Workers
+      12        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      73        2200 TO 2340: Teachers
+      10        2400 TO 2550: Education, Training and Library Workers
+      49        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       9        2800 TO 2960: Media and Communications Workers
+      44        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      78        3300 TO 3650: Health Care Technical and Support Occupations
+      30        3700 TO 3950: Protective Service Occupations
+      76        4000 TO 4160: Food Preparation and Serving Related Occupations
+      95        4200 TO 4250: Cleaning and Building Service Occupations
+       3        4300 TO 4430: Entertainment Attendants and Related Workers
+      57        4500 TO 4650: Personal Care and Service Workers
+     140        4700 TO 4960: Sales and Related Workers
+     180        5000 TO 5930: Office and Administrative Support Workers
+       8        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     107        6200 TO 6940: Construction Trade and Extraction Workers
+      52        7000 TO 7620: Installation, Maintenance and Repairs Workers
+      12        7700 TO 7750: Production and Operating Workers
+       3        7800 TO 7850: Food Preparation Occupations
+      57        7900 TO 8960: Setters, Operators and Tenders
+     112        9000 TO 9750: Transportation and Material Moving Workers
+       1        9840: Armed Forces
+       4        9990: Uncodeable
+  -------
+    1506
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    1506   VALID SKIP(-4)    6059     NON-INTERVIEW(-5)    5121
+ 
+Min:             10        Max:           9990        Mean:              4346.8
+ 
+Lead In: T23261.00[Default]
+Default Next Question: T31866.00
+--------------------------------------------------------------------------------
+T23267.00    [OCCALL-EMP.03]                                Survey Year: 2010
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+(UPDATED 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      33          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      17         500 TO 950: Management Related Occupations
+       4        1000 TO 1240: Mathematical and Computer Scientists
+       3        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       3        2000 TO 2060: Counselors, Sociala and Religious Workers
+       1        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      13        2200 TO 2340: Teachers
+       3        2400 TO 2550: Education, Training and Library Workers
+       8        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       2        2800 TO 2960: Media and Communications Workers
+       6        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      19        3300 TO 3650: Health Care Technical and Support Occupations
+      12        3700 TO 3950: Protective Service Occupations
+      14        4000 TO 4160: Food Preparation and Serving Related Occupations
+       7        4200 TO 4250: Cleaning and Building Service Occupations
+       4        4300 TO 4430: Entertainment Attendants and Related Workers
+      10        4500 TO 4650: Personal Care and Service Workers
+      33        4700 TO 4960: Sales and Related Workers
+      34        5000 TO 5930: Office and Administrative Support Workers
+       1        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      21        6200 TO 6940: Construction Trade and Extraction Workers
+       7        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       4        7700 TO 7750: Production and Operating Workers
+      14        7900 TO 8960: Setters, Operators and Tenders
+      24        9000 TO 9750: Transportation and Material Moving Workers
+       1        9840: Armed Forces
+       1        9990: Uncodeable
+  -------
+     299
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     299   VALID SKIP(-4)    7266     NON-INTERVIEW(-5)    5121
+ 
+Min:             10        Max:           9990        Mean:             4382.21
+ 
+Lead In: T23262.00[Default]
+Default Next Question: T31867.00
+--------------------------------------------------------------------------------
+T23268.00    [OCCALL-EMP.04]                                Survey Year: 2010
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+(UPDATED 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       4          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       6         500 TO 950: Management Related Occupations
+       3        1000 TO 1240: Mathematical and Computer Scientists
+       2        2000 TO 2060: Counselors, Sociala and Religious Workers
+       2        2200 TO 2340: Teachers
+       1        2400 TO 2550: Education, Training and Library Workers
+       2        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       5        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       7        3300 TO 3650: Health Care Technical and Support Occupations
+       3        4000 TO 4160: Food Preparation and Serving Related Occupations
+       1        4200 TO 4250: Cleaning and Building Service Occupations
+       2        4500 TO 4650: Personal Care and Service Workers
+       3        4700 TO 4960: Sales and Related Workers
+       9        5000 TO 5930: Office and Administrative Support Workers
+       4        6200 TO 6940: Construction Trade and Extraction Workers
+       3        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       1        7700 TO 7750: Production and Operating Workers
+       6        9000 TO 9750: Transportation and Material Moving Workers
+  -------
+      64
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      64   VALID SKIP(-4)    7501     NON-INTERVIEW(-5)    5121
+ 
+Min:            120        Max:           9720        Mean:             4149.06
+ 
+Lead In: T23263.00[Default]
+Default Next Question: T31868.00
+--------------------------------------------------------------------------------
+T23269.00    [OCCALL-EMP.05]                                Survey Year: 2010
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
+(UPDATED 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       3         500 TO 950: Management Related Occupations
+       1        1000 TO 1240: Mathematical and Computer Scientists
+       1        2000 TO 2060: Counselors, Sociala and Religious Workers
+       3        2200 TO 2340: Teachers
+       1        3300 TO 3650: Health Care Technical and Support Occupations
+       1        4200 TO 4250: Cleaning and Building Service Occupations
+       1        4700 TO 4960: Sales and Related Workers
+       2        5000 TO 5930: Office and Administrative Support Workers
+       1        6200 TO 6940: Construction Trade and Extraction Workers
+       1        7900 TO 8960: Setters, Operators and Tenders
+       1        9000 TO 9750: Transportation and Material Moving Workers
+  -------
+      16
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      16   VALID SKIP(-4)    7549     NON-INTERVIEW(-5)    5121
+ 
+Min:            530        Max:           9130        Mean:             3704.38
+ 
+Lead In: T23264.00[Default]
+Default Next Question: T31869.00
+--------------------------------------------------------------------------------
+T33087.00    [OCCALL-EMP.01]                                Survey Year: 2012
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     685          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+     269         500 TO 950: Management Related Occupations
+     126        1000 TO 1240: Mathematical and Computer Scientists
+      90        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+      15        1600 TO 1760: Physical Scientists
+      10        1800 TO 1860: Social Scientists and Related Workers
+      14        1900 TO 1960: Life, Physical and Social Science Technicians
+     122        2000 TO 2060: Counselors, Sociala and Religious Workers
+      47        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+     281        2200 TO 2340: Teachers
+      88        2400 TO 2550: Education, Training and Library Workers
+      55        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      39        2800 TO 2960: Media and Communications Workers
+     159        3000 TO 3260: Health Diagnosing and Treating Practitioners
+     274        3300 TO 3650: Health Care Technical and Support Occupations
+     156        3700 TO 3950: Protective Service Occupations
+     227        4000 TO 4160: Food Preparation and Serving Related Occupations
+     304        4200 TO 4250: Cleaning and Building Service Occupations
+      21        4300 TO 4430: Entertainment Attendants and Related Workers
+       0        4460: Funeral Related Occupations
+     187        4500 TO 4650: Personal Care and Service Workers
+     431        4700 TO 4960: Sales and Related Workers
+     859        5000 TO 5930: Office and Administrative Support Workers
+      31        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     321        6200 TO 6940: Construction Trade and Extraction Workers
+     252        7000 TO 7620: Installation, Maintenance and Repairs Workers
+     113        7700 TO 7750: Production and Operating Workers
+      16        7800 TO 7850: Food Preparation Occupations
+     302        7900 TO 8960: Setters, Operators and Tenders
+     442        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+      13        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       5        9990: Uncodeable
+  -------
+    5954
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    5954   VALID SKIP(-4)    1346     NON-INTERVIEW(-5)    5386
+ 
+Min:             10        Max:           9990        Mean:             4373.12
+ 
+Lead In: T33082.00[Default]
+Default Next Question: T33092.00
+--------------------------------------------------------------------------------
+T33088.00    [OCCALL-EMP.02]                                Survey Year: 2012
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     177          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      57         500 TO 950: Management Related Occupations
+      25        1000 TO 1240: Mathematical and Computer Scientists
+      14        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       3        1600 TO 1760: Physical Scientists
+       3        1800 TO 1860: Social Scientists and Related Workers
+       0        1900 TO 1960: Life, Physical and Social Science Technicians
+      40        2000 TO 2060: Counselors, Sociala and Religious Workers
+       9        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      74        2200 TO 2340: Teachers
+      11        2400 TO 2550: Education, Training and Library Workers
+      46        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       8        2800 TO 2960: Media and Communications Workers
+      45        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      84        3300 TO 3650: Health Care Technical and Support Occupations
+      40        3700 TO 3950: Protective Service Occupations
+      70        4000 TO 4160: Food Preparation and Serving Related Occupations
+     112        4200 TO 4250: Cleaning and Building Service Occupations
+       9        4300 TO 4430: Entertainment Attendants and Related Workers
+       1        4460: Funeral Related Occupations
+      65        4500 TO 4650: Personal Care and Service Workers
+     164        4700 TO 4960: Sales and Related Workers
+     190        5000 TO 5930: Office and Administrative Support Workers
+      10        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     102        6200 TO 6940: Construction Trade and Extraction Workers
+      60        7000 TO 7620: Installation, Maintenance and Repairs Workers
+      13        7700 TO 7750: Production and Operating Workers
+       3        7800 TO 7850: Food Preparation Occupations
+      52        7900 TO 8960: Setters, Operators and Tenders
+     124        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       3        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       6        9990: Uncodeable
+  -------
+    1620
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    1620   VALID SKIP(-4)    5680     NON-INTERVIEW(-5)    5386
+ 
+Min:             10        Max:           9990        Mean:             4351.92
+ 
+Lead In: T33083.00[Default]
+Default Next Question: T33093.00
+--------------------------------------------------------------------------------
+T33089.00    [OCCALL-EMP.03]                                Survey Year: 2012
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      35          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      19         500 TO 950: Management Related Occupations
+       7        1000 TO 1240: Mathematical and Computer Scientists
+       1        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       0        1600 TO 1760: Physical Scientists
+       0        1800 TO 1860: Social Scientists and Related Workers
+       0        1900 TO 1960: Life, Physical and Social Science Technicians
+       9        2000 TO 2060: Counselors, Sociala and Religious Workers
+       0        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      26        2200 TO 2340: Teachers
+       0        2400 TO 2550: Education, Training and Library Workers
+       8        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       3        2800 TO 2960: Media and Communications Workers
+      13        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      29        3300 TO 3650: Health Care Technical and Support Occupations
+       9        3700 TO 3950: Protective Service Occupations
+      16        4000 TO 4160: Food Preparation and Serving Related Occupations
+      19        4200 TO 4250: Cleaning and Building Service Occupations
+       1        4300 TO 4430: Entertainment Attendants and Related Workers
+       0        4460: Funeral Related Occupations
+      14        4500 TO 4650: Personal Care and Service Workers
+      42        4700 TO 4960: Sales and Related Workers
+      49        5000 TO 5930: Office and Administrative Support Workers
+       4        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      15        6200 TO 6940: Construction Trade and Extraction Workers
+      11        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       3        7700 TO 7750: Production and Operating Workers
+       1        7800 TO 7850: Food Preparation Occupations
+      14        7900 TO 8960: Setters, Operators and Tenders
+      26        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       0        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       2        9990: Uncodeable
+  -------
+     376
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     376   VALID SKIP(-4)    6924     NON-INTERVIEW(-5)    5386
+ 
+Min:             10        Max:           9990        Mean:             4277.95
+ 
+Lead In: T33084.00[Default]
+Default Next Question: T33094.00
+--------------------------------------------------------------------------------
+T33090.00    [OCCALL-EMP.04]                                Survey Year: 2012
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       9          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       4         500 TO 950: Management Related Occupations
+       2        1000 TO 1240: Mathematical and Computer Scientists
+       0        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       0        1600 TO 1760: Physical Scientists
+       0        1800 TO 1860: Social Scientists and Related Workers
+       0        1900 TO 1960: Life, Physical and Social Science Technicians
+       0        2000 TO 2060: Counselors, Sociala and Religious Workers
+       0        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+       6        2200 TO 2340: Teachers
+       1        2400 TO 2550: Education, Training and Library Workers
+       1        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       0        2800 TO 2960: Media and Communications Workers
+       5        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       5        3300 TO 3650: Health Care Technical and Support Occupations
+       1        3700 TO 3950: Protective Service Occupations
+       3        4000 TO 4160: Food Preparation and Serving Related Occupations
+       2        4200 TO 4250: Cleaning and Building Service Occupations
+       0        4300 TO 4430: Entertainment Attendants and Related Workers
+       0        4460: Funeral Related Occupations
+       3        4500 TO 4650: Personal Care and Service Workers
+      12        4700 TO 4960: Sales and Related Workers
+      17        5000 TO 5930: Office and Administrative Support Workers
+       1        6000 TO 6130: Farming, Fishing and Forestry Occupations
+       3        6200 TO 6940: Construction Trade and Extraction Workers
+       2        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       0        7700 TO 7750: Production and Operating Workers
+       0        7800 TO 7850: Food Preparation Occupations
+       5        7900 TO 8960: Setters, Operators and Tenders
+      13        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       0        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       2        9990: Uncodeable
+  -------
+      97
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      97   VALID SKIP(-4)    7203     NON-INTERVIEW(-5)    5386
+ 
+Min:             10        Max:           9990        Mean:             4822.37
+ 
+Lead In: T33085.00[Default]
+Default Next Question: T33095.00
+--------------------------------------------------------------------------------
+T33091.00    [OCCALL-EMP.05]                                Survey Year: 2012
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER (UPDATED 2003)
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       3          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       1         500 TO 950: Management Related Occupations
+       2        1000 TO 1240: Mathematical and Computer Scientists
+       0        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       0        1600 TO 1760: Physical Scientists
+       0        1800 TO 1860: Social Scientists and Related Workers
+       0        1900 TO 1960: Life, Physical and Social Science Technicians
+       1        2000 TO 2060: Counselors, Sociala and Religious Workers
+       0        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+       1        2200 TO 2340: Teachers
+       1        2400 TO 2550: Education, Training and Library Workers
+       0        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       0        2800 TO 2960: Media and Communications Workers
+       1        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       1        3300 TO 3650: Health Care Technical and Support Occupations
+       0        3700 TO 3950: Protective Service Occupations
+       0        4000 TO 4160: Food Preparation and Serving Related Occupations
+       0        4200 TO 4250: Cleaning and Building Service Occupations
+       0        4300 TO 4430: Entertainment Attendants and Related Workers
+       0        4460: Funeral Related Occupations
+       0        4500 TO 4650: Personal Care and Service Workers
+       2        4700 TO 4960: Sales and Related Workers
+       7        5000 TO 5930: Office and Administrative Support Workers
+       1        6000 TO 6130: Farming, Fishing and Forestry Occupations
+       1        6200 TO 6940: Construction Trade and Extraction Workers
+       0        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       0        7700 TO 7750: Production and Operating Workers
+       0        7800 TO 7850: Food Preparation Occupations
+       0        7900 TO 8960: Setters, Operators and Tenders
+       3        9000 TO 9750: Transportation and Material Moving Workers
+       0        9800 TO 9830: Military Specific Occupations
+       0        9840: Armed Forces
+       0        9950: Not in Labor Force (ACS Code)
+       0        9990: Uncodeable
+  -------
+      25
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      25   VALID SKIP(-4)    7275     NON-INTERVIEW(-5)    5386
+ 
+Min:            140        Max:           9620        Mean:              4199.2
+ 
+Lead In: T33086.00[Default]
+Default Next Question: T33096.00
+--------------------------------------------------------------------------------
+T42828.00    [OCCALL-EMP.01]                                Survey Year: 2014
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     680          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+     263         500 TO 950: Management Related Occupations
+     108        1000 TO 1240: Mathematical and Computer Scientists
+      83        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+      18        1600 TO 1760: Physical Scientists
+       9        1800 TO 1860: Social Scientists and Related Workers
+      15        1900 TO 1960: Life, Physical and Social Science Technicians
+     130        2000 TO 2060: Counselors, Sociala and Religious Workers
+      43        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+     243        2200 TO 2340: Teachers
+      86        2400 TO 2550: Education, Training and Library Workers
+      58        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      42        2800 TO 2960: Media and Communications Workers
+     148        3000 TO 3260: Health Diagnosing and Treating Practitioners
+     256        3300 TO 3650: Health Care Technical and Support Occupations
+     140        3700 TO 3950: Protective Service Occupations
+     217        4000 TO 4160: Food Preparation and Serving Related Occupations
+     270        4200 TO 4250: Cleaning and Building Service Occupations
+      18        4300 TO 4430: Entertainment Attendants and Related Workers
+     192        4500 TO 4650: Personal Care and Service Workers
+     396        4700 TO 4960: Sales and Related Workers
+     772        5000 TO 5930: Office and Administrative Support Workers
+      28        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     288        6200 TO 6940: Construction Trade and Extraction Workers
+     236        7000 TO 7620: Installation, Maintenance and Repairs Workers
+      84        7700 TO 7750: Production and Operating Workers
+      15        7800 TO 7850: Food Preparation Occupations
+     262        7900 TO 8960: Setters, Operators and Tenders
+     417        9000 TO 9750: Transportation and Material Moving Workers
+       9        9840: Armed Forces
+       1        9990: Uncodeable
+  -------
+    5527
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    5527   VALID SKIP(-4)    1543     NON-INTERVIEW(-5)    5616
+ 
+Min:             10        Max:           9990        Mean:             4296.09
+ 
+Lead In: T42823.00[Default]
+Default Next Question: T42833.00
+--------------------------------------------------------------------------------
+T42829.00    [OCCALL-EMP.02]                                Survey Year: 2014
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     147          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      52         500 TO 950: Management Related Occupations
+      21        1000 TO 1240: Mathematical and Computer Scientists
+       6        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       7        1600 TO 1760: Physical Scientists
+       2        1800 TO 1860: Social Scientists and Related Workers
+       1        1900 TO 1960: Life, Physical and Social Science Technicians
+      37        2000 TO 2060: Counselors, Sociala and Religious Workers
+      10        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      62        2200 TO 2340: Teachers
+       7        2400 TO 2550: Education, Training and Library Workers
+      35        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      10        2800 TO 2960: Media and Communications Workers
+      37        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      66        3300 TO 3650: Health Care Technical and Support Occupations
+      31        3700 TO 3950: Protective Service Occupations
+      64        4000 TO 4160: Food Preparation and Serving Related Occupations
+      71        4200 TO 4250: Cleaning and Building Service Occupations
+       8        4300 TO 4430: Entertainment Attendants and Related Workers
+      47        4500 TO 4650: Personal Care and Service Workers
+     129        4700 TO 4960: Sales and Related Workers
+     152        5000 TO 5930: Office and Administrative Support Workers
+       7        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      67        6200 TO 6940: Construction Trade and Extraction Workers
+      50        7000 TO 7620: Installation, Maintenance and Repairs Workers
+      13        7700 TO 7750: Production and Operating Workers
+       2        7800 TO 7850: Food Preparation Occupations
+      45        7900 TO 8960: Setters, Operators and Tenders
+      89        9000 TO 9750: Transportation and Material Moving Workers
+       2        9840: Armed Forces
+       1        9990: Uncodeable
+  -------
+    1278
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    1278   VALID SKIP(-4)    5792     NON-INTERVIEW(-5)    5616
+ 
+Min:             10        Max:           9990        Mean:             4235.95
+ 
+Lead In: T42824.00[Default]
+Default Next Question: T42834.00
+--------------------------------------------------------------------------------
+T42830.00    [OCCALL-EMP.03]                                Survey Year: 2014
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      31          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      18         500 TO 950: Management Related Occupations
+       4        1000 TO 1240: Mathematical and Computer Scientists
+       7        2000 TO 2060: Counselors, Sociala and Religious Workers
+      14        2200 TO 2340: Teachers
+       7        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       2        2800 TO 2960: Media and Communications Workers
+      10        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      14        3300 TO 3650: Health Care Technical and Support Occupations
+      11        3700 TO 3950: Protective Service Occupations
+       8        4000 TO 4160: Food Preparation and Serving Related Occupations
+       9        4200 TO 4250: Cleaning and Building Service Occupations
+      13        4500 TO 4650: Personal Care and Service Workers
+      28        4700 TO 4960: Sales and Related Workers
+      34        5000 TO 5930: Office and Administrative Support Workers
+       1        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      11        6200 TO 6940: Construction Trade and Extraction Workers
+       3        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       2        7700 TO 7750: Production and Operating Workers
+       2        7800 TO 7850: Food Preparation Occupations
+       9        7900 TO 8960: Setters, Operators and Tenders
+      25        9000 TO 9750: Transportation and Material Moving Workers
+       1        9990: Uncodeable
+  -------
+     264
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     264   VALID SKIP(-4)    6806     NON-INTERVIEW(-5)    5616
+ 
+Min:             10        Max:           9990        Mean:             4222.99
+ 
+Lead In: T42825.00[Default]
+Default Next Question: T42835.00
+--------------------------------------------------------------------------------
+T42831.00    [OCCALL-EMP.04]                                Survey Year: 2014
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       4          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       2         500 TO 950: Management Related Occupations
+       3        1000 TO 1240: Mathematical and Computer Scientists
+       2        2000 TO 2060: Counselors, Sociala and Religious Workers
+       1        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+       3        2200 TO 2340: Teachers
+       2        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       1        3300 TO 3650: Health Care Technical and Support Occupations
+       1        3700 TO 3950: Protective Service Occupations
+       4        4000 TO 4160: Food Preparation and Serving Related Occupations
+       1        4200 TO 4250: Cleaning and Building Service Occupations
+       5        4700 TO 4960: Sales and Related Workers
+       8        5000 TO 5930: Office and Administrative Support Workers
+       1        6000 TO 6130: Farming, Fishing and Forestry Occupations
+       5        6200 TO 6940: Construction Trade and Extraction Workers
+       1        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       1        7700 TO 7750: Production and Operating Workers
+       1        7800 TO 7850: Food Preparation Occupations
+       7        9000 TO 9750: Transportation and Material Moving Workers
+  -------
+      53
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      53   VALID SKIP(-4)    7017     NON-INTERVIEW(-5)    5616
+ 
+Min:             50        Max:           9620        Mean:              4616.6
+ 
+Lead In: T42826.00[Default]
+Default Next Question: T42836.00
+--------------------------------------------------------------------------------
+T42832.00    [OCCALL-EMP.05]                                Survey Year: 2014
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       1          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       1        1000 TO 1240: Mathematical and Computer Scientists
+       2        2200 TO 2340: Teachers
+       1        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       1        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       2        3300 TO 3650: Health Care Technical and Support Occupations
+       1        3700 TO 3950: Protective Service Occupations
+       4        4700 TO 4960: Sales and Related Workers
+       1        5000 TO 5930: Office and Administrative Support Workers
+       1        6200 TO 6940: Construction Trade and Extraction Workers
+       2        7700 TO 7750: Production and Operating Workers
+       4        9000 TO 9750: Transportation and Material Moving Workers
+  -------
+      21
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      21   VALID SKIP(-4)    7049     NON-INTERVIEW(-5)    5616
+ 
+Min:             10        Max:           9360        Mean:             5039.05
+ 
+Lead In: T42827.00[Default]
+Default Next Question: T42837.00
+--------------------------------------------------------------------------------
+T52569.00    [OCCALL-EMP.01]                                Survey Year: 2016
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     666          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+     267         500 TO 950: Management Related Occupations
+     110        1000 TO 1240: Mathematical and Computer Scientists
+      85        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+      19        1600 TO 1760: Physical Scientists
+      10        1800 TO 1860: Social Scientists and Related Workers
+      11        1900 TO 1960: Life, Physical and Social Science Technicians
+     113        2000 TO 2060: Counselors, Sociala and Religious Workers
+      48        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+     233        2200 TO 2340: Teachers
+      88        2400 TO 2550: Education, Training and Library Workers
+      67        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      35        2800 TO 2960: Media and Communications Workers
+     134        3000 TO 3260: Health Diagnosing and Treating Practitioners
+     249        3300 TO 3650: Health Care Technical and Support Occupations
+     145        3700 TO 3950: Protective Service Occupations
+     209        4000 TO 4160: Food Preparation and Serving Related Occupations
+     272        4200 TO 4250: Cleaning and Building Service Occupations
+      18        4300 TO 4430: Entertainment Attendants and Related Workers
+     202        4500 TO 4650: Personal Care and Service Workers
+     374        4700 TO 4960: Sales and Related Workers
+     718        5000 TO 5930: Office and Administrative Support Workers
+      21        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     278        6200 TO 6940: Construction Trade and Extraction Workers
+     206        7000 TO 7620: Installation, Maintenance and Repairs Workers
+      84        7700 TO 7750: Production and Operating Workers
+      12        7800 TO 7850: Food Preparation Occupations
+     246        7900 TO 8960: Setters, Operators and Tenders
+     397        9000 TO 9750: Transportation and Material Moving Workers
+       6        9840: Armed Forces
+  -------
+    5323
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    5323   VALID SKIP(-4)    1589     NON-INTERVIEW(-5)    5774
+ 
+Min:             10        Max:           9840        Mean:             4239.46
+ 
+Lead In: T52564.00[Default]
+Default Next Question: T52574.00
+--------------------------------------------------------------------------------
+T52570.00    [OCCALL-EMP.02]                                Survey Year: 2016
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     145          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      57         500 TO 950: Management Related Occupations
+      17        1000 TO 1240: Mathematical and Computer Scientists
+      12        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       1        1600 TO 1760: Physical Scientists
+       4        1800 TO 1860: Social Scientists and Related Workers
+      31        2000 TO 2060: Counselors, Sociala and Religious Workers
+       6        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      62        2200 TO 2340: Teachers
+      13        2400 TO 2550: Education, Training and Library Workers
+      35        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      17        2800 TO 2960: Media and Communications Workers
+      37        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      64        3300 TO 3650: Health Care Technical and Support Occupations
+      16        3700 TO 3950: Protective Service Occupations
+      55        4000 TO 4160: Food Preparation and Serving Related Occupations
+      72        4200 TO 4250: Cleaning and Building Service Occupations
+       7        4300 TO 4430: Entertainment Attendants and Related Workers
+       2        4460: Funeral Related Occupations
+      53        4500 TO 4650: Personal Care and Service Workers
+     135        4700 TO 4960: Sales and Related Workers
+     140        5000 TO 5930: Office and Administrative Support Workers
+       9        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      70        6200 TO 6940: Construction Trade and Extraction Workers
+      36        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       8        7700 TO 7750: Production and Operating Workers
+       7        7800 TO 7850: Food Preparation Occupations
+      31        7900 TO 8960: Setters, Operators and Tenders
+     102        9000 TO 9750: Transportation and Material Moving Workers
+       1        9990: Uncodeable
+  -------
+    1245
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    1245   VALID SKIP(-4)    5667     NON-INTERVIEW(-5)    5774
+ 
+Min:             10        Max:           9990        Mean:             4201.57
+ 
+Lead In: T52565.00[Default]
+Default Next Question: T52575.00
+--------------------------------------------------------------------------------
+T52571.00    [OCCALL-EMP.03]                                Survey Year: 2016
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      32          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      23         500 TO 950: Management Related Occupations
+       4        1000 TO 1240: Mathematical and Computer Scientists
+       3        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       1        1600 TO 1760: Physical Scientists
+       4        2000 TO 2060: Counselors, Sociala and Religious Workers
+       2        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      16        2200 TO 2340: Teachers
+       1        2400 TO 2550: Education, Training and Library Workers
+       6        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       3        2800 TO 2960: Media and Communications Workers
+      10        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      14        3300 TO 3650: Health Care Technical and Support Occupations
+       4        3700 TO 3950: Protective Service Occupations
+      13        4000 TO 4160: Food Preparation and Serving Related Occupations
+      10        4200 TO 4250: Cleaning and Building Service Occupations
+       2        4300 TO 4430: Entertainment Attendants and Related Workers
+      16        4500 TO 4650: Personal Care and Service Workers
+      27        4700 TO 4960: Sales and Related Workers
+      34        5000 TO 5930: Office and Administrative Support Workers
+       1        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      16        6200 TO 6940: Construction Trade and Extraction Workers
+       8        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       5        7700 TO 7750: Production and Operating Workers
+       1        7800 TO 7850: Food Preparation Occupations
+       8        7900 TO 8960: Setters, Operators and Tenders
+      30        9000 TO 9750: Transportation and Material Moving Workers
+       1        9840: Armed Forces
+       1        9990: Uncodeable
+  -------
+     296
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     296   VALID SKIP(-4)    6616     NON-INTERVIEW(-5)    5774
+ 
+Min:             10        Max:           9990        Mean:                4310
+ 
+Lead In: T52566.00[Default]
+Default Next Question: T52576.00
+--------------------------------------------------------------------------------
+T52572.00    [OCCALL-EMP.04]                                Survey Year: 2016
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       8          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       8         500 TO 950: Management Related Occupations
+       2        1000 TO 1240: Mathematical and Computer Scientists
+       2        2000 TO 2060: Counselors, Sociala and Religious Workers
+       1        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+       5        2200 TO 2340: Teachers
+       2        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       4        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       7        3300 TO 3650: Health Care Technical and Support Occupations
+       1        3700 TO 3950: Protective Service Occupations
+       2        4000 TO 4160: Food Preparation and Serving Related Occupations
+       2        4200 TO 4250: Cleaning and Building Service Occupations
+       3        4500 TO 4650: Personal Care and Service Workers
+       4        4700 TO 4960: Sales and Related Workers
+      11        5000 TO 5930: Office and Administrative Support Workers
+       5        6200 TO 6940: Construction Trade and Extraction Workers
+       1        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       1        7700 TO 7750: Production and Operating Workers
+       1        7800 TO 7850: Food Preparation Occupations
+       4        7900 TO 8960: Setters, Operators and Tenders
+       6        9000 TO 9750: Transportation and Material Moving Workers
+  -------
+      80
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      80   VALID SKIP(-4)    6832     NON-INTERVIEW(-5)    5774
+ 
+Min:            120        Max:           9640        Mean:             4108.25
+ 
+Lead In: T52567.00[Default]
+Default Next Question: T52577.00
+--------------------------------------------------------------------------------
+T52573.00    [OCCALL-EMP.05]                                Survey Year: 2016
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       2          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       2         500 TO 950: Management Related Occupations
+       1        2000 TO 2060: Counselors, Sociala and Religious Workers
+       1        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+       2        2200 TO 2340: Teachers
+       1        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       1        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       2        3300 TO 3650: Health Care Technical and Support Occupations
+       2        4700 TO 4960: Sales and Related Workers
+       1        5000 TO 5930: Office and Administrative Support Workers
+       1        6200 TO 6940: Construction Trade and Extraction Workers
+       1        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       2        9000 TO 9750: Transportation and Material Moving Workers
+  -------
+      19
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      19   VALID SKIP(-4)    6893     NON-INTERVIEW(-5)    5774
+ 
+Min:            150        Max:           9600        Mean:             3748.95
+ 
+Lead In: T52568.00[Default]
+Default Next Question: T52578.00
+--------------------------------------------------------------------------------
+T78186.00    [OCCALL-EMP.01]                                Survey Year: 2018
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     628          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+     263         500 TO 950: Management Related Occupations
+     112        1000 TO 1240: Mathematical and Computer Scientists
+      71        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+      16        1600 TO 1760: Physical Scientists
+      11        1800 TO 1860: Social Scientists and Related Workers
+      10        1900 TO 1960: Life, Physical and Social Science Technicians
+     126        2000 TO 2060: Counselors, Sociala and Religious Workers
+      47        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+     219        2200 TO 2340: Teachers
+      91        2400 TO 2550: Education, Training and Library Workers
+      57        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      33        2800 TO 2960: Media and Communications Workers
+     129        3000 TO 3260: Health Diagnosing and Treating Practitioners
+     239        3300 TO 3650: Health Care Technical and Support Occupations
+     126        3700 TO 3950: Protective Service Occupations
+     190        4000 TO 4160: Food Preparation and Serving Related Occupations
+     264        4200 TO 4250: Cleaning and Building Service Occupations
+      24        4300 TO 4430: Entertainment Attendants and Related Workers
+     189        4500 TO 4650: Personal Care and Service Workers
+     355        4700 TO 4960: Sales and Related Workers
+     709        5000 TO 5930: Office and Administrative Support Workers
+      22        6000 TO 6130: Farming, Fishing and Forestry Occupations
+     275        6200 TO 6940: Construction Trade and Extraction Workers
+     187        7000 TO 7620: Installation, Maintenance and Repairs Workers
+      78        7700 TO 7750: Production and Operating Workers
+      16        7800 TO 7850: Food Preparation Occupations
+     250        7900 TO 8960: Setters, Operators and Tenders
+     428        9000 TO 9750: Transportation and Material Moving Workers
+       7        9840: Armed Forces
+       5        9990: Uncodeable
+  -------
+    5177
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    5177   VALID SKIP(-4)    1701     NON-INTERVIEW(-5)    5808
+ 
+Min:             10        Max:           9990        Mean:             4312.24
+ 
+Lead In: T78181.00[Default]
+Default Next Question: T78191.00
+--------------------------------------------------------------------------------
+T78187.00    [OCCALL-EMP.02]                                Survey Year: 2018
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     113          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+      51         500 TO 950: Management Related Occupations
+      25        1000 TO 1240: Mathematical and Computer Scientists
+       9        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       1        1600 TO 1760: Physical Scientists
+       4        1800 TO 1860: Social Scientists and Related Workers
+       2        1900 TO 1960: Life, Physical and Social Science Technicians
+      33        2000 TO 2060: Counselors, Sociala and Religious Workers
+       8        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      47        2200 TO 2340: Teachers
+       5        2400 TO 2550: Education, Training and Library Workers
+      36        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+      13        2800 TO 2960: Media and Communications Workers
+      33        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      64        3300 TO 3650: Health Care Technical and Support Occupations
+      20        3700 TO 3950: Protective Service Occupations
+      50        4000 TO 4160: Food Preparation and Serving Related Occupations
+      58        4200 TO 4250: Cleaning and Building Service Occupations
+       8        4300 TO 4430: Entertainment Attendants and Related Workers
+      47        4500 TO 4650: Personal Care and Service Workers
+     124        4700 TO 4960: Sales and Related Workers
+     119        5000 TO 5930: Office and Administrative Support Workers
+       3        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      65        6200 TO 6940: Construction Trade and Extraction Workers
+      42        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       6        7700 TO 7750: Production and Operating Workers
+       3        7800 TO 7850: Food Preparation Occupations
+      32        7900 TO 8960: Setters, Operators and Tenders
+      94        9000 TO 9750: Transportation and Material Moving Workers
+       1        9990: Uncodeable
+  -------
+    1116
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    1116   VALID SKIP(-4)    5762     NON-INTERVIEW(-5)    5808
+ 
+Min:             10        Max:           9990        Mean:             4263.97
+ 
+Lead In: T78182.00[Default]
+Default Next Question: T78192.00
+--------------------------------------------------------------------------------
+T78188.00    [OCCALL-EMP.03]                                Survey Year: 2018
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      24          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       8         500 TO 950: Management Related Occupations
+       8        1000 TO 1240: Mathematical and Computer Scientists
+       5        2000 TO 2060: Counselors, Sociala and Religious Workers
+       2        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+      13        2200 TO 2340: Teachers
+       2        2400 TO 2550: Education, Training and Library Workers
+       5        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       1        2800 TO 2960: Media and Communications Workers
+      12        3000 TO 3260: Health Diagnosing and Treating Practitioners
+      11        3300 TO 3650: Health Care Technical and Support Occupations
+       5        3700 TO 3950: Protective Service Occupations
+      16        4000 TO 4160: Food Preparation and Serving Related Occupations
+       6        4200 TO 4250: Cleaning and Building Service Occupations
+       2        4300 TO 4430: Entertainment Attendants and Related Workers
+      16        4500 TO 4650: Personal Care and Service Workers
+      17        4700 TO 4960: Sales and Related Workers
+      22        5000 TO 5930: Office and Administrative Support Workers
+       1        6000 TO 6130: Farming, Fishing and Forestry Occupations
+      14        6200 TO 6940: Construction Trade and Extraction Workers
+       5        7000 TO 7620: Installation, Maintenance and Repairs Workers
+       2        7700 TO 7750: Production and Operating Workers
+       1        7800 TO 7850: Food Preparation Occupations
+       4        7900 TO 8960: Setters, Operators and Tenders
+      26        9000 TO 9750: Transportation and Material Moving Workers
+       2        9990: Uncodeable
+  -------
+     230
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     230   VALID SKIP(-4)    6648     NON-INTERVIEW(-5)    5808
+ 
+Min:             10        Max:           9990        Mean:             4356.09
+ 
+Lead In: T78183.00[Default]
+Default Next Question: T78193.00
+--------------------------------------------------------------------------------
+T78189.00    [OCCALL-EMP.04]                                Survey Year: 2018
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      10          10 TO 430: Executive, Administrative and Managerial 
+                          Occupations
+       4         500 TO 950: Management Related Occupations
+       1        1000 TO 1240: Mathematical and Computer Scientists
+       1        1300 TO 1560: Engineers, Architects, Surveyers, Engineering and 
+                          Related Technicians
+       1        2000 TO 2060: Counselors, Sociala and Religious Workers
+       1        2100 TO 2150: Lawyers, Judges and Legal Support Workers
+       3        2200 TO 2340: Teachers
+       1        2600 TO 2760: Entertainers and Performers, Sports and Related 
+                          Workers
+       1        2800 TO 2960: Media and Communications Workers
+       5        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       1        3300 TO 3650: Health Care Technical and Support Occupations
+       2        3700 TO 3950: Protective Service Occupations
+       6        4000 TO 4160: Food Preparation and Serving Related Occupations
+       3        4500 TO 4650: Personal Care and Service Workers
+       5        4700 TO 4960: Sales and Related Workers
+       7        5000 TO 5930: Office and Administrative Support Workers
+       3        6200 TO 6940: Construction Trade and Extraction Workers
+       2        7900 TO 8960: Setters, Operators and Tenders
+       6        9000 TO 9750: Transportation and Material Moving Workers
+  -------
+      63
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      63   VALID SKIP(-4)    6815     NON-INTERVIEW(-5)    5808
+ 
+Min:            130        Max:           9620        Mean:             3869.21
+ 
+Lead In: T78184.00[Default]
+Default Next Question: T78194.00
+--------------------------------------------------------------------------------
+T78190.00    [OCCALL-EMP.05]                                Survey Year: 2018
+  PRIMARY VARIABLE
+
+ 
+             OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+NOTE: SEE ATTACHMENT 3, INDUSTRY AND OCCUPATION CODES
+ 
+INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       1        1000 TO 1240: Mathematical and Computer Scientists
+       1        2200 TO 2340: Teachers
+       1        3000 TO 3260: Health Diagnosing and Treating Practitioners
+       2        3300 TO 3650: Health Care Technical and Support Occupations
+       1        4700 TO 4960: Sales and Related Workers
+       7        5000 TO 5930: Office and Administrative Support Workers
+       3        6200 TO 6940: Construction Trade and Extraction Workers
+       1        7900 TO 8960: Setters, Operators and Tenders
+       1        9000 TO 9750: Transportation and Material Moving Workers
+  -------
+      18
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      18   VALID SKIP(-4)    6860     NON-INTERVIEW(-5)    5808
+ 
+Min:           1010        Max:           9130        Mean:             5158.89
+ 
+Lead In: T78185.00[Default]
+Default Next Question: T78195.00

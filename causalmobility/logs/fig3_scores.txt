@@ -1,0 +1,14 @@
+[1] "2024-01-13 18:03:13 CST"
+   resp_race         parental_educ      slope         se      ci.min    ci.max
+1   Hispanic Less than high school 0.16800275 0.02552750  0.11796977 0.2180357
+2      Black Less than high school 0.16800272 0.02552747  0.11796980 0.2180356
+3      White Less than high school 0.16800272 0.02552744  0.11796986 0.2180356
+4   Hispanic           High school 0.12580341 0.04515862  0.03729415 0.2143127
+5      Black           High school 0.05206029 0.04323107 -0.03267105 0.1367916
+6      White           High school 0.09661153 0.03136518  0.03513691 0.1580862
+7   Hispanic          Some college 0.16800232 0.02552787  0.11796861 0.2180360
+8      Black          Some college 0.16800271 0.02552748  0.11796977 0.2180356
+9      White          Some college 0.20044574 0.03145265  0.13879969 0.2620918
+10  Hispanic               College 0.16800273 0.02552747  0.11796981 0.2180356
+11     Black               College 0.16800248 0.02552760  0.11796930 0.2180357
+12     White               College 0.16800275 0.02552744  0.11796989 0.2180356
