@@ -30,7 +30,7 @@ fit_marginal_score <- gam(
 
 ## Fit a bootstrapped model for slope CI
 n_replicates <- 1000
-plan(multicore, workers = parallel::detectCores())
+plan(multisession, workers = parallel::detectCores())
 with_progress({
   p <- progressor(along = 1:n_replicates)
   fit_marginal_score_bootstrapped <- future_vapply(
