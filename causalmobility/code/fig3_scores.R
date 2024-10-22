@@ -1,4 +1,6 @@
 # Dependencies
+library(future.apply)
+library(progressr)
 library(here)
 library(tidyverse)
 theme_set(theme_bw())
@@ -19,18 +21,43 @@ confounder_strata <- nlsy_analysis |>
 # ANALYSIS WITH OCCUPATIONAL SCORE
 
 # Unadjusted parent occupation -> child occupation
+
 fit_marginal_score <- gam(
   hwsei ~ parental_hwsei + s(parental_occ_title, bs = "re"),
   data = nlsy_analysis,
   weights = weight
 )
-marginal_coef_summary <- data.frame(
-    coef = coef(fit_marginal_score)["parental_hwsei"],
-    se = sqrt(diag(vcov(fit_marginal_score))["parental_hwsei"])
+
+## Fit a bootstrapped model for slope CI
+n_replicates <- 1000
+plan(multicore, workers = parallel::detectCores())
+with_progress({
+  p <- progressor(along = 1:n_replicates)
+  fit_marginal_score_bootstrapped <- future_vapply(
+    1:n_replicates,
+    function(iter) {
+      # Generate bootstrap indices
+      boot_idx <- sample(1:nrow(nlsy_analysis), nrow(nlsy_analysis), replace = TRUE)
+      fit_marginal_score_iter <- gam(
+        hwsei ~ parental_hwsei + s(parental_occ_title, bs = "re"),
+        data = nlsy_analysis[boot_idx, ],
+        weights = weight
+      )
+      p()
+      return(coef(fit_marginal_score_iter)["parental_hwsei"])
+    },
+    numeric(1),
+    future.seed = TRUE
+  )
+})
+plan(sequential)
+
+marginal_coef_summary <- tibble(
+    coef = coef(fit_marginal_score)["parental_hwsei"]
   ) |>
   mutate(
-    ci.min = coef - qnorm(.975) * se,
-    ci.max = coef + qnorm(.975) * se
+    ci.min = quantile(fit_marginal_score_bootstrapped, 0.025),
+    ci.max = quantile(fit_marginal_score_bootstrapped, 0.975)
   )
 
 to_predict_marginal <- nlsy_analysis |>
@@ -95,6 +122,7 @@ to_predict <- nlsy_analysis |>
   group_by(resp_race, parental_educ, parental_occ_title, parental_hwsei) |>
   summarize(occ_weight = sum(weight),
             .groups = "drop")
+
 fitted <- predict(fit, type = "terms", newdata = to_predict)
 random_intercept_columns <- which(grepl("parental_occ",colnames(fitted)))
 line <- rowSums(fitted[,-random_intercept_columns]) + attr(fitted,"constant")
