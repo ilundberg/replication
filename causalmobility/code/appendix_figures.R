@@ -27,5 +27,22 @@ nlsy_analysis |>
 
 ggsave(here("figures", "closest_to_40_age_dist.pdf"), width = 5, height = 3)
 
+# Plot the age distribution of parents
+nlsy_analysis |>
+  mutate(
+    birth_date = case_when(
+      which_parent_occ == "Father" ~ birth_date_father,
+      TRUE ~ birth_date_mother)
+  ) |>
+  ggplot(aes(x=birth_date)) +
+  geom_histogram(aes(y = ..density..), fill = "steelblue3", alpha = 0.5) +
+  geom_density() +
+  facet_wrap(~parental_egp, nrow = 5, scales = "free_y") +
+  theme(panel.spacing = unit(1, "lines")) +
+  labs(x = "Parental Birth Year", y = "Density")
+
+ggsave(here("figures/parental_birth_year.pdf"),
+       height = 6, width = 5)
+
 sessionInfo()
 sink()

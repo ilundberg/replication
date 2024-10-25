@@ -153,23 +153,36 @@ occ_1990_to_hwsei <- read_ipums_micro(ddi, verbose = FALSE) |>
 #' Pivot occupation x year variables into long format and keep each
 #' respondent's occupation that is closest to when they are 40.
 nlsy_resp_occs <- nlsy |>
-  select(CASEID_1979, starts_with("OCCALL-EMP"), starts_with("Q1-3")) |>
+  select(CASEID_1979, starts_with(c("COWALL-EMP", "OCCALL-EMP", "Q1-3", "FAM-DAD", "FAM-MOM"))) |>
   pivot_longer(
-    cols = starts_with("OCCALL-EMP"),
-    names_pattern = ".*\\.(..)_(.*)",
-    names_to = c("resp_occ_no", "resp_occ_year"),
-    values_to = "resp_occ"
+    cols = starts_with(c("OCCALL-EMP", "COWALL-EMP")),
+    names_pattern = "(OCCALL|COWALL)-EMP\\.(..)_(.*)",
+    names_to = c(".value", "no", "year"),
+    values_to = NULL
+  ) |>
+  rename(
+    resp_occ_no = no,
+    resp_occ_year = year,
+    resp_occ = OCCALL,
+    resp_occ_class = COWALL
   ) |>
   rename_with(.fn = \(x) gsub(".*~", "", x), .cols = starts_with("Q1-3")) |>
+  rename_with(.fn = \(x) gsub(".*-", "", x), .cols = starts_with("FAM-")) |>
   mutate(
     across(
-      .cols = c(M_1979, Y_1979, M_1981, Y_1981),
+      .cols = c(M_1979, Y_1979, M_1981, Y_1981, starts_with("FAM-")),
       .fns = \(x) case_when(x <= 0 ~ NA, TRUE ~ x)
     ),
     M_1979 = coalesce(M_1979, M_1981),
     Y_1979 = coalesce(Y_1979, Y_1981),
     Y_1979 = case_when(is.na(Y_1979) ~ NA, TRUE ~ paste0("19", Y_1979)),
+    across(
+      .cols = c("DAD_Y_1987", "MOM_Y_1987"),
+      .fns = \(x) case_when(is.na(x) ~ NA, TRUE ~ paste0("19", x))
+    ),
     birth_date = my(paste(M_1979, Y_1979), quiet = TRUE),
+    birth_date_father = my(paste(DAD_M_1987, DAD_Y_1987), quiet = TRUE),
+    birth_date_mother = my(paste(MOM_M_1987, MOM_Y_1987), quiet = TRUE),
     resp_occ = case_when(resp_occ <= 0 ~ NA, TRUE ~ resp_occ),
     resp_occ_no = as.numeric(resp_occ_no),
     resp_occ_type = case_when(
@@ -182,16 +195,21 @@ nlsy_resp_occs <- nlsy |>
       endsWith(resp_occ_type, "3-digit") ~ sprintf("%03d", .data$resp_occ),
       endsWith(resp_occ_type, "4-digit") ~ sprintf("%04d", .data$resp_occ)
     ),
+    resp_occ_class = case_when(
+      is.na(resp_occ) ~ NA,
+      resp_occ_class == 4 ~ "self-employed",
+      TRUE ~ "other"
+    ),
     resp_occ_year = as.numeric(resp_occ_year)
   ) |>
-  select(-c(M_1979, Y_1979, M_1981, Y_1981))
+  select(-c(M_1979, Y_1979, M_1981, Y_1981, starts_with(c("DAD_", "MOM_"))))
 
 # Create data frame with one chosen occupation report per respondent
 # This data frame will exclude those who do not have an occupation report
 # in the age range
 nlsy_resp_occs_subset <- nlsy_resp_occs |>
   group_by(CASEID_1979, resp_occ_year) |>
-  fill(resp_occ, .direction = "updown") |>
+  fill(resp_occ, resp_occ_class, .direction = "updown") |>
   ungroup() |>
   distinct(CASEID_1979, resp_occ_year, .keep_all = TRUE) |>
   group_by(CASEID_1979) |>
@@ -220,7 +238,7 @@ nlsy_resp_occs_subset <- nlsy_resp_occs |>
 
 nlsy_panel <- nlsy |>
   # Remove many respondent occupation variables, handled above instead
-  select(-starts_with("OCCALL-EMP"), -starts_with("Q1-3")) |>
+  select(-starts_with(c("OCCALL-EMP", "COWALL-EMP")), -starts_with("Q1-3")) |>
   # Create user-friendly names
   rename(
     mother_occ = `FAM-9A_1979`,
@@ -238,17 +256,23 @@ nlsy_panel <- nlsy |>
   ) |>
   # Code each parent's education into categories
   mutate(
-    across(
-      .cols = all_of(c("educ_mother","educ_father")),
-      .fns = \(x) factor(case_when(x == -4 ~ 1,
-                            x %in% 0:11 ~ 2,
-                            x %in% 12 ~ 3,
-                            x %in% 13:15 ~ 4,
-                            x %in% 16:21 ~ 5),
-                         labels = c("No parent","Less than high school",
-                                    "High school","Some college","College"))
-                            
-    )
+    across(.cols = all_of(c("educ_mother", "educ_father")),
+           .fns = \(x) factor(
+             case_when(
+               # x == -4 ~ 1,
+               x %in% 0:11 ~ 2,
+               x %in% 12 ~ 3,
+               x %in% 13:15 ~ 4,
+               x %in% 16:21 ~ 5
+              ),
+             labels = c(
+               # "No parent",
+               "Less than high school",
+               "High school",
+               "Some college",
+               "College"
+             )
+           ))
   ) |>
   # Code missing values as NA
   mutate(
@@ -404,9 +428,16 @@ nlsy_panel <- nlsy_panel |>
   filter(!is.na(hwsei) & !is.na(egp) & !is.na(resp_occ_1990_title))
 cat(paste(
   "Child occupation maps to title, HWSEI, and EGP:",
-  nrow(nlsy_panel),
+  n_nlsy <- nrow(nlsy_panel),
   "\n\n"
 ))
+cat(
+  "Number (%) of children that are self-employed:",
+  paste0(
+    n_selfemp <- sum(nlsy_panel$resp_occ_class == "self-employed"), 
+    " (", 100 * round(n_selfemp/n_nlsy, 4), ")"
+  )
+)
 
 # Notes about which occupations missed scores
 
@@ -487,7 +518,6 @@ balance_table <- nlsy_balance_panel |>
       birth_year ~ "Birth Year"
     )
   ) |>
-  add_p() |>
   bold_labels()
 balance_table |>
   as_gt() |>
