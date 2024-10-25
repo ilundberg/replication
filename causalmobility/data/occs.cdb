@@ -1,7 +1,6 @@
 R00001.00    [CASEID]                                       Survey Year: 1979
   PRIMARY VARIABLE
 
- 
              IDENTIFICATION CODE
  
 ORIGINAL QUESTION NAME: CASEID
@@ -26,7 +25,6 @@ Default Next Question: R00001.49
 R00003.00    [Q1-3_A~M]                                     Survey Year: 1979
   PRIMARY VARIABLE
 
- 
              DATE OF BIRTH - MONTH
  
 ORIGINAL QUESTION NAME: S01Q01A
@@ -64,7 +62,6 @@ Default Next Question: R00005.00
 R00005.00    [Q1-3_A~Y]                                     Survey Year: 1979
   PRIMARY VARIABLE
 
- 
              DATE OF BIRTH - YEAR
  
 ORIGINAL QUESTION NAME: S01Q01A
@@ -98,7 +95,6 @@ Default Next Question: R00006.00
 R00022.00    [FAM-9A]                                       Survey Year: 1979
   PRIMARY VARIABLE
 
- 
              OCCUPATION OF ADULT FEMALE PRESENT IN HOUSEHOLD AT AGE 14 (CENSUS 3
              DIGIT)
  
@@ -137,7 +133,6 @@ Default Next Question: R00023.00
 R00025.00    [FAM-11A]                                      Survey Year: 1979
   PRIMARY VARIABLE
 
- 
              OCCUPATION OF ADULT MALE PRESENT IN HOUSEHOLD AT AGE 14 (CENSUS 3 
              DIGIT)
  
@@ -178,7 +173,6 @@ Default Next Question: R00027.00
 R00065.00    [HGC-MOTHER]                                   Survey Year: 1979
   PRIMARY VARIABLE
 
- 
              HIGHEST GRADE COMPLETED BY R'S MOTHER
  
 ORIGINAL QUESTION NAME: S01Q16
@@ -226,7 +220,6 @@ Default Next Question: R00066.00
 R00079.00    [HGC-FATHER]                                   Survey Year: 1979
   PRIMARY VARIABLE
 
- 
              HIGHEST GRADE COMPLETED BY R'S FATHER
  
 ORIGINAL QUESTION NAME: S01Q23
@@ -274,7 +267,6 @@ Default Next Question: R00080.00
 R01736.00    [SAMPLE_ID]                                    Survey Year: 1979
   PRIMARY VARIABLE
 
- 
              SAMPLE IDENTIFICATION CODE
  
 ORIGINAL QUESTION NAME: S24Q01
@@ -322,7 +314,6 @@ Default Next Question: R01737.00
 R02147.00    [SAMPLE_RACE]                                  Survey Year: 78SCRN
   PRIMARY VARIABLE
 
- 
              R'S RACIAL/ETHNIC COHORT FROM SCREENER
  
 UNIVERSE: Entire Sample
@@ -357,7 +348,6 @@ Default Next Question: R02148.00
 R02148.00    [SAMPLE_SEX]                                   Survey Year: 1979
   PRIMARY VARIABLE
 
- 
              SEX OF R
  
 UNIVERSE: Entire sample
@@ -392,7 +382,6 @@ Default Next Question: R02149.00
 R04101.00    [Q1-3_A~M]                                     Survey Year: 1981
   PRIMARY VARIABLE
 
- 
              DATE OF BIRTH - MONTH
  
 ORIGINAL QUESTION NAME: S01D0114
@@ -437,7 +426,6 @@ Default Next Question: R04103.00
 R04103.00    [Q1-3_A~Y]                                     Survey Year: 1981
   PRIMARY VARIABLE
 
- 
              DATE OF BIRTH - YEAR
  
 ORIGINAL QUESTION NAME: S01D0118
@@ -478,10 +466,159 @@ Min:             55        Max:             65        Mean:               60.37
 Lead In: R04101.00[Default]
 Default Next Question: R04104.00
 --------------------------------------------------------------------------------
+R23029.00    [FAM-DAD_M]                                    Survey Year: 1987
+  PRIMARY VARIABLE
+
+             MONTH OF BIRTH OF R'S FATHER
+ 
+ORIGINAL QUESTION NAME: Q0161
+ 
+WHEN WAS YOUR NATURAL FATHER BORN?
+ 
+1 THRU 12 ACTUAL MONTH
+ 
+       0           0: < 1
+     468           1
+     448           2
+     470           3
+     461           4
+     482           5
+     412           6
+     479           7
+     459           8
+     430           9
+     438          10
+     385          11
+     469          12
+       0          13
+       0          14
+       0          15
+       0          16
+       0          17 TO 99999: 17+
+  -------
+    5401
+ 
+Refusal(-1)            1
+Don't Know(-2)        96
+TOTAL =========>    5498   VALID SKIP(-4)    4987     NON-INTERVIEW(-5)    2201
+ 
+Min:              1        Max:             12        Mean:                6.41
+ 
+Lead In: R23028.00[Default]
+Default Next Question: R23031.00
+--------------------------------------------------------------------------------
+R23031.00    [FAM-DAD_Y]                                    Survey Year: 1987
+  PRIMARY VARIABLE
+
+             YEAR OF BIRTH OF R'S FATHER
+ 
+ORIGINAL QUESTION NAME: Q0165
+ 
+SEE R(23029.)  ACTUAL YEAR 66 NEVER KNEW PARENT
+ 
+       3           0
+      29           1 TO 4
+      64           5 TO 9
+     137          10 TO 14
+     309          15 TO 19
+     679          20 TO 24
+    1045          25 TO 29
+    1315          30 TO 34
+    1272          35 TO 39
+     549          40 TO 44
+      93          45 TO 49
+     256          50 TO 9999999: 50+
+  -------
+    5751
+ 
+Refusal(-1)            5
+Don't Know(-2)      4728
+Invalid Skip(-3)       1
+TOTAL =========>   10485   VALID SKIP(-4)       0     NON-INTERVIEW(-5)    2201
+ 
+Min:              0        Max:             66        Mean:               31.97
+ 
+Lead In: R23029.00[Default]
+Default Next Question: R23032.00
+--------------------------------------------------------------------------------
+R23033.00    [FAM-MOM_M]                                    Survey Year: 1987
+  PRIMARY VARIABLE
+
+             MONTH OF BIRTH OF R'S MOTHER
+ 
+ORIGINAL QUESTION NAME: Q0169
+ 
+WHEN WAS YOUR NATURAL MOTHER BORN?
+ 
+1 THRU 12 ACTUAL MONTH
+ 
+       0           0: < 1
+     524           1
+     521           2
+     532           3
+     553           4
+     608           5
+     554           6
+     503           7
+     542           8
+     538           9
+     492          10
+     462          11
+     512          12
+       0          13
+       0          14
+       0          15
+       0          16
+       0          17 TO 99999: 17+
+  -------
+    6341
+ 
+Refusal(-1)            1
+Don't Know(-2)        89
+TOTAL =========>    6431   VALID SKIP(-4)    4054     NON-INTERVIEW(-5)    2201
+ 
+Min:              1        Max:             12        Mean:                 6.4
+ 
+Lead In: R23032.00[Default]
+Default Next Question: R23035.00
+--------------------------------------------------------------------------------
+R23035.00    [FAM-MOM_Y]                                    Survey Year: 1987
+  PRIMARY VARIABLE
+
+             YEAR OF BIRTH OF R'S MOTHER
+ 
+ORIGINAL QUESTION NAME: Q0173
+ 
+SEE R(23033.)  ACTUAL YEAR 66 NEVER KNEW PARENT
+ 
+       0           0
+       0           1 TO 4
+       2           5 TO 9
+      29          10 TO 14
+     133          15 TO 19
+     504          20 TO 24
+     931          25 TO 29
+    1434          30 TO 34
+    1770          35 TO 39
+    1294          40 TO 44
+     328          45 TO 49
+      68          50 TO 9999999: 50+
+  -------
+    6493
+ 
+Refusal(-1)            6
+Don't Know(-2)      3985
+Invalid Skip(-3)       1
+TOTAL =========>   10485   VALID SKIP(-4)       0     NON-INTERVIEW(-5)    2201
+ 
+Min:              7        Max:             66        Mean:               34.55
+ 
+Lead In: R23033.00[Default]
+Default Next Question: R23036.00
+--------------------------------------------------------------------------------
 R64726.00    [OCCALL-EMP.01]                                Survey Year: 1998
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL) JOB #01
  
 COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
@@ -521,7 +658,6 @@ Default Next Question: R64731.00
 R64727.00    [OCCALL-EMP.02]                                Survey Year: 1998
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL) JOB #02
  
 COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
@@ -560,7 +696,6 @@ Default Next Question: R64732.00
 R64728.00    [OCCALL-EMP.03]                                Survey Year: 1998
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL) JOB #03
  
 COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
@@ -599,7 +734,6 @@ Default Next Question: R64733.00
 R64729.00    [OCCALL-EMP.04]                                Survey Year: 1998
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL) JOB #04
  
 COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
@@ -638,7 +772,6 @@ Default Next Question: R64734.00
 R64730.00    [OCCALL-EMP.05]                                Survey Year: 1998
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL) JOB #05
  
 COMMENT: 1970 CENSUS CODE FOR OCCUPATION - EMPLOYER
@@ -674,10 +807,149 @@ Min:              4        Max:            980        Mean:              530.69
 Lead In: R64725.00[Default]
 Default Next Question: R64735.00
 --------------------------------------------------------------------------------
+R64731.00    [COWALL-EMP.01]                                Survey Year: 1998
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #01
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1164           1: 1  Government
+    5103           2: 2  Private for profit company
+     523           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     582           4: 4  Self employed
+      97           5: 5  Working in family business
+  -------
+    7469
+ 
+Refusal(-1)            0
+Don't Know(-2)        20
+Invalid Skip(-3)      25
+TOTAL =========>    7514   VALID SKIP(-4)     885     NON-INTERVIEW(-5)    4287
+ 
+Min:              1        Max:              5        Mean:                2.11
+ 
+Lead In: R64726.00[Default]
+Default Next Question: R59374.00
+--------------------------------------------------------------------------------
+R64732.00    [COWALL-EMP.02]                                Survey Year: 1998
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #02
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     202           1: 1  Government
+    1653           2: 2  Private for profit company
+     144           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     183           4: 4  Self employed
+      19           5: 5  Working in family business
+  -------
+    2201
+ 
+Refusal(-1)            0
+Don't Know(-2)         5
+Invalid Skip(-3)       8
+TOTAL =========>    2214   VALID SKIP(-4)    6185     NON-INTERVIEW(-5)    4287
+ 
+Min:              1        Max:              5        Mean:                2.17
+ 
+Lead In: R64727.00[Default]
+Default Next Question: R59375.00
+--------------------------------------------------------------------------------
+R64733.00    [COWALL-EMP.03]                                Survey Year: 1998
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #03
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      45           1: 1  Government
+     571           2: 2  Private for profit company
+      39           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      40           4: 4  Self employed
+       3           5: 5  Working in family business
+  -------
+     698
+ 
+Refusal(-1)            0
+Don't Know(-2)         1
+Invalid Skip(-3)       5
+TOTAL =========>     704   VALID SKIP(-4)    7695     NON-INTERVIEW(-5)    4287
+ 
+Min:              1        Max:              5        Mean:                2.12
+ 
+Lead In: R64728.00[Default]
+Default Next Question: R59376.00
+--------------------------------------------------------------------------------
+R64734.00    [COWALL-EMP.04]                                Survey Year: 1998
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #04
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      17           1: 1  Government
+     175           2: 2  Private for profit company
+       8           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      13           4: 4  Self employed
+       0           5: 5  Working in family business
+  -------
+     213
+ 
+Refusal(-1)            0
+Don't Know(-2)         3
+Invalid Skip(-3)       2
+TOTAL =========>     218   VALID SKIP(-4)    8181     NON-INTERVIEW(-5)    4287
+ 
+Min:              1        Max:              4        Mean:                2.08
+ 
+Lead In: R64729.00[Default]
+Default Next Question: R59377.00
+--------------------------------------------------------------------------------
+R64735.00    [COWALL-EMP.05]                                Survey Year: 1998
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #05
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       1           1: 1  Government
+      50           2: 2  Private for profit company
+       4           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+       7           4: 4  Self employed
+       0           5: 5  Working in family business
+  -------
+      62
+ 
+Refusal(-1)            0
+Don't Know(-2)         1
+Invalid Skip(-3)       1
+TOTAL =========>      64   VALID SKIP(-4)    8335     NON-INTERVIEW(-5)    4287
+ 
+Min:              1        Max:              4        Mean:                2.27
+ 
+Lead In: R64730.00[Default]
+Default Next Question: R59378.00
+--------------------------------------------------------------------------------
 R65918.00    [OCCALL-EMP.01]                                Survey Year: 2000
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL)
  
 UNIVERSE: R is employed
@@ -719,7 +991,6 @@ Default Next Question: R65923.00
 R65919.00    [OCCALL-EMP.02]                                Survey Year: 2000
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL)
  
 UNIVERSE: R is employed
@@ -760,7 +1031,6 @@ Default Next Question: R65924.00
 R65920.00    [OCCALL-EMP.03]                                Survey Year: 2000
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL)
  
 UNIVERSE: R is employed
@@ -801,7 +1071,6 @@ Default Next Question: R65925.00
 R65921.00    [OCCALL-EMP.04]                                Survey Year: 2000
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL)
  
 UNIVERSE: R is employed
@@ -842,7 +1111,6 @@ Default Next Question: R65926.00
 R65922.00    [OCCALL-EMP.05]                                Survey Year: 2000
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 70 CODES) (ALL)
  
 UNIVERSE: R is employed
@@ -880,10 +1148,158 @@ Min:              1        Max:            962        Mean:              579.53
 Lead In: R65917.00[Default]
 Default Next Question: R65927.00
 --------------------------------------------------------------------------------
+R65923.00    [COWALL-EMP.01]                                Survey Year: 2000
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1169           1: 1  Government
+    4866           2: 2  Private for profit company
+     497           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     573           4: 4  Self employed
+      87           5: 5  Working in family business
+  -------
+    7192
+ 
+Refusal(-1)            1
+Don't Know(-2)        28
+Invalid Skip(-3)      17
+TOTAL =========>    7238   VALID SKIP(-4)     794     NON-INTERVIEW(-5)    4654
+ 
+Min:              1        Max:              5        Mean:                 2.1
+ 
+Lead In: R65918.00[Default]
+Default Next Question: R65928.00
+--------------------------------------------------------------------------------
+R65924.00    [COWALL-EMP.02]                                Survey Year: 2000
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     244           1: 1  Government
+    1899           2: 2  Private for profit company
+     150           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     212           4: 4  Self employed
+      20           5: 5  Working in family business
+  -------
+    2525
+ 
+Refusal(-1)            0
+Don't Know(-2)        12
+Invalid Skip(-3)      13
+TOTAL =========>    2550   VALID SKIP(-4)    5482     NON-INTERVIEW(-5)    4654
+ 
+Min:              1        Max:              5        Mean:                2.15
+ 
+Lead In: R65919.00[Default]
+Default Next Question: R65931.00
+--------------------------------------------------------------------------------
+R65925.00    [COWALL-EMP.03]                                Survey Year: 2000
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      75           1: 1  Government
+     649           2: 2  Private for profit company
+      55           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      47           4: 4  Self employed
+       7           5: 5  Working in family business
+  -------
+     833
+ 
+Refusal(-1)            0
+Don't Know(-2)         1
+Invalid Skip(-3)       4
+TOTAL =========>     838   VALID SKIP(-4)    7194     NON-INTERVIEW(-5)    4654
+ 
+Min:              1        Max:              5        Mean:                2.11
+ 
+Lead In: R65920.00[Default]
+Default Next Question: R65932.00
+--------------------------------------------------------------------------------
+R65926.00    [COWALL-EMP.04]                                Survey Year: 2000
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      22           1: 1  Government
+     213           2: 2  Private for profit company
+      12           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+       7           4: 4  Self employed
+       0           5: 5  Working in family business
+  -------
+     254
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)       1
+TOTAL =========>     255   VALID SKIP(-4)    7777     NON-INTERVIEW(-5)    4654
+ 
+Min:              1        Max:              4        Mean:                2.02
+ 
+Lead In: R65921.00[Default]
+Default Next Question: R65933.00
+--------------------------------------------------------------------------------
+R65927.00    [COWALL-EMP.05]                                Survey Year: 2000
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       5           1: 1  Government
+      87           2: 2  Private for profit company
+       6           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+       2           4: 4  Self employed
+       0           5: 5  Working in family business
+  -------
+     100
+ 
+Refusal(-1)            0
+Don't Know(-2)         1
+TOTAL =========>     101   VALID SKIP(-4)    7931     NON-INTERVIEW(-5)    4654
+ 
+Min:              1        Max:              4        Mean:                2.05
+ 
+Lead In: R65922.00[Default]
+Default Next Question: R65934.00
+--------------------------------------------------------------------------------
 R72096.00    [OCCALL-EMP.01]                                Survey Year: 2002
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 00 CODES) (ALL)
  
 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
@@ -935,7 +1351,6 @@ Default Next Question: R72101.00
 R72097.00    [OCCALL-EMP.02]                                Survey Year: 2002
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 00 CODES) (ALL)
  
 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
@@ -986,7 +1401,6 @@ Default Next Question: R72102.00
 R72098.00    [OCCALL-EMP.03]                                Survey Year: 2002
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 00 CODES) (ALL)
  
 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
@@ -1037,7 +1451,6 @@ Default Next Question: R72103.00
 R72099.00    [OCCALL-EMP.04]                                Survey Year: 2002
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 00 CODES) (ALL)
  
 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
@@ -1088,7 +1501,6 @@ Default Next Question: R72104.00
 R72100.00    [OCCALL-EMP.05]                                Survey Year: 2002
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 3 DIGIT, 00 CODES) (ALL)
  
 2000 CENSUS CODE FOR OCCUPATION - EMPLOYER
@@ -1136,10 +1548,152 @@ Min:             53        Max:            964        Mean:              527.32
 Lead In: R72095.00[Default]
 Default Next Question: R72105.00
 --------------------------------------------------------------------------------
+R72101.00    [COWALL-EMP.01]                                Survey Year: 2002
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1178           1: GOVERNMENT
+    4462           2: PRIVATE FOR PROFIT
+     523           3: NON-PROFIT
+     636           4: SELF-EMPLOYED
+      70           5: FAMILY BUSINESS
+  -------
+    6869
+ 
+Refusal(-1)            0
+Don't Know(-2)        26
+Invalid Skip(-3)       6
+TOTAL =========>    6901   VALID SKIP(-4)     823     NON-INTERVIEW(-5)    4962
+ 
+Min:              1        Max:              5        Mean:                2.12
+ 
+Lead In: R72096.00[Default]
+Default Next Question: R72439.00
+--------------------------------------------------------------------------------
+R72102.00    [COWALL-EMP.02]                                Survey Year: 2002
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     201           1: GOVERNMENT
+    1564           2: PRIVATE FOR PROFIT
+     130           3: NON-PROFIT
+     293           4: SELF-EMPLOYED
+      13           5: FAMILY BUSINESS
+  -------
+    2201
+ 
+Refusal(-1)            0
+Don't Know(-2)        12
+Invalid Skip(-3)       4
+TOTAL =========>    2217   VALID SKIP(-4)    5507     NON-INTERVIEW(-5)    4962
+ 
+Min:              1        Max:              5        Mean:                2.25
+ 
+Lead In: R72097.00[Default]
+Default Next Question: R72440.00
+--------------------------------------------------------------------------------
+R72103.00    [COWALL-EMP.03]                                Survey Year: 2002
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      60           1: GOVERNMENT
+     454           2: PRIVATE FOR PROFIT
+      37           3: NON-PROFIT
+      63           4: SELF-EMPLOYED
+       4           5: FAMILY BUSINESS
+  -------
+     618
+ 
+Refusal(-1)            0
+Don't Know(-2)         2
+TOTAL =========>     620   VALID SKIP(-4)    7104     NON-INTERVIEW(-5)    4962
+ 
+Min:              1        Max:              5        Mean:                2.19
+ 
+Lead In: R72098.00[Default]
+Default Next Question: R72441.00
+--------------------------------------------------------------------------------
+R72104.00    [COWALL-EMP.04]                                Survey Year: 2002
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      13           1: GOVERNMENT
+     134           2: PRIVATE FOR PROFIT
+      10           3: NON-PROFIT
+      17           4: SELF-EMPLOYED
+       0           5: FAMILY BUSINESS
+  -------
+     174
+ 
+Refusal(-1)            0
+Don't Know(-2)         1
+Invalid Skip(-3)       1
+TOTAL =========>     176   VALID SKIP(-4)    7548     NON-INTERVIEW(-5)    4962
+ 
+Min:              1        Max:              4        Mean:                2.18
+ 
+Lead In: R72099.00[Default]
+Default Next Question: R72442.00
+--------------------------------------------------------------------------------
+R72105.00    [COWALL-EMP.05]                                Survey Year: 2002
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL)
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       5           1: GOVERNMENT
+      41           2: PRIVATE FOR PROFIT
+       2           3: NON-PROFIT
+       3           4: SELF-EMPLOYED
+       0           5: FAMILY BUSINESS
+  -------
+      51
+ 
+Refusal(-1)            0
+Don't Know(-2)         1
+TOTAL =========>      52   VALID SKIP(-4)    7672     NON-INTERVIEW(-5)    4962
+ 
+Min:              1        Max:              4        Mean:                2.06
+ 
+Lead In: R72100.00[Default]
+Default Next Question: R72443.00
+--------------------------------------------------------------------------------
 R78980.00    [OCCALL-EMP.01]                                Survey Year: 2004
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
  
 UNIVERSE: R is employed
@@ -1203,7 +1757,6 @@ Default Next Question: R78985.00
 R78981.00    [OCCALL-EMP.02]                                Survey Year: 2004
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
  
 UNIVERSE: R is employed
@@ -1267,7 +1820,6 @@ Default Next Question: R78986.00
 R78982.00    [OCCALL-EMP.03]                                Survey Year: 2004
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
  
 UNIVERSE: R is employed
@@ -1331,7 +1883,6 @@ Default Next Question: R78987.00
 R78983.00    [OCCALL-EMP.04]                                Survey Year: 2004
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
  
 UNIVERSE: R is employed
@@ -1394,7 +1945,6 @@ Default Next Question: R78988.00
 R78984.00    [OCCALL-EMP.05]                                Survey Year: 2004
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
  
 UNIVERSE: R is employed
@@ -1454,10 +2004,127 @@ Min:            310        Max:           8300        Mean:             4271.94
 Lead In: R78979.00[Default]
 Default Next Question: R78989.00
 --------------------------------------------------------------------------------
+R78985.00    [COWALL-EMP.01]                                Survey Year: 2004
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1219           1: 1  Government
+    4081           2: 2  Private for profit company
+     534           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     701           4: 4  Self employed
+      71           5: 5  Working in family business
+  -------
+    6606
+ 
+Refusal(-1)            1
+Don't Know(-2)        39
+Invalid Skip(-3)       2
+TOTAL =========>    6648   VALID SKIP(-4)    1013     NON-INTERVIEW(-5)    5025
+ 
+Min:              1        Max:              5        Mean:                2.14
+ 
+Lead In: R78980.00[Default]
+Default Next Question: R79335.00
+--------------------------------------------------------------------------------
+R78986.00    [COWALL-EMP.02]                                Survey Year: 2004
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     152           1: 1  Government
+    1128           2: 2  Private for profit company
+     124           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     267           4: 4  Self employed
+      20           5: 5  Working in family business
+  -------
+    1691
+ 
+Refusal(-1)            0
+Don't Know(-2)         8
+Invalid Skip(-3)       2
+TOTAL =========>    1701   VALID SKIP(-4)    5960     NON-INTERVIEW(-5)    5025
+ 
+Min:              1        Max:              5        Mean:                2.33
+ 
+Lead In: R78981.00[Default]
+Default Next Question: R79336.00
+--------------------------------------------------------------------------------
+R78987.00    [COWALL-EMP.03]                                Survey Year: 2004
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      35           1: 1  Government
+     297           2: 2  Private for profit company
+      31           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      65           4: 4  Self employed
+       2           5: 5  Working in family business
+  -------
+     430
+ 
+Refusal(-1)            0
+Don't Know(-2)         7
+TOTAL =========>     437   VALID SKIP(-4)    7224     NON-INTERVIEW(-5)    5025
+ 
+Min:              1        Max:              5        Mean:                2.31
+ 
+Lead In: R78982.00[Default]
+Default Next Question: R79337.00
+--------------------------------------------------------------------------------
+R78989.00    [COWALL-EMP.05]                                Survey Year: 2004
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       1           1: 1  Government
+      24           2: 2  Private for profit company
+       4           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+       2           4: 4  Self employed
+       0           5: 5  Working in family business
+  -------
+      31
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      31   VALID SKIP(-4)    7630     NON-INTERVIEW(-5)    5025
+ 
+Min:              1        Max:              4        Mean:                2.23
+ 
+Lead In: R78984.00[Default]
+Default Next Question: R79339.00
+--------------------------------------------------------------------------------
 T01384.00    [OCCALL-EMP.01]                                Survey Year: 2006
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
  
 UNIVERSE: R is employed
@@ -1520,7 +2187,6 @@ Default Next Question: T01389.00
 T01385.00    [OCCALL-EMP.02]                                Survey Year: 2006
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
  
 UNIVERSE: R is employed
@@ -1584,7 +2250,6 @@ Default Next Question: T01390.00
 T01386.00    [OCCALL-EMP.03]                                Survey Year: 2006
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
  
 UNIVERSE: R is employed
@@ -1648,7 +2313,6 @@ Default Next Question: T01391.00
 T01387.00    [OCCALL-EMP.04]                                Survey Year: 2006
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
  
 UNIVERSE: R is employed
@@ -1711,7 +2375,6 @@ Default Next Question: T01392.00
 T01388.00    [OCCALL-EMP.05]                                Survey Year: 2006
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
  
 UNIVERSE: R is employed
@@ -1771,10 +2434,144 @@ Min:            430        Max:           9640        Mean:                4730
 Lead In: T01383.00[Default]
 Default Next Question: T01393.00
 --------------------------------------------------------------------------------
+T10375.00    [COWALL-EMP_REVISED.01]                        Survey Year: 2006
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #01
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1222           1: 1  Government
+    4003           2: 2  Private for profit company
+     521           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     770           4: 4  Self employed
+      57           5: 5  Working in family business
+  -------
+    6573
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    6573   VALID SKIP(-4)    1080     NON-INTERVIEW(-5)    5033
+ 
+Min:              1        Max:              5        Mean:                2.15
+ 
+Lead In: T01389.00[Default]
+Default Next Question: T01737.00
+--------------------------------------------------------------------------------
+T10376.00    [COWALL-EMP_REVISED.02]                        Survey Year: 2006
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #02
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     141           1: 1  Government
+    1199           2: 2  Private for profit company
+     120           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     388           4: 4  Self employed
+      22           5: 5  Working in family business
+  -------
+    1870
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    1870   VALID SKIP(-4)    5783     NON-INTERVIEW(-5)    5033
+ 
+Min:              1        Max:              5        Mean:                2.44
+ 
+Lead In: T01390.00[Default]
+Default Next Question: T01738.00
+--------------------------------------------------------------------------------
+T10377.00    [COWALL-EMP_REVISED.03]                        Survey Year: 2006
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #03
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      34           1: 1  Government
+     287           2: 2  Private for profit company
+      25           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      79           4: 4  Self employed
+       3           5: 5  Working in family business
+  -------
+     428
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     428   VALID SKIP(-4)    7225     NON-INTERVIEW(-5)    5033
+ 
+Min:              1        Max:              5        Mean:                2.37
+ 
+Lead In: T01391.00[Default]
+Default Next Question: T01739.00
+--------------------------------------------------------------------------------
+T10378.00    [COWALL-EMP_REVISED.04]                        Survey Year: 2006
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #04
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       8           1: 1  Government
+      90           2: 2  Private for profit company
+       5           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      17           4: 4  Self employed
+       0           5: 5  Working in family business
+  -------
+     120
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>     120   VALID SKIP(-4)    7533     NON-INTERVIEW(-5)    5033
+ 
+Min:              1        Max:              4        Mean:                2.26
+ 
+Lead In: T01392.00[Default]
+Default Next Question: T01740.00
+--------------------------------------------------------------------------------
+T10379.00    [COWALL-EMP_REVISED.05]                        Survey Year: 2006
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #05
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       2           1: 1  Government
+      21           2: 2  Private for profit company
+       2           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+       6           4: 4  Self employed
+       0           5: 5  Working in family business
+  -------
+      31
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      31   VALID SKIP(-4)    7622     NON-INTERVIEW(-5)    5033
+ 
+Min:              1        Max:              4        Mean:                2.39
+ 
+Lead In: T01393.00[Default]
+Default Next Question: T01741.00
+--------------------------------------------------------------------------------
 T12980.00    [OCCALL-EMP.01]                                Survey Year: 2008
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
  
 UNIVERSE: R is employed
@@ -1834,7 +2631,6 @@ Default Next Question: T12985.00
 T12981.00    [OCCALL-EMP.02]                                Survey Year: 2008
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
  
 UNIVERSE: R is employed
@@ -1894,7 +2690,6 @@ Default Next Question: T12986.00
 T12982.00    [OCCALL-EMP.03]                                Survey Year: 2008
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
  
 UNIVERSE: R is employed
@@ -1951,7 +2746,6 @@ Default Next Question: T12987.00
 T12983.00    [OCCALL-EMP.04]                                Survey Year: 2008
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
  
 UNIVERSE: R is employed
@@ -1999,7 +2793,6 @@ Default Next Question: T12988.00
 T12984.00    [OCCALL-EMP.05]                                Survey Year: 2008
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
  
 UNIVERSE: R is employed
@@ -2035,10 +2828,155 @@ Min:            530        Max:           9610        Mean:             5267.69
 Lead In: T12979.00[Default]
 Default Next Question: T12989.00
 --------------------------------------------------------------------------------
+T12985.00    [COWALL-EMP.01]                                Survey Year: 2008
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1246           1: Government
+    3978           2: Private for profit company
+     558           3: Non-profit organization (including tax exempt and 
+                          charitable)
+     780           4: Self employed
+      61           5: Working in family business
+  -------
+    6623
+ 
+Refusal(-1)            2
+Don't Know(-2)        76
+Invalid Skip(-3)       4
+TOTAL =========>    6705   VALID SKIP(-4)    1052     NON-INTERVIEW(-5)    4929
+ 
+Min:              1        Max:              5        Mean:                2.16
+ 
+Lead In: T12980.00[Default]
+Default Next Question: T13314.00
+--------------------------------------------------------------------------------
+T12986.00    [COWALL-EMP.02]                                Survey Year: 2008
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     144           1: Government
+    1097           2: Private for profit company
+     125           3: Non-profit organization (including tax exempt and 
+                          charitable)
+     372           4: Self employed
+      19           5: Working in family business
+  -------
+    1757
+ 
+Refusal(-1)            0
+Don't Know(-2)        18
+Invalid Skip(-3)       1
+TOTAL =========>    1776   VALID SKIP(-4)    5981     NON-INTERVIEW(-5)    4929
+ 
+Min:              1        Max:              5        Mean:                2.45
+ 
+Lead In: T12981.00[Default]
+Default Next Question: T13315.00
+--------------------------------------------------------------------------------
+T12987.00    [COWALL-EMP.03]                                Survey Year: 2008
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      30           1: Government
+     287           2: Private for profit company
+      22           3: Non-profit organization (including tax exempt and 
+                          charitable)
+      70           4: Self employed
+       1           5: Working in family business
+  -------
+     410
+ 
+Refusal(-1)            1
+Don't Know(-2)         7
+Invalid Skip(-3)       1
+TOTAL =========>     419   VALID SKIP(-4)    7338     NON-INTERVIEW(-5)    4929
+ 
+Min:              1        Max:              5        Mean:                2.33
+ 
+Lead In: T12982.00[Default]
+Default Next Question: T13316.00
+--------------------------------------------------------------------------------
+T12988.00    [COWALL-EMP.04]                                Survey Year: 2008
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       4           1: Government
+      87           2: Private for profit company
+       7           3: Non-profit organization (including tax exempt and 
+                          charitable)
+      13           4: Self employed
+       1           5: Working in family business
+  -------
+     112
+ 
+Refusal(-1)            0
+Don't Know(-2)         2
+TOTAL =========>     114   VALID SKIP(-4)    7643     NON-INTERVIEW(-5)    4929
+ 
+Min:              1        Max:              5        Mean:                2.29
+ 
+Lead In: T12983.00[Default]
+Default Next Question: T13317.00
+--------------------------------------------------------------------------------
+T12989.00    [COWALL-EMP.05]                                Survey Year: 2008
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      22           2: Private for profit company
+       1           3: Non-profit organization (including tax exempt and 
+                          charitable)
+       5           4: Self employed
+  -------
+      28
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      28   VALID SKIP(-4)    7729     NON-INTERVIEW(-5)    4929
+ 
+Min:              2        Max:              4        Mean:                2.39
+ 
+Lead In: T12984.00[Default]
+Default Next Question: T13318.00
+--------------------------------------------------------------------------------
 T23265.00    [OCCALL-EMP.01]                                Survey Year: 2010
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
  
 UNIVERSE: R is employed
@@ -2099,7 +3037,6 @@ Default Next Question: T31865.00
 T23266.00    [OCCALL-EMP.02]                                Survey Year: 2010
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
  
 UNIVERSE: R is employed
@@ -2160,7 +3097,6 @@ Default Next Question: T31866.00
 T23267.00    [OCCALL-EMP.03]                                Survey Year: 2010
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
  
 UNIVERSE: R is employed
@@ -2217,7 +3153,6 @@ Default Next Question: T31867.00
 T23268.00    [OCCALL-EMP.04]                                Survey Year: 2010
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
  
 UNIVERSE: R is employed
@@ -2264,7 +3199,6 @@ Default Next Question: T31868.00
 T23269.00    [OCCALL-EMP.05]                                Survey Year: 2010
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
  
 UNIVERSE: R is employed
@@ -2299,10 +3233,153 @@ Min:            530        Max:           9130        Mean:             3704.38
 Lead In: T23264.00[Default]
 Default Next Question: T31869.00
 --------------------------------------------------------------------------------
+T31865.00    [COWALL-EMP.01]                                Survey Year: 2010
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1241           1: 1  Government
+    3699           2: 2  Private for profit company
+     526           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     727           4: 4  Self employed
+      63           5: 5  Working in family business
+  -------
+    6256
+ 
+Refusal(-1)            0
+Don't Know(-2)        92
+Invalid Skip(-3)      15
+TOTAL =========>    6363   VALID SKIP(-4)    1202     NON-INTERVIEW(-5)    5121
+ 
+Min:              1        Max:              5        Mean:                2.15
+ 
+Lead In: T23265.00[Default]
+Default Next Question: T23270.00
+--------------------------------------------------------------------------------
+T31866.00    [COWALL-EMP.02]                                Survey Year: 2010
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     131           1: 1  Government
+     821           2: 2  Private for profit company
+     130           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     349           4: 4  Self employed
+      15           5: 5  Working in family business
+  -------
+    1446
+ 
+Refusal(-1)            0
+Don't Know(-2)        19
+Invalid Skip(-3)       3
+TOTAL =========>    1468   VALID SKIP(-4)    6097     NON-INTERVIEW(-5)    5121
+ 
+Min:              1        Max:              5        Mean:                2.51
+ 
+Lead In: T23266.00[Default]
+Default Next Question: T23271.00
+--------------------------------------------------------------------------------
+T31867.00    [COWALL-EMP.03]                                Survey Year: 2010
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      16           1: 1  Government
+     210           2: 2  Private for profit company
+      17           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      56           4: 4  Self employed
+       3           5: 5  Working in family business
+  -------
+     302
+ 
+Refusal(-1)            0
+Don't Know(-2)         2
+Invalid Skip(-3)       1
+TOTAL =========>     305   VALID SKIP(-4)    7260     NON-INTERVIEW(-5)    5121
+ 
+Min:              1        Max:              5        Mean:                 2.4
+ 
+Lead In: T23267.00[Default]
+Default Next Question: T23272.00
+--------------------------------------------------------------------------------
+T31868.00    [COWALL-EMP.04]                                Survey Year: 2010
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       4           1: 1  Government
+      55           2: 2  Private for profit company
+       5           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+       9           4: 4  Self employed
+  -------
+      73
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      73   VALID SKIP(-4)    7492     NON-INTERVIEW(-5)    5121
+ 
+Min:              1        Max:              4        Mean:                2.26
+ 
+Lead In: T23268.00[Default]
+Default Next Question: T23273.00
+--------------------------------------------------------------------------------
+T31869.00    [COWALL-EMP.05]                                Survey Year: 2010
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       2           1: 1  Government
+      13           2: 2  Private for profit company
+       4           4: 4  Self employed
+  -------
+      19
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      19   VALID SKIP(-4)    7546     NON-INTERVIEW(-5)    5121
+ 
+Min:              1        Max:              4        Mean:                2.32
+ 
+Lead In: T23269.00[Default]
+Default Next Question: T23274.00
+--------------------------------------------------------------------------------
 T33087.00    [OCCALL-EMP.01]                                Survey Year: 2012
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
  
 UNIVERSE: R is employed
@@ -2365,7 +3442,6 @@ Default Next Question: T33092.00
 T33088.00    [OCCALL-EMP.02]                                Survey Year: 2012
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
  
 UNIVERSE: R is employed
@@ -2428,7 +3504,6 @@ Default Next Question: T33093.00
 T33089.00    [OCCALL-EMP.03]                                Survey Year: 2012
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
  
 UNIVERSE: R is employed
@@ -2491,7 +3566,6 @@ Default Next Question: T33094.00
 T33090.00    [OCCALL-EMP.04]                                Survey Year: 2012
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
  
 UNIVERSE: R is employed
@@ -2554,7 +3628,6 @@ Default Next Question: T33095.00
 T33091.00    [OCCALL-EMP.05]                                Survey Year: 2012
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
  
 UNIVERSE: R is employed
@@ -2614,10 +3687,145 @@ Min:            140        Max:           9620        Mean:              4199.2
 Lead In: T33086.00[Default]
 Default Next Question: T33096.00
 --------------------------------------------------------------------------------
+T33092.00    [COWALL-EMP.01]                                Survey Year: 2012
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1178           1: 1  Government
+    3421           2: 2  Private for profit company
+     508           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     751           4: 4  Self employed
+      66           5: 5  Working in family business
+  -------
+    5924
+ 
+Refusal(-1)            1
+Don't Know(-2)        97
+TOTAL =========>    6022   VALID SKIP(-4)    1278     NON-INTERVIEW(-5)    5386
+ 
+Min:              1        Max:              5        Mean:                2.17
+ 
+Lead In: T33087.00[Default]
+Default Next Question: T33404.00
+--------------------------------------------------------------------------------
+T33093.00    [COWALL-EMP.02]                                Survey Year: 2012
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     159           1: 1  Government
+     888           2: 2  Private for profit company
+     118           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     335           4: 4  Self employed
+      21           5: 5  Working in family business
+  -------
+    1521
+ 
+Refusal(-1)            0
+Don't Know(-2)        24
+Invalid Skip(-3)       3
+TOTAL =========>    1548   VALID SKIP(-4)    5752     NON-INTERVIEW(-5)    5386
+ 
+Min:              1        Max:              5        Mean:                2.45
+ 
+Lead In: T33088.00[Default]
+Default Next Question: T33405.00
+--------------------------------------------------------------------------------
+T33094.00    [COWALL-EMP.03]                                Survey Year: 2012
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      38           1: 1  Government
+     232           2: 2  Private for profit company
+      30           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      55           4: 4  Self employed
+       6           5: 5  Working in family business
+  -------
+     361
+ 
+Refusal(-1)            0
+Don't Know(-2)         9
+TOTAL =========>     370   VALID SKIP(-4)    6930     NON-INTERVIEW(-5)    5386
+ 
+Min:              1        Max:              5        Mean:                2.33
+ 
+Lead In: T33089.00[Default]
+Default Next Question: T33406.00
+--------------------------------------------------------------------------------
+T33095.00    [COWALL-EMP.04]                                Survey Year: 2012
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      14           1: 1  Government
+      60           2: 2  Private for profit company
+       8           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      13           4: 4  Self employed
+       3           5: 5  Working in family business
+  -------
+      98
+ 
+Refusal(-1)            0
+Don't Know(-2)         1
+TOTAL =========>      99   VALID SKIP(-4)    7201     NON-INTERVIEW(-5)    5386
+ 
+Min:              1        Max:              5        Mean:                 2.3
+ 
+Lead In: T33090.00[Default]
+Default Next Question: T33407.00
+--------------------------------------------------------------------------------
+T33096.00    [COWALL-EMP.05]                                Survey Year: 2012
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       3           1: 1  Government
+      18           2: 2  Private for profit company
+       0           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+       2           4: 4  Self employed
+       1           5: 5  Working in family business
+  -------
+      24
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>      24   VALID SKIP(-4)    7276     NON-INTERVIEW(-5)    5386
+ 
+Min:              1        Max:              5        Mean:                2.17
+ 
+Lead In: T33091.00[Default]
+Default Next Question: T33408.00
+--------------------------------------------------------------------------------
 T42828.00    [OCCALL-EMP.01]                                Survey Year: 2014
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
  
 UNIVERSE: R is employed
@@ -2675,7 +3883,6 @@ Default Next Question: T42833.00
 T42829.00    [OCCALL-EMP.02]                                Survey Year: 2014
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
  
 UNIVERSE: R is employed
@@ -2733,7 +3940,6 @@ Default Next Question: T42834.00
 T42830.00    [OCCALL-EMP.03]                                Survey Year: 2014
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
  
 UNIVERSE: R is employed
@@ -2782,7 +3988,6 @@ Default Next Question: T42835.00
 T42831.00    [OCCALL-EMP.04]                                Survey Year: 2014
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
  
 UNIVERSE: R is employed
@@ -2827,7 +4032,6 @@ Default Next Question: T42836.00
 T42832.00    [OCCALL-EMP.05]                                Survey Year: 2014
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
  
 UNIVERSE: R is employed
@@ -2862,10 +4066,147 @@ Min:             10        Max:           9360        Mean:             5039.05
 Lead In: T42827.00[Default]
 Default Next Question: T42837.00
 --------------------------------------------------------------------------------
+T42833.00    [COWALL-EMP.01]                                Survey Year: 2014
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1134           1: 1  Government
+    3099           2: 2  Private for profit company
+     493           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     692           4: 4  Self employed
+      63           5: 5  Working in family business
+  -------
+    5481
+ 
+Refusal(-1)            5
+Don't Know(-2)        99
+Invalid Skip(-3)      22
+TOTAL =========>    5607   VALID SKIP(-4)    1463     NON-INTERVIEW(-5)    5616
+ 
+Min:              1        Max:              5        Mean:                2.17
+ 
+Lead In: T42828.00[Default]
+Default Next Question: T43164.00
+--------------------------------------------------------------------------------
+T42834.00    [COWALL-EMP.02]                                Survey Year: 2014
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+     120           1: 1  Government
+     717           2: 2  Private for profit company
+     111           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     281           4: 4  Self employed
+      12           5: 5  Working in family business
+  -------
+    1241
+ 
+Refusal(-1)            1
+Don't Know(-2)        28
+Invalid Skip(-3)     152
+TOTAL =========>    1422   VALID SKIP(-4)    5648     NON-INTERVIEW(-5)    5616
+ 
+Min:              1        Max:              5        Mean:                2.47
+ 
+Lead In: T42829.00[Default]
+Default Next Question: T43165.00
+--------------------------------------------------------------------------------
+T42835.00    [COWALL-EMP.03]                                Survey Year: 2014
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      25           1: 1  Government
+     160           2: 2  Private for profit company
+      24           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      34           4: 4  Self employed
+       5           5: 5  Working in family business
+  -------
+     248
+ 
+Refusal(-1)            0
+Don't Know(-2)         6
+Invalid Skip(-3)      52
+TOTAL =========>     306   VALID SKIP(-4)    6764     NON-INTERVIEW(-5)    5616
+ 
+Min:              1        Max:              5        Mean:                2.33
+ 
+Lead In: T42830.00[Default]
+Default Next Question: T43166.00
+--------------------------------------------------------------------------------
+T42836.00    [COWALL-EMP.04]                                Survey Year: 2014
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       2           1: 1  Government
+      35           2: 2  Private for profit company
+       5           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      10           4: 4  Self employed
+       1           5: 5  Working in family business
+  -------
+      53
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)      18
+TOTAL =========>      71   VALID SKIP(-4)    6999     NON-INTERVIEW(-5)    5616
+ 
+Min:              1        Max:              5        Mean:                2.49
+ 
+Lead In: T42831.00[Default]
+Default Next Question: T43167.00
+--------------------------------------------------------------------------------
+T42837.00    [COWALL-EMP.05]                                Survey Year: 2014
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      16           2: 2  Private for profit company
+       1           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+       4           4: 4  Self employed
+  -------
+      21
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)       4
+TOTAL =========>      25   VALID SKIP(-4)    7045     NON-INTERVIEW(-5)    5616
+ 
+Min:              2        Max:              4        Mean:                2.43
+ 
+Lead In: T42832.00[Default]
+Default Next Question: T43168.00
+--------------------------------------------------------------------------------
 T52569.00    [OCCALL-EMP.01]                                Survey Year: 2016
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
  
 UNIVERSE: R is employed
@@ -2922,7 +4263,6 @@ Default Next Question: T52574.00
 T52570.00    [OCCALL-EMP.02]                                Survey Year: 2016
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
  
 UNIVERSE: R is employed
@@ -2979,7 +4319,6 @@ Default Next Question: T52575.00
 T52571.00    [OCCALL-EMP.03]                                Survey Year: 2016
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
  
 UNIVERSE: R is employed
@@ -3035,7 +4374,6 @@ Default Next Question: T52576.00
 T52572.00    [OCCALL-EMP.04]                                Survey Year: 2016
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
  
 UNIVERSE: R is employed
@@ -3082,7 +4420,6 @@ Default Next Question: T52577.00
 T52573.00    [OCCALL-EMP.05]                                Survey Year: 2016
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
  
 UNIVERSE: R is employed
@@ -3118,10 +4455,157 @@ Min:            150        Max:           9600        Mean:             3748.95
 Lead In: T52568.00[Default]
 Default Next Question: T52578.00
 --------------------------------------------------------------------------------
+T52574.00    [COWALL-EMP.01]                                Survey Year: 2016
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1102           1: 1  Government
+    2903           2: 2  Private for profit company
+     465           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     700           4: 4  Self employed
+      56           5: 5  Working in family business
+  -------
+    5226
+ 
+Refusal(-1)            7
+Don't Know(-2)       127
+Invalid Skip(-3)      14
+TOTAL =========>    5374   VALID SKIP(-4)    1538     NON-INTERVIEW(-5)    5774
+ 
+Min:              1        Max:              5        Mean:                2.18
+ 
+Lead In: T52569.00[Default]
+Default Next Question: T52914.00
+--------------------------------------------------------------------------------
+T52575.00    [COWALL-EMP.02]                                Survey Year: 2016
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      98           1: 1  Government
+     718           2: 2  Private for profit company
+     104           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     279           4: 4  Self employed
+      14           5: 5  Working in family business
+  -------
+    1213
+ 
+Refusal(-1)            1
+Don't Know(-2)        35
+Invalid Skip(-3)     133
+TOTAL =========>    1382   VALID SKIP(-4)    5530     NON-INTERVIEW(-5)    5774
+ 
+Min:              1        Max:              5        Mean:                 2.5
+ 
+Lead In: T52570.00[Default]
+Default Next Question: T52915.00
+--------------------------------------------------------------------------------
+T52576.00    [COWALL-EMP.03]                                Survey Year: 2016
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      25           1: 1  Government
+     194           2: 2  Private for profit company
+      22           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      50           4: 4  Self employed
+       4           5: 5  Working in family business
+  -------
+     295
+ 
+Refusal(-1)            0
+Don't Know(-2)         4
+Invalid Skip(-3)      39
+TOTAL =========>     338   VALID SKIP(-4)    6574     NON-INTERVIEW(-5)    5774
+ 
+Min:              1        Max:              5        Mean:                2.37
+ 
+Lead In: T52571.00[Default]
+Default Next Question: T52916.00
+--------------------------------------------------------------------------------
+T52577.00    [COWALL-EMP.04]                                Survey Year: 2016
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       8           1: 1  Government
+      55           2: 2  Private for profit company
+       7           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      10           4: 4  Self employed
+  -------
+      80
+ 
+Refusal(-1)            0
+Don't Know(-2)         2
+Invalid Skip(-3)      12
+TOTAL =========>      94   VALID SKIP(-4)    6818     NON-INTERVIEW(-5)    5774
+ 
+Min:              1        Max:              4        Mean:                2.24
+ 
+Lead In: T52572.00[Default]
+Default Next Question: T52917.00
+--------------------------------------------------------------------------------
+T52578.00    [COWALL-EMP.05]                                Survey Year: 2016
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       2           1: 1  Government
+      11           2: 2  Private for profit company
+       2           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+       2           4: 4  Self employed
+  -------
+      17
+ 
+Refusal(-1)            0
+Don't Know(-2)         1
+Invalid Skip(-3)       6
+TOTAL =========>      24   VALID SKIP(-4)    6888     NON-INTERVIEW(-5)    5774
+ 
+Min:              1        Max:              4        Mean:                2.24
+ 
+Lead In: T52573.00[Default]
+Default Next Question: T52918.00
+--------------------------------------------------------------------------------
 T78186.00    [OCCALL-EMP.01]                                Survey Year: 2018
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #01
  
 UNIVERSE: R is employed
@@ -3179,7 +4663,6 @@ Default Next Question: T78191.00
 T78187.00    [OCCALL-EMP.02]                                Survey Year: 2018
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #02
  
 UNIVERSE: R is employed
@@ -3236,7 +4719,6 @@ Default Next Question: T78192.00
 T78188.00    [OCCALL-EMP.03]                                Survey Year: 2018
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #03
  
 UNIVERSE: R is employed
@@ -3288,7 +4770,6 @@ Default Next Question: T78193.00
 T78189.00    [OCCALL-EMP.04]                                Survey Year: 2018
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #04
  
 UNIVERSE: R is employed
@@ -3334,7 +4815,6 @@ Default Next Question: T78194.00
 T78190.00    [OCCALL-EMP.05]                                Survey Year: 2018
   PRIMARY VARIABLE
 
- 
              OCCUPATION (CENSUS 4 DIGIT, 00 CODES) (ALL) JOB #05
  
 UNIVERSE: R is employed
@@ -3363,3 +4843,147 @@ Min:           1010        Max:           9130        Mean:             5158.89
  
 Lead In: T78185.00[Default]
 Default Next Question: T78195.00
+--------------------------------------------------------------------------------
+T78191.00    [COWALL-EMP.01]                                Survey Year: 2018
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #01
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+    1017           1: 1  Government
+    2798           2: 2  Private for profit company
+     462           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     741           4: 4  Self employed
+      55           5: 5  Working in family business
+  -------
+    5073
+ 
+Refusal(-1)            5
+Don't Know(-2)       143
+Invalid Skip(-3)      21
+TOTAL =========>    5242   VALID SKIP(-4)    1636     NON-INTERVIEW(-5)    5808
+ 
+Min:              1        Max:              5        Mean:                2.22
+ 
+Lead In: T78186.00[Default]
+Default Next Question: T78498.00
+--------------------------------------------------------------------------------
+T78192.00    [COWALL-EMP.02]                                Survey Year: 2018
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #02
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      89           1: 1  Government
+     531           2: 2  Private for profit company
+      73           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+     265           4: 4  Self employed
+       9           5: 5  Working in family business
+  -------
+     967
+ 
+Refusal(-1)            2
+Don't Know(-2)        16
+Invalid Skip(-3)       2
+TOTAL =========>     987   VALID SKIP(-4)    5891     NON-INTERVIEW(-5)    5808
+ 
+Min:              1        Max:              5        Mean:                2.56
+ 
+Lead In: T78187.00[Default]
+Default Next Question: T78499.00
+--------------------------------------------------------------------------------
+T78193.00    [COWALL-EMP.03]                                Survey Year: 2018
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #03
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      24           1: 1  Government
+     116           2: 2  Private for profit company
+      10           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+      48           4: 4  Self employed
+  -------
+     198
+ 
+Refusal(-1)            0
+Don't Know(-2)         3
+Invalid Skip(-3)       5
+TOTAL =========>     206   VALID SKIP(-4)    6672     NON-INTERVIEW(-5)    5808
+ 
+Min:              1        Max:              4        Mean:                2.41
+ 
+Lead In: T78188.00[Default]
+Default Next Question: T78500.00
+--------------------------------------------------------------------------------
+T78194.00    [COWALL-EMP.04]                                Survey Year: 2018
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #04
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+       4           1: 1  Government
+      33           2: 2  Private for profit company
+       4           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+       4           4: 4  Self employed
+  -------
+      45
+ 
+Refusal(-1)            0
+Don't Know(-2)         4
+TOTAL =========>      49   VALID SKIP(-4)    6829     NON-INTERVIEW(-5)    5808
+ 
+Min:              1        Max:              4        Mean:                2.18
+ 
+Lead In: T78189.00[Default]
+Default Next Question: T78501.00
+--------------------------------------------------------------------------------
+T78195.00    [COWALL-EMP.05]                                Survey Year: 2018
+  PRIMARY VARIABLE
+
+             CLASS OF WORKER (ALL) JOB #05
+ 
+UNIVERSE: R is employed
+ 
+COMMENT: CLASS OF WORKER - EMPLOYER
+ 
+NOTE: INCLUDES DATA FOR ALL R'S REPORTING EMPLOYER
+ 
+      13           2: 2  Private for profit company
+       1           3: 3  Non-profit organization (including tax exempt and 
+                          charitable)
+  -------
+      14
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)       1
+TOTAL =========>      15   VALID SKIP(-4)    6863     NON-INTERVIEW(-5)    5808
+ 
+Min:              2        Max:              3        Mean:                2.07
+ 
+Lead In: T78190.00[Default]
+Default Next Question: T79115.00
