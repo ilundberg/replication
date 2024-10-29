@@ -152,23 +152,54 @@ subgroup_slopes <- data.frame(term = gsub(".*)","",names(estimate)[-1]),
                                 levels = levels(nlsy_analysis$parental_educ)))
 print(subgroup_slopes)
 
-# Examine population-average slope
 with_weights <- subgroup_slopes |>
   select(resp_race, parental_educ) |>
   left_join(confounder_strata, by = c("resp_race","parental_educ")) |>
   mutate(stratum_weight = stratum_weight / sum(stratum_weight))
-A <- c(1, with_weights$stratum_weight)
-pop_slope_estimate <- A %*% as.matrix(estimate)
-pop_slope_se <- sqrt(t(as.matrix(A)) %*% Sigma %*% as.matrix(A))
-pop_slope_estimates <- data.frame(
-    population_slope = pop_slope_estimate,
-    se = pop_slope_se
-  ) |>
-  mutate(
-    ci.min = population_slope - qnorm(.975) * se,
-    ci.max = population_slope + qnorm(.975) * se
+
+# Examine population-average slope -- Use bootstrapping to estimate CI
+n_replicates <- 1000
+plan(multisession, workers = parallel::detectCores())
+with_progress({
+  p <- progressor(along = 1:n_replicates)
+  fit_pop_average_bootstrapped <- future_vapply(
+    1:n_replicates,
+    function(iter) {
+      # Generate bootstrap indices
+      boot_idx <- sample(1:nrow(nlsy_analysis), nrow(nlsy_analysis), replace = TRUE)
+      fit_pop_average_iter <- gam(
+        hwsei ~ parental_hwsei +
+          s(
+            parental_hwsei,
+            bs = "re",
+            by = interaction(resp_race, parental_educ)
+          ) +
+          resp_race + parental_educ +
+          s(parental_occ_title, bs = "re"),
+        data = nlsy_analysis[boot_idx, ],
+        weights = weight
+      )
+      # Extract Parental HWSEI x Race x Education coefficients
+      estimate <- coef(fit_pop_average_iter)
+      slope_terms <- which(grepl("hwsei",names(estimate)))
+      estimate <- estimate[slope_terms]
+      # Calculate population average of slopes
+      A <- c(1, with_weights$stratum_weight)
+      pop_slope_estimate <- A %*% as.matrix(estimate)
+      p()
+      return(pop_slope_estimate)
+    },
+    numeric(1),
+    future.seed = TRUE
   )
-print(pop_slope_estimates)
+})
+plan(sequential)
+pop_slope_estimates <- tibble(
+  population_slope = pop_slope_estimate[1, 1],
+  ci.min = quantile(fit_pop_average_bootstrapped, 0.025),
+  ci.max = quantile(fit_pop_average_bootstrapped, 0.975)
+)
+print(pop_slope_estimates |> mutate(across(everything(), \(x) round(x, 2))))
 
 # Visualize the subgroup slopes
 to_predict |>
