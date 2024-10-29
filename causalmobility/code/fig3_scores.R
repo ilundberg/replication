@@ -157,13 +157,18 @@ with_weights <- subgroup_slopes |>
   select(resp_race, parental_educ) |>
   left_join(confounder_strata, by = c("resp_race","parental_educ")) |>
   mutate(stratum_weight = stratum_weight / sum(stratum_weight))
-A <- c(1,with_weights$stratum_weight)
+A <- c(1, with_weights$stratum_weight)
 pop_slope_estimate <- A %*% as.matrix(estimate)
 pop_slope_se <- sqrt(t(as.matrix(A)) %*% Sigma %*% as.matrix(A))
-data.frame(population_slope = pop_slope_estimate,
-           se = pop_slope_se) |>
-  mutate(ci.min = population_slope - qnorm(.975) * se,
-         ci.max = population_slope + qnorm(.975) * se)
+pop_slope_estimates <- data.frame(
+    population_slope = pop_slope_estimate,
+    se = pop_slope_se
+  ) |>
+  mutate(
+    ci.min = population_slope - qnorm(.975) * se,
+    ci.max = population_slope + qnorm(.975) * se
+  )
+print(pop_slope_estimates)
 
 # Visualize the subgroup slopes
 to_predict |>

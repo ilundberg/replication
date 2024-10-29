@@ -27,7 +27,7 @@ nlsy_analysis |>
 
 ggsave(here("figures", "closest_to_40_age_dist.pdf"), width = 5, height = 3)
 
-# Plot the age distribution of parents
+# Plot the age distribution of parents by class
 nlsy_analysis |>
   mutate(
     birth_date = case_when(
@@ -43,6 +43,28 @@ nlsy_analysis |>
 
 ggsave(here("figures/parental_birth_year.pdf"),
        height = 6, width = 5)
+
+# Plot the race/ethnicity distribution of parents by class
+nlsy_analysis |>
+  group_by(resp_race, parental_egp) |>
+  summarize(weight = sum(weight), .groups = "drop_last") |>
+  mutate(weight = weight / sum(weight)) |>
+  ggplot(aes(y = parental_egp, x = weight)) +
+  geom_bar(stat = "identity", fill = "steelblue3") +
+  facet_wrap(~ resp_race, ncol = 3) +
+  geom_text(aes(label = paste0(round(100*weight),"%")),
+            hjust = -.15) +
+  scale_x_continuous(
+    name = "Probability of Parent Occupational Class\nGiven Parental Race/Ethnicity",
+    limits = c(0,1.1),
+    breaks = c(0,.5,1),
+    labels = function(x) paste0(round(100*x),"%")
+  ) +
+  scale_y_discrete(name = "Parent Occupational Class",
+                   labels = function(x) gsub(" ","\n",x)) +
+  theme(panel.spacing = unit(1, "lines"))
+
+ggsave(here("figures/race_by_class.pdf"), height = 3, width = 7)
 
 sessionInfo()
 sink()
