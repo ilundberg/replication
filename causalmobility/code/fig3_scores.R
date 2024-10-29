@@ -8,6 +8,7 @@ library(mgcv)
 
 sink(here("logs","fig3_scores.txt"))
 print(Sys.time())
+set.seed(123)
 
 # Import analysis panel
 nlsy_analysis <- tibble(readRDS(here("data/nlsy_panel.RDS")))
@@ -115,7 +116,8 @@ fit <- gam(
     resp_race + parental_educ +
     s(parental_occ_title, bs = "re"),
   data = nlsy_analysis,
-  weights = weight
+  weights = weight,
+  method = "REML"
 )
 
 to_predict <- nlsy_analysis |>
@@ -177,7 +179,9 @@ with_progress({
           resp_race + parental_educ +
           s(parental_occ_title, bs = "re"),
         data = nlsy_analysis[boot_idx, ],
-        weights = weight
+        weights = weight,
+        control = mgcv::gam.control(maxit = 2000),
+        method = "REML"
       )
       # Extract Parental HWSEI x Race x Education coefficients
       estimate <- coef(fit_pop_average_iter)
@@ -190,7 +194,9 @@ with_progress({
       return(pop_slope_estimate)
     },
     numeric(1),
-    future.seed = TRUE
+    future.seed = TRUE,
+    future.scheduling = Inf,
+    future.chunk.size = NULL
   )
 })
 plan(sequential)
