@@ -23,18 +23,18 @@ nlsy_analysis |>
   theme(panel.grid.minor.y = element_blank()) +
   scale_x_continuous(name = "Age of Child at Occupation Measurement",
                      breaks = 35:45) +
-  ylab("Number of Respondents")
+  ylab("Proportion of Respondents")
 
 ggsave(here("figures", "closest_to_40_age_dist.pdf"), width = 5, height = 3)
 
 # Plot the age distribution of parents by class
 nlsy_analysis |>
   mutate(
-    birth_date = case_when(
+    parent_birth_date = case_when(
       which_parent_occ == "Father" ~ birth_date_father,
       TRUE ~ birth_date_mother)
   ) |>
-  ggplot(aes(x=birth_date)) +
+  ggplot(aes(x = parent_birth_date)) +
   geom_histogram(aes(y = ..density..), fill = "steelblue3", alpha = 0.5) +
   geom_density() +
   facet_wrap(~parental_egp, nrow = 5, scales = "free_y") +
@@ -55,7 +55,7 @@ nlsy_analysis |>
   geom_text(aes(label = paste0(round(100*weight),"%")),
             hjust = -.15) +
   scale_x_continuous(
-    name = "Probability of Parent Occupational Class\nGiven Parental Race/Ethnicity",
+    name = "Probability of Parent Occupational Class\nGiven Race/Ethnicity",
     limits = c(0,1.1),
     breaks = c(0,.5,1),
     labels = function(x) paste0(round(100*x),"%")

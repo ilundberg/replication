@@ -506,13 +506,24 @@ nlsy_balance_panel <- nlsy_panel_balance |>
   )
 
 balance_table <- nlsy_balance_panel |>
+  mutate(
+    educ_parent = case_when(
+      which_parent_occ == "Father" ~ educ_father,
+      TRUE ~ educ_mother
+    )
+  ) |>
+  filter(group == "Analysis") |>
   tbl_summary(
-    include = c(educ_mother, educ_father, resp_race, resp_sex, birth_year),
-    by = group,
+    include = c(
+      educ_parent,
+      resp_race,
+      resp_sex,
+      birth_year
+    ),
+    # by = group,
     statistic = list(all_continuous() ~ "{mean} ({sd})"),
     label = list(
-      educ_mother ~ "Mother's Education",
-      educ_father ~ "Father's Education",
+      educ_parent ~ "Parent's Education",
       resp_race ~ "Respondent Race/Ethnicity",
       resp_sex ~ "Respondent Gender",
       birth_year ~ "Birth Year"
