@@ -1,6 +1,6 @@
 # pstratreg_ex
 
-Replication code for examples illustrating regression-based principal stratification. This repository corresponds to a paper in progress, and will be updated in the future. With questions, contact Ian Lundberg ([ilundberg@cornell.edu](mailto:ilundberg@cornell.edu)) and Soonhong Cho ([soonhongcho@g.ucla.edu](mailto:soonhongcho@g.ucla.edu)).
+Replication code for examples illustrating regression-based principal stratification. This repository corresponds to a paper in progress, and will be updated in the future. With questions, contact Ian Lundberg ([ianlundberg@ucla.edu](mailto:ianlundberg@ucla.edu)) and Soonhong Cho ([soonhongcho@g.ucla.edu](mailto:soonhongcho@g.ucla.edu)).
 
 To use this code, do a few thing
 

@@ -9,18 +9,32 @@ library(Amelia)
 library(foreach)
 library(doParallel)
 library(doRNG)
-cl <- makeCluster(6)
+cl <- makeCluster(detectCores())
 registerDoParallel(cl)
 library(pstratreg)
 
-bs_reps <- 100
+bs_reps <- 500
+print(paste("Bootstrap reps:",bs_reps))
+print(paste("Cores:",detectCores()))
 
 set.seed(14850)
 
 # Load the prepared data
 d_prepared <- readRDS("../intermediate/motherhood.RDS")
 
-estimator <- function(data, bs = F, homoskedastic = F, monotonicity_positive, monotonicity_negative, diagnostic_file_prefix = NULL) {
+estimator <- function(
+    data, 
+    bs = F, 
+    homoskedastic = F, 
+    monotonicity_positive = F, 
+    monotonicity_negative = F, 
+    mean_dominance_y1_positive = F,
+    mean_dominance_y1_negative = F,
+    mean_dominance_y0_positive = F,
+    mean_dominance_y0_negative = F,
+    diagnostic_file_prefix = NULL,
+    group_by_baseline_wage = F
+) {
   
   # Bootstrap if requested
   if (bs) {
@@ -68,11 +82,30 @@ estimator <- function(data, bs = F, homoskedastic = F, monotonicity_positive, mo
     }
     data_imp[[varname]] <- x
   }
+  
+  # Create categories of baseline wages
+  if (group_by_baseline_wage) {
+    data_imp <- data_imp |>
+      mutate(
+        wage_baseline_categories = factor(
+          case_when(
+            !employed ~ 1,
+            wage_baseline < log(15) ~ 2,
+            wage_baseline < log(20) ~ 3,
+            T ~ 4
+          ),
+          labels = c("Not employed","Below $15","$15 to $20","Over $20")
+        )
+      )
+    group_vars <- c("treated","wage_baseline_categories")
+  } else {
+    group_vars <- "treated"
+  }
 
   result <- pstratreg(
     formula_y = wage ~ treated*(race + poly(age_1,2) + educ + marital + fulltime + log(tenure + 1) + 
                                   log(experience + 1) + wage_baseline + employed_baseline),
-    formula_m = employed ~ treated*(race + poly(age_1,2) + educ + marital + fulltime + log(tenure + 1) + 
+    formula_s = employed ~ treated*(race + poly(age_1,2) + educ + marital + fulltime + log(tenure + 1) + 
                                       log(experience + 1) + wage_baseline + employed_baseline),
     formula_sq_resid = ~ (treated + race + poly(age_1,2) + educ + marital + fulltime + log(tenure + 1) + 
                             log(experience + 1) + wage_baseline + employed_baseline),
@@ -82,8 +115,12 @@ estimator <- function(data, bs = F, homoskedastic = F, monotonicity_positive, mo
     homoskedastic = homoskedastic,
     monotonicity_positive = monotonicity_positive,
     monotonicity_negative = monotonicity_negative,
+    mean_dominance_y1_positive = mean_dominance_y1_positive,
+    mean_dominance_y1_negative = mean_dominance_y1_negative,
+    mean_dominance_y0_positive = mean_dominance_y0_positive,
+    mean_dominance_y0_negative = mean_dominance_y0_negative,
     aggregate = T,
-    group_vars = "treated"
+    group_vars = group_vars
   )
   
   if (!is.null(diagnostic_file_prefix)) {
@@ -133,147 +170,168 @@ estimator <- function(data, bs = F, homoskedastic = F, monotonicity_positive, mo
   }
   
   # Create a data frame to return, with the ATT estimates
-  to_return <- result$estimates_m %>% filter(treated) %>% select(-treated) %>%
-    bind_cols(result$estimates_y %>% filter(treated) %>% select(-treated))
+  to_return <- result$estimates_s |> filter(treated) |>
+    left_join(
+      result$estimates_y |> filter(treated),
+      by = group_vars
+    ) |>
+    select(-treated)
   
   return(to_return)
 }
 
-# MOTHERHOOD, HETEROSKEDASTIC
-# Point estimate
+# ESTIMATE EMPLOYMENT WITHIN SUBGROUPS, AMONG WOMEN
 point <- estimator(
-  data = d_prepared %>% filter(sex == "Women"), 
-  bs = F,
-  monotonicity_positive = F,
-  monotonicity_negative = T,
-  diagnostic_file_prefix = "../figures/motherhood_"
+  data = d_prepared |>  filter(sex == "Women"),
+  bs = F, 
+  group_by_baseline_wage = TRUE
 )
-# Bootstrap estimates
 point_star <- foreach(
   rep = 1:bs_reps, 
   .combine = "rbind", 
-  .packages = c("tidyverse","Amelia","pstratreg")
+  .packages = c("tidyverse","pstratreg","Amelia")
 ) %dorng% {
-  estimator(data = d_prepared %>% filter(sex == "Women"), 
-            bs = T,
-            monotonicity_positive = F,
-            monotonicity_negative = T)
+  estimator(
+    data = d_prepared |>  filter(sex == "Women"),
+    bs = T, 
+    group_by_baseline_wage = TRUE
+  )
 }
-# Standard error over bootstrap estimates
-se <- apply(point_star,2,sd)
-# Visualize result
-motherhood_result <- data.frame(estimand = names(point),
-           estimate = t(point),
-           se = se) %>%
-  mutate(ci.min = estimate - qnorm(.975) * se,
-         ci.max = estimate + qnorm(.975) * se,
-         label = format(round(estimate,2),nsmall=2)) %>%
-  print()
-saveRDS(motherhood_result,
-        file = "../intermediate/motherhood_result.RDS")
+point |>
+  select(wage_baseline_categories, effect_s) |>
+  left_join(
+    point_star |>
+      group_by(wage_baseline_categories) |>
+      summarize(se = sd(effect_s), .groups = "drop"),
+    by = join_by(wage_baseline_categories)
+  ) |>
+  mutate(
+    ci.min = effect_s - qnorm(.975) * se, 
+    ci.max = effect_s + qnorm(.975) * se
+  ) |>
+  saveRDS("../intermediate/motherhood_within_subgroups.RDS")
 
-# MOTHERHOOD, ASSUMED HOMOSKEDASTIC
-# Point estimate
+# ESTIMATE EMPLOYMENT WITHIN SUBGROUPS, AMONG MEN
 point <- estimator(
-  data = d_prepared %>% filter(sex == "Women"), 
-  bs = F,
-  homoskedastic = T,
-  monotonicity_positive = F,
-  monotonicity_negative = T,
-  diagnostic_file_prefix = "../figures/motherhood_homoskedastic_"
+  data = d_prepared |>  filter(sex == "Men"),
+  bs = F, 
+  group_by_baseline_wage = TRUE
 )
-# Bootstrap estimates
 point_star <- foreach(
   rep = 1:bs_reps, 
   .combine = "rbind", 
-  .packages = c("tidyverse","Amelia","pstratreg")
+  .packages = c("tidyverse","pstratreg","Amelia")
 ) %dorng% {
-  estimator(data = d_prepared %>% filter(sex == "Women"), 
-            bs = T,
-            homoskedastic = T,
-            monotonicity_positive = F,
-            monotonicity_negative = T)
+  estimator(
+    data = d_prepared |>  filter(sex == "Men"),
+    bs = T, 
+    group_by_baseline_wage = TRUE
+  )
 }
-# Standard error over bootstrap estimates
-se <- apply(point_star,2,sd)
-# Visualize result
-motherhood_result <- data.frame(estimand = names(point),
-                                estimate = t(point),
-                                se = se) %>%
-  mutate(ci.min = estimate - qnorm(.975) * se,
-         ci.max = estimate + qnorm(.975) * se,
-         label = format(round(estimate,2),nsmall=2)) %>%
-  print()
-saveRDS(motherhood_result,
-        file = "../intermediate/motherhood_result_homoskedastic.RDS")
+point |>
+  select(wage_baseline_categories, effect_s) |>
+  left_join(
+    point_star |>
+      group_by(wage_baseline_categories) |>
+      summarize(se = sd(effect_s), .groups = "drop"),
+    by = join_by(wage_baseline_categories)
+  ) |>
+  mutate(
+    ci.min = effect_s - qnorm(.975) * se, 
+    ci.max = effect_s + qnorm(.975) * se
+  ) |>
+  saveRDS("../intermediate/fatherhood_within_subgroups.RDS")
 
-# FATHERHOOD, HETEROSKEDASTIC
-# Point estimate
-point <- estimator(
-  data = d_prepared %>% filter(sex == "Men"), 
-  bs = F,
-  monotonicity_positive = F,
-  monotonicity_negative = F,
-  diagnostic_file_prefix = "../figures/fatherhood_"
+# Estimates for main quantities of interest
+# Create a set of arguments.
+# For women, consider both mean dominance and monotonicity.
+# For men, consider only mean dominance since monotonicity is unlikely to hold.
+args <- tibble(
+  sex = c("Men","Men","Women","Women","Women","Women"),
+  monotonicity = c(F,F,F,F,T,T),
+  mean_dominance = c(F,T,F,T,F,T)
 )
-# Bootstrap estimates
-point_star <- foreach(
-  rep = 1:bs_reps, 
-  .combine = "rbind", 
-  .packages = c("tidyverse","Amelia","pstratreg")
-) %dorng% {
-  estimator(data = d_prepared %>% filter(sex == "Men"), 
-            bs = T,
-            monotonicity_positive = F,
-            monotonicity_negative = F)
-}
-# Standard error over bootstrap estimates
-se <- apply(point_star,2,sd)
-# Visualize result
-fatherhood_result <- data.frame(estimand = names(point),
-           estimate = t(point),
-           se = se) %>%
-  mutate(ci.min = estimate - qnorm(.975) * se,
-         ci.max = estimate + qnorm(.975) * se,
-         label = format(round(estimate,2),nsmall=2)) %>%
-  print()
-saveRDS(fatherhood_result,
-        file = "../intermediate/fatherhood_result.RDS")
 
-# FATHERHOOD, HOMOSKEDASTIC
-# Point estimate
-point <- estimator(
-  data = d_prepared %>% filter(sex == "Men"), 
-  bs = F,
-  homoskedastic = T,
-  monotonicity_positive = F,
-  monotonicity_negative = F,
-  diagnostic_file_prefix = "../figures/motherhood_homoskedastic_"
-)
-# Bootstrap estimates
-point_star <- foreach(
-  rep = 1:bs_reps, 
-  .combine = "rbind", 
-  .packages = c("tidyverse","Amelia","pstratreg")
-) %dorng% {
-  estimator(data = d_prepared %>% filter(sex == "Men"), 
-            bs = T,
-            homoskedastic = T,
-            monotonicity_positive = F,
-            monotonicity_negative = F)
+estimates <- foreach(i = 1:nrow(args), .combine = "rbind") %do% {
+  
+  # Extract arguments for this setting
+  args_case <- args[i,]
+  
+  # Construct point estimate
+  point <- estimator(
+    data = d_prepared |> filter(sex == args_case$sex),
+    bs = F, 
+    monotonicity_negative = args_case$monotonicity,
+    mean_dominance_y0_positive = args_case$mean_dominance,
+    mean_dominance_y1_positive = args_case$mean_dominance
+  )
+  
+  # Construct bootstrap replicates
+  point_star <- foreach(
+    rep = 1:bs_reps, 
+    .combine = "rbind", 
+    .packages = c("tidyverse","pstratreg","Amelia")
+  ) %dorng% {
+    estimator(
+      data = d_prepared |> filter(sex == args_case$sex),
+      bs = T, 
+      monotonicity_negative = args_case$monotonicity,
+      mean_dominance_y0_positive = args_case$mean_dominance,
+      mean_dominance_y1_positive = args_case$mean_dominance
+    )
+  }
+  
+  # Construct standard errors and confidence intervals
+  se <- point_star |>
+    summarize_all(.funs = sd)
+  ci.min <- point_star |>
+    summarize_all(.funs = function(x) quantile(x, .025))
+  ci.max <- point_star |>
+    summarize_all(.funs = function(x) quantile(x, .975))
+  
+  estimate <- point |>
+    pivot_longer(
+      cols = everything(), 
+      names_to = "estimand", 
+      values_to = "estimate"
+    ) |>
+    left_join(
+      se |>
+        pivot_longer(
+          cols = everything(), 
+          names_to = "estimand", 
+          values_to = "se"
+        ),
+      by = "estimand"
+    ) |>
+    left_join(
+      ci.min |>
+        pivot_longer(
+          cols = everything(), 
+          names_to = "estimand", 
+          values_to = "ci.min"
+        ),
+      by = "estimand"
+    ) |>
+    left_join(
+      ci.max |>
+        pivot_longer(
+          cols = everything(), 
+          names_to = "estimand", 
+          values_to = "ci.max"
+        ),
+      by = "estimand"
+    ) |>
+    mutate(
+      ci.min.normal = estimate - qnorm(.975) * se,
+      ci.max.normal = estimate + qnorm(.975) * se
+    ) |>
+    bind_cols(args_case)
+  
+  return(estimate)
 }
-# Standard error over bootstrap estimates
-se <- apply(point_star,2,sd)
-# Visualize result
-fatherhood_result <- data.frame(estimand = names(point),
-                                estimate = t(point),
-                                se = se) %>%
-  mutate(ci.min = estimate - qnorm(.975) * se,
-         ci.max = estimate + qnorm(.975) * se,
-         label = format(round(estimate,2),nsmall=2)) %>%
-  print()
-saveRDS(fatherhood_result,
-        file = "../intermediate/fatherhood_result_homoskedastic.RDS")
+
+saveRDS(estimates, file = "../intermediate/estimates.RDS")
 
 sessionInfo()
 
