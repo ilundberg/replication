@@ -110,6 +110,80 @@ legend_confounding <- ggpubr::as_ggplot(ggpubr::get_legend(
     theme(legend.position = "right")
 ))
 
+# Extrapolation problem
+
+forplot <- tibble(A = rep(seq(-1, 1, .1),2), L = rep(0:1, each = 21)) |>
+  mutate(mu = case_when(
+    L == 0 ~ A,
+    L == 1 ~ 1 + .1 * A
+  )) |>
+  mutate(L = factor(L, labels = c("Disadvantaged","Advantaged"))) |>
+  mutate(Y = rnorm(n(), mu, .1))
+forplot |>
+  ggplot(aes(x = A, y = mu, color = L)) +
+  geom_line(
+    data = forplot |> 
+      filter((A <= .5 & L == "Disadvantaged") | (A >= -.5 & L == "Advantaged")),
+    linetype = "solid"
+  ) +
+  geom_line(
+    data = forplot |> 
+      filter((A >= .5 & L == "Disadvantaged") | (A <= -.5 & L == "Advantaged")),
+    linetype = "dotted",
+    size = 1.2
+  ) +
+  xlab("Treatment") +
+  scale_y_continuous(name = "\nOutcome") +
+  theme(
+    legend.position = "none",
+    axis.text.y = element_blank(), 
+    axis.ticks.y = element_blank()
+  )
+ggsave(paste0("figures/extrapolation.pdf"),
+       height = 2.5, width = 2.6)
+
+forplot |>
+  ggplot(aes(x = A, y = mu, color = L)) +
+  geom_line(
+    linetype = "solid"
+  ) +
+  xlab("Treatment") +
+  scale_y_continuous(name = "\nOutcome") +
+  theme(
+    legend.position = "none",
+    axis.text.y = element_blank(), 
+    axis.ticks.y = element_blank()
+  )
+ggsave(paste0("figures/extrapolation_none.pdf"),
+       height = 2.5, width = 2.6)
+  
+
+data.frame(L = rep(0:1, each = n_samp / 2)) %>%
+  group_by(L) %>%
+  mutate(mu = L - .5,
+         quantile = (1:n()) / n(),
+         A = qnorm(quantile, mean = mu, sd = sd_for_strong),
+         pdf = dnorm(A, mean = mu, sd = sd_for_strong)) %>%
+  # Truncate distribution and renormalize pdf
+  filter(A >= -1 & A <= 1) %>%
+  mutate(pdf = pdf / (pnorm(1,mu,sd_for_strong) - pnorm(-1,mu,sd_for_strong))) %>%
+  ungroup() %>%
+  mutate(L = factor(L, labels = c("Disadvantaged","Advantaged"))) %>%
+  ggplot(aes(x = A, y = pdf, fill = L)) +
+  geom_ribbon(aes(ymin = 0, ymax = pdf),
+              alpha = .6) +
+  geom_line() +
+  xlab("Treatment") +
+  scale_y_continuous(name = "Treatment Density Within\nPopulation Subgroup",
+                     limits = c(0,1.3),
+                     # This is to make the plot sizes match;
+                     # labels will be invisible in theme
+                     labels = function(x) paste0(round(100*x),"%")) +
+  scale_fill_discrete(name = "Population\nSubgroup") +
+  theme(legend.position = "none",
+        axis.text.y = element_text(color = "white"),
+        axis.ticks.y = element_line(color = "white"))
+
 # Save plots
 for (p_name in c(
   "binary_standard","binary_strong",

@@ -1,29 +1,149 @@
 
-source("code/shorten_race.R")
+source("code/load_data.R")
 
-for_visualize_model <- readRDS("intermediate/for_visualize_model.RDS")
+data <- load_data(outcome = "enrolled_any")
 
-for (outcome_val in unique(for_visualize_model$outcome)) {
-  for_visualize_model %>%
-    filter(outcome == outcome_val) %>%
-    mutate(wealth_label = factor(case_when(wealth == 25e3 ~ 1,
-                                           wealth == 100e3 ~ 2,
-                                           wealth == 200e3 ~ 3),
-                                 labels = c("$25k","$100k","$200k")),
-           wealth_label = fct_rev(wealth_label)) %>%
-    mutate(educJoint = fct_rev(educJoint),
-           race = shorten_race(race)) %>%
-    ggplot(aes(x = income, y = estimate, color = wealth_label)) +
-    geom_line() +
-    facet_grid(race ~ educJoint) +
-    scale_color_discrete(name = "Wealth") +
-    scale_x_continuous(name = "Parent Income",
-                       labels = function(x) paste0("$",round(x / 1e3),"k")) +
-    ylab(case_when(outcome_val == "enrolled_any" ~ "College Enrollment by 21",
-                   outcome_val == "enrolled_4yr" ~ "4-Year College Enrollment by 25",
-                   outcome_val == "completed_25" ~ "BA Degree by Age 25",
-                   outcome_val == "completed_30" ~ "BA Degree by Age 30")) +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
-  ggsave(paste0("figures/vis_model_",outcome_val,".pdf"),
-         height = 6, width = 6.5)
-}
+logit <- glm(
+  y ~ log(income)*(
+    educJoint + race + log(wealth) + 
+      wealth_negative + wealth_low
+  ),
+  data = data,
+  family = binomial,
+  weights = w
+)
+
+gam <- mgcv::gam(
+  y ~ s(log(income)) + 
+    educJoint + race + log(wealth) + 
+    wealth_negative + wealth_low,
+  data = data,
+  family = binomial,
+  weights = w
+)
+
+to_predict <- data |>
+  filter(!wealth_negative & !wealth_low) |>
+  group_by(educJoint, race, label_wealth) |>
+  mutate(income_max = quantile(income, .95), income_min = quantile(income, .05)) |>
+  ungroup() |>
+  mutate(wealth = case_when(
+    grepl("Low", label_wealth) ~ 25e3,
+    grepl("Middle", label_wealth) ~ 100e3,
+    grepl("High", label_wealth) ~ 200e3
+  )) |>
+  select(educJoint, race, wealth, wealth_negative, wealth_low, income_min, income_max) |>
+  distinct() |>
+  mutate(data = map2(.x = income_min, .y = income_max, .f = \(x,y) tibble(income = seq(x, y, length.out = 100)))) |>
+  unnest(data)
+
+to_predict |>
+  mutate(
+    estimate = predict(logit, type = "response", newdata = to_predict)
+  ) |>
+  mutate(educJoint = fct_rev(educJoint), race = fct_relevel(race,"Hispanic","Non-Hispanic Black","White or Other")) |>
+  ggplot(aes(x = income, y = estimate, color = factor(wealth))) +
+  geom_line() +
+  facet_grid(
+    race ~ educJoint,
+    labeller = as_labeller(
+      \(x) case_when(
+        x == "Non-Hispanic Black" ~ "Non-Hispanic\nBlack",
+        x == "White or Other" ~ "White or\nOther",
+        T ~ x
+      )
+    )
+  ) +
+  scale_color_discrete(
+    name = "Wealth",
+    labels = function(x) scales::label_currency(scale = 1e-3, suffix = "k")(as.numeric(x))
+  ) +
+  scale_x_continuous(
+    name = "Family Income at Age 17", 
+    labels = scales::label_currency(),
+    breaks = seq(0,300e3,100e3),
+    limits = c(0,300e3)
+  ) +
+  scale_y_continuous(
+    name = "Probability of College Enrollment", 
+    labels = scales::label_number(accuracy = .01),
+    limits = c(0,1)
+  ) +
+  geom_hline(
+    yintercept = c(0,1),
+    color = "gray",
+    linetype = "dashed"
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(hjust = 1, angle = 45),
+    strip.text.y = element_text(angle = 0)
+  )
+ggsave("figures/figure7_logit.pdf", height = 4, width = 6)
+
+to_predict |>
+  mutate(
+    estimate = predict(gam, type = "response", newdata = to_predict)
+  ) |>
+  mutate(educJoint = fct_rev(educJoint), race = fct_relevel(race,"Hispanic","Non-Hispanic Black","White or Other")) |>
+  ggplot(aes(x = income, y = estimate, color = factor(wealth))) +
+  geom_line() +
+  facet_grid(
+    race ~ educJoint,
+    labeller = as_labeller(
+      \(x) case_when(
+        x == "Non-Hispanic Black" ~ "Non-Hispanic\nBlack",
+        x == "White or Other" ~ "White or\nOther",
+        T ~ x
+      )
+    )
+  ) +
+  scale_color_discrete(
+    name = "Wealth",
+    labels = function(x) scales::label_currency(scale = 1e-3, suffix = "k")(as.numeric(x))
+  ) +
+  scale_x_continuous(
+    name = "Family Income at Age 17", 
+    labels = scales::label_currency(),
+    breaks = seq(0,300e3,100e3),
+    limits = c(0,300e3)
+  ) +
+  scale_y_continuous(
+    name = "Probability of College Enrollment", 
+    labels = scales::label_number(accuracy = .01),
+    limits = c(0,1)
+  ) +
+  geom_hline(
+    yintercept = c(0,1),
+    color = "gray",
+    linetype = "dashed"
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(hjust = 1, angle = 45),
+    strip.text.y = element_text(angle = 0)
+  )
+ggsave("figures/figure7_gam.pdf", height = 4, width = 6)
+
+
+
+to_predict |>
+  mutate(
+    GAM = predict(gam, type = "response", newdata = to_predict),
+    Logit = predict(logit, type = "response", newdata = to_predict)
+  ) |>
+  pivot_longer(cols = c("GAM","Logit"), names_to = "Model", values_to = "estimate") |>
+  mutate(educJoint = fct_rev(educJoint), race = fct_relevel(race,"Hispanic","Non-Hispanic Black","White or Other")) |>
+  ggplot(aes(x = income, y = estimate, linetype = Model, color = factor(wealth))) +
+  geom_line() +
+  facet_grid(race ~ educJoint) +
+  scale_color_discrete(
+    name = "Wealth",
+    labels = function(x) scales::label_currency(scale = 1e-3, suffix = "k")(as.numeric(x))
+  ) +
+  scale_x_continuous(name = "Parent Income", labels = scales::label_currency(scale = 1e-3, suffix = "k")) +
+  scale_y_continuous(name = "Any College Enrollment by Age 21", labels = scales::label_percent())
+ggsave("figures/model_visualization.pdf", height = 5, width = 6.5)
+
+
+  

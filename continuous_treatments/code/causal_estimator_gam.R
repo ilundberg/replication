@@ -9,11 +9,13 @@ causal_estimator <- function(
   
   # Function to make estimate
   make_estimate <- function(learning, estimation, delta) {
-    fit <- glm(
-      y ~ log(income)*(
+    fit <- mgcv::gam(
+      y ~ s(log(income)) + 
+        #log(income)*(
         educJoint + race + log(wealth) + 
-          wealth_negative + wealth_low
-      ),
+        wealth_negative + wealth_low
+      #),
+      ,
       data = learning,
       family = binomial,
       weights = w

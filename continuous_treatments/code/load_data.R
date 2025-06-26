@@ -1,4 +1,6 @@
 
+# This function loads data and optionally imputes missing values and/or carries out a bootstrap sample
+
 load_data <- function(outcome, impute = T, bs = F, learning_pubids = NULL) {
   
   source("code/label_terciles.R")
@@ -32,15 +34,23 @@ load_data <- function(outcome, impute = T, bs = F, learning_pubids = NULL) {
   } else {
     # Otherwise, impute missing values first
     imputed <- Amelia::amelia(data,
-                              noms = c("female","race","educJoint"),
+                              noms = c("female","race","educJoint","wealth_negative","wealth_low"),
                               logs = c("income","wealth"),
                               boot.type = "none",
                               idvars = "learning",
                               m = 1)$imputations$imp1 %>%
-      # enforce original data range on wealth
-      mutate(wealth = case_when(wealth < min(data$wealth, na.rm = T) ~ min(data$wealth, na.rm = T),
-                                wealth > max(data$wealth, na.rm = T) ~ max(data$wealth, na.rm = T),
-                                T ~ wealth)) %>%
+      # enforce original data range and coding on wealth
+      mutate(
+        # Correct inconsistent imputations of low wealth
+        wealth_low = ifelse(wealth_negative, 0, wealth_low),
+        # Correct inconsistent imputations of numeric wealth
+        wealth = case_when(
+          wealth_low | wealth_negative ~ min(data$wealth, na.rm = T),
+          wealth < min(data$wealth, na.rm = T) ~ min(data$wealth, na.rm = T),
+          wealth > max(data$wealth, na.rm = T) ~ max(data$wealth, na.rm = T),
+          T ~ wealth
+        )
+      ) %>%
       # label income and wealth terciles in imputed data
       label_terciles()
     return(imputed)

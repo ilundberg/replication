@@ -119,7 +119,7 @@ income <- raw %>%
   # mark missing values
   mutate(income = case_when(!(income %in% c(-1:-5)) ~ income)) %>%
   # adjust for inflation
-  mutate(income = income * cpi$cpi[cpi$year == 2022] / cpi$cpi[cpi$year == 1997],
+  mutate(income = income * cpi$cpi[cpi$year == 2022] / cpi$cpi[cpi$year == 1996],
          # Bottom-code income
          income = case_when(income >= 10e3 ~ income,
                             income < 10e3 ~ 10e3))
@@ -130,7 +130,7 @@ covariates <- raw %>%
             female = KEY_SEX_1997 == 2,
             race = case_when(KEY_RACE_ETHNICITY_1997 == 1 ~ "Non-Hispanic Black",
                              KEY_RACE_ETHNICITY_1997 == 2 ~ "Hispanic",
-                             KEY_RACE_ETHNICITY_1997 %in% 3:4 ~ "Non-Black Non-Hispanic"),
+                             KEY_RACE_ETHNICITY_1997 %in% 3:4 ~ "White or Other"),
             race = as_factor(race),
             educMom = case_when(CV_HGC_RES_MOM_1997 == -4 ~ "No residential mom",
                                 (CV_HGC_RES_MOM_1997 >= 0 & CV_HGC_RES_MOM_1997 < 12) | CV_HGC_RES_MOM_1997 == 95 ~ "Less than high school",
@@ -147,17 +147,24 @@ covariates <- raw %>%
             educJoint = factor(case_when(educMom == "College" & educDad == "College" ~ 1,
                                          educMom == "College" | educDad == "College" ~ 2,
                                          !is.na(educMom) & !is.na(educDad) ~ 3),
-                                  labels = c("Two parents\nfinished college",
-                                             "One parent\nfinished college",
-                                             "No parent\nfinished college")),
+                                  labels = c("Two parents\ncompleted college",
+                                             "One parent\ncompleted college",
+                                             "No parent\ncompleted college")),
             # Wealth. From documentation:
             # Respondents with household net worth values above $600,000 were topcoded to a value of $600,000.
             wealth = case_when(!(CV_HH_NET_WORTH_P_1997 %in% -1:-5) ~ as.numeric(CV_HH_NET_WORTH_P_1997)),
             # Inflation adjustment for wealth
             wealth = wealth * cpi$cpi[cpi$year == 2022] / cpi$cpi[cpi$year == 1997],
             # Bottom-code wealth
-            wealth = case_when(wealth < 1e3 ~ 1e3,
-                               wealth >= 1e3 ~ wealth)) %>%
+            #wealth = case_when(wealth < 1e3 ~ 1e3,
+            #                   wealth >= 1e3 ~ wealth),
+            wealth_negative = wealth < 0,
+            wealth_low = wealth >=0 & wealth <= 10e3,
+            wealth = case_when(
+              wealth < 10e3 ~ 10e3,
+              wealth >= 10e3 ~ wealth
+            )
+  ) %>%
   left_join(weight, by = "PUBID")
   
 # Merge the data together
@@ -201,7 +208,7 @@ for (outcome in c("enrolled_any","enrolled_4yr","completed_25","completed_30")) 
     rename_with(.fn = function(x) str_replace(x,outcome,"y")) %>%
     filter(!is.na(y)) %>%
     print_n("Valid outcome") %>%
-    select(PUBID, y, income, female, race, educJoint, wealth)
+    select(PUBID, y, income, female, race, educJoint, wealth, wealth_low, wealth_negative)
   
   write_lines(data_this_outcome$PUBID,
               file = paste0("intermediate/","ids_",outcome,".txt"))

@@ -6,23 +6,26 @@ needed_files <- c(
   "main.R",
   # files called from main file
   "check_environment.R",
+  "nonlinear_heterogeneous_conceptual.R",
+  "strong_confounding.R",
   "prepare_data.R",
-  "descriptive_binner.R",
   "descriptive_smoother.R",
-  "extrapolation_danger.R",
+  "descriptive_binner.R",
   "strong_confounding.R",
   "causal_estimator.R",
-  "analyze_to_visualize_model.R",
+  "causal_estimator_gam.R",
   "visualize_model.R",
   "visualize_descriptive.R",
   "visualize_causal.R",
-  "visualize_causal_subgroup_estimates.R",
+  "visualize_logit_gam_scatter.R",
   "summarize_x_given_effect.R",
-  "visualize_inductive.R",
+  "visualize_model.R",
+  "simulation_forest_can_underperform.R",
+  "simulation_interactive_nonlinear_mse.R",
   # supporting files called within scripts above
+  "load_data.R",
   "label_outcomes_treatments.R",
   "label_terciles.R",
-  "load_data.R",
   "weighted.quantile.R"
 )
 
