@@ -1,31 +1,67 @@
-# Quantifying the contribution of occupational
-# segregation to racial disparities in health:
-# A gap-closing perspective
 
-# Ian Lundberg
-# ilundberg@princeton.edu
+sink("figures/log_figure_1.txt")
+print(Sys.time())
 
-# See run_all.R where this file is called.
+# See run_all.R to see how this file is called
 
-# Start with an environment with no objects so this code can be run independently
-rm(list = ls(all = TRUE))
+# This code produces scatter plots of occupation-specific onset
+# as functions of racial/ethnic composition
 
-# Record printed output in a text file
-sink("logs/fig01.txt")
+all_data <- list(
+  d_onset = readRDS("intermediate/d_onset.RDS"),
+  full_population = readRDS("intermediate/full_population.RDS")
+)
 
-# Record the time that this code file begins.
-t0 <- Sys.time()
-print("Date and time of code run:")
-print(t0)
+# Extract the occupational titles to facilitate labeling points
+occupation_titles <- all_data$full_population %>%
+  select(OCC2010) %>%
+  group_by(OCC2010) %>%
+  filter(1:n() == 1) %>%
+  group_by() %>%
+  mutate(occ_title = as.character(as_factor(OCC2010)),
+         OCC2010 = factor(OCC2010))
 
-# Load packages
-library(tidyverse)
-library(reshape2)
-library(ggrepel)
+# I will fit models on all_data$d_onset
+# I will predict for to_predict, which has one row per occupation
+to_predict <- all_data$d_onset %>%
+  group_by(OCC2010) %>%
+  summarize(size = sum(ASECWT)) %>%
+  group_by() %>%
+  left_join(occupation_titles, by = "OCC2010")
 
-# Load the data
-for_scatter <- readRDS("intermediate/for_scatter.Rds")
-scatter_slopes <- readRDS("intermediate/scatter_slopes.Rds")
+# Fit the proportion in each category of race
+# This model does partial pooling to improve precision of estimates
+categories <- unique(all_data$d_onset$RACE)
+category_proportions <- foreach(r = categories, .combine = "rbind") %do% {
+  fit <- bam(as.numeric(RACE == r) ~ s(OCC2010, bs = "re"),
+             data = all_data$d_onset,
+             weights = ASECWT)
+  return(to_predict %>%
+           mutate(category = r,
+                  proportion = predict(fit, newdata = to_predict)))
+}
+# Fit the outcome model
+# This model does partial pooling to improve precision of estimates
+fit_outcome <- bam(y ~ s(OCC2010, bs = "re"),
+                   data = all_data$d_onset,
+                   weights = ASECWT)
+# Combine those in a dataset for the scatter
+for_scatter <- category_proportions %>%
+  left_join(to_predict %>%
+              select(OCC2010) %>%
+              mutate(y = predict(fit_outcome, newdata = to_predict)),
+            by = "OCC2010")
+
+# Get the slope of the best-fit line as a function of each category proportion
+slopes <- foreach(r = categories, .combine = "c") %do% {
+  fit <- lm(y ~ proportion,
+            weights = size,
+            data = for_scatter %>%
+              filter(category == r))
+  return(coef(fit)[2])
+}
+slopes <- format(round(slopes,2),nsmall = 2)
+names(slopes) <- categories
 
 ####################
 # PRODUCE SCATTERS #
@@ -46,13 +82,14 @@ plot <- for_scatter %>%
   theme(legend.position = "none", axis.title = element_text(face = "bold")) +
   scale_size_continuous(range = c(.2,3)) +
   annotate(geom = "text", x = .65, y = .002, hjust = 1,
-           label = paste0("Slope of Best Fit Line: ",scatter_slopes["Non-Hispanic Black"]),
+           label = paste0("Slope of Best Fit Line: ",slopes["Non-Hispanic Black"]),
            size = 3)
+plot
 
 ggsave("figures/scatter_factual_outcome_re_NonHispanicBlack.pdf",
-       height = 3, width = 3.5, plot = plot)
+       height = 3, width = 3.5)
 
-annotated <- plot +
+plot +
   geom_text_repel(aes(label = case_when(occ_title == "Personal Care Aides" ~ "Personal\nCare Aides",
                                         occ_title == "Nursing, Psychiatric, and Home Health Aides" ~ "Home Health\nAides",
                                         occ_title == "Taxi Drivers and Chauffeurs" ~ "Taxi Drivers",
@@ -64,10 +101,7 @@ annotated <- plot +
                                         occ_title == "Postal Service Mail Sorters, Processors, and Processing Machine Operators" ~ "Mail\nSorters",
                                         T ~ "")),
                   size = 2)
-
-ggsave(filename = "figures/scatter_factual_outcome_re_NonHispanicBlack_annotated.pdf",
-       plot = annotated,
-       device = "pdf",
+ggsave("figures/scatter_factual_outcome_re_NonHispanicBlack_annotated.pdf",
        height = 3, width = 3.5)
 
 # Plot as a function of Hispanic
@@ -85,14 +119,13 @@ plot <- for_scatter %>%
   theme_bw() +
   theme(legend.position = "none", axis.title = element_text(face = "bold")) +
   annotate(geom = "text", x = .65, y = .002, hjust = 1,
-           label = paste0("Slope of Best Fit Line: ",scatter_slopes["Hispanic"]),
+           label = paste0("Slope of Best Fit Line: ",slopes["Hispanic"]),
            size = 3)
-
+plot
 ggsave("figures/scatter_factual_outcome_re_Hispanic.pdf",
-       height = 3, width = 3.5,
-       plot = plot, device = "pdf")
+       height = 3, width = 3.5)
 
-annotated <- plot +
+plot +
   geom_text_repel(aes(label = case_when(occ_title == "Combined Food Preparation and Serving Workers, Including Fast Food" ~ "Fast Food",
                                         occ_title == "Taxi Drivers and Chauffeurs" ~ "Taxi Drivers",
                                         occ_title == "Agricultural workers, nec" ~ "Agricultural\nworkers",
@@ -116,12 +149,11 @@ annotated <- plot +
                   nudge_y = .009,
                   nudge_x = -.005,
                   size = 2)
-
 ggsave("figures/scatter_factual_outcome_re_Hispanic_annotated.pdf",
-       height = 3, width = 3.5, plot = annotated, device = "pdf")
+       height = 3, width = 3.5)
 
 # Non-Hispanic White
-plot <-  for_scatter %>%
+plot <- for_scatter %>%
   filter(category == "Non-Hispanic White") %>%
   ggplot(aes(x = proportion, y = y, size = size)) +
   geom_point() +
@@ -135,13 +167,12 @@ plot <-  for_scatter %>%
   theme(legend.position = "none", axis.title = element_text(face = "bold")) +
   scale_size_continuous(range = c(.2,3)) +
   annotate(geom = "text", x = .3, y = 0.002, hjust = 0,
-           label = paste0("Slope of Best Fit Line: ",scatter_slopes["Non-Hispanic White"]),
+           label = paste0("Slope of Best Fit Line: ",slopes["Non-Hispanic White"]),
            size = 3)
-
+plot 
 ggsave("figures/scatter_factual_outcome_re_NonHispanicWhite.pdf",
-       height = 3, width = 3.5, plot = plot, device = "pdf")
-
-annotated <- plot +
+       height = 3, width = 3.5)
+plot +
   geom_text_repel(aes(label = case_when(occ_title == "Chief executives and legislators/public administration" ~ "CEOs",
                                         occ_title == "Physicians and Surgeons" ~ "Physicians",
                                         occ_title == "Combined Food Preparation and Serving Workers, Including Fast Food" ~ "Fast Food",
@@ -157,7 +188,7 @@ annotated <- plot +
                                         T ~ "")),
                   size = 2, nudge_y = -.001, nudge_x = -.02)
 ggsave("figures/scatter_factual_outcome_re_NonHispanicWhite_annotated.pdf",
-       height = 3, width = 3.5, plot = annotated, device = "pdf")
+       height = 3, width = 3.5)
 
 # Other
 plot <- for_scatter %>%
@@ -174,11 +205,12 @@ plot <- for_scatter %>%
   xlim(c(0,.65)) +
   ylim(c(0,.056)) +
   annotate(geom = "text", x = .65, y = .002, hjust = 1,
-           label = paste0("Slope of Best Fit Line: ",scatter_slopes["Other"]),
+           label = paste0("Slope of Best Fit Line: ",slopes["Other"]),
            size = 3)
+plot
 ggsave("figures/scatter_factual_outcome_re_Other.pdf",
-       height = 3, width = 3.5, plot = plot, device = "pdf")
-annotated <- plot +
+       height = 3, width = 3.5)
+plot +
   geom_text_repel(aes(label = case_when(occ_title == "Chief executives and legislators/public administration" ~ "CEOs",
                                         occ_title == "Physicians and Surgeons" ~ "Physicians",
                                         occ_title == "Combined Food Preparation and Serving Workers, Including Fast Food" ~ "Fast Food",
@@ -193,81 +225,22 @@ annotated <- plot +
                                         T ~ "")),
                   size = 2, nudge_y = .01, segment.size = .2)
 ggsave("figures/scatter_factual_outcome_re_Other_annotated.pdf",
-       height = 3, width = 3.5, plot = annotated, device = "pdf")
+       height = 3, width = 3.5)
 
-##################
-# SLIDE VERSIONS #
-##################
 
-# These build up the non-Hispanic Black plot
-plot <- for_scatter %>%
-  filter(category == "Non-Hispanic Black") %>%
-  ggplot(aes(x = proportion, y = y, size = size)) +
-  xlab("Proportion Non-Hispanic Black") +
-  ylab("Onset of Work-Limiting Disability") +
-  xlim(c(0,.4)) +
-  ylim(c(0,.056)) +
-  geom_hline(yintercept = 0, color = "gray") +
-  theme_bw() +
-  theme(legend.position = "none", axis.title = element_text(face = "bold")) +
-  scale_size_continuous(range = c(.2,3))
-
-ggsave("figures/scatter_factual_outcome_re_NonHispanicBlack_slide1.pdf",
-       height = 3, width = 4, plot = plot, device = "pdf")
-plot2 <- plot +
-  geom_point(aes(alpha = occ_title %in% c("Physicians and Surgeons"))) +
-  geom_text(aes(label = case_when(occ_title == "Physicians and Surgeons" ~ "Physicians")),
-            size = 2, vjust = 2) +
-  scale_alpha_manual(values = c(0,1)) +
-  theme(legend.position = "none")
-ggsave("figures/scatter_factual_outcome_re_NonHispanicBlack_slide2.pdf",
-       height = 3, width = 4, plot = plot2, device = "pdf")
-
-plot3 <- plot2 +
-  geom_point(aes(alpha = occ_title %in% c("Nursing, Psychiatric, and Home Health Aides"))) +
-  geom_text(aes(label = case_when(occ_title == "Nursing, Psychiatric, and Home Health Aides" ~ "Home Health\nAide")),
-            size = 2,
-            vjust = 1.5) +
-  theme(legend.position = "none")
-ggsave("figures/scatter_factual_outcome_re_NonHispanicBlack_slide3.pdf",
-       height = 3, width = 4, plot = plot3, device = "pdf")
-
-plot4 <- plot3 +
-  geom_point(aes(alpha = occ_title %in% c("Taxi Drivers and Chauffeurs"))) +
-  geom_text(aes(label = case_when(occ_title == "Taxi Drivers and Chauffeurs" ~ "Taxi Drivers")),
-            size = 2,
-            vjust = -1) +
-  theme(legend.position = "none")
-ggsave("figures/scatter_factual_outcome_re_NonHispanicBlack_slide4.pdf",
-       height = 3, width = 4, plot = plot4, device = "pdf")
-
-plot5 <- plot4 +
-  geom_point() +
-  geom_text_repel(aes(label = case_when(occ_title == "Personal Care Aides" ~ "Personal\nCare Aides",
-                                        occ_title == "Combined Food Preparation and Serving Workers, Including Fast Food" ~ "Fast Food",
-                                        occ_title == "Dishwashers" ~ "Dishwashers",
-                                        occ_title == "Carpet, Floor, and Tile Installers and Finishers" ~ "Carpet\nInstallers",
-                                        T ~ "")),
-                  size = 2) +
-  theme(legend.position = "none")
-ggsave("figures/scatter_factual_outcome_re_NonHispanicBlack_slide5.pdf",
-       height = 3, width = 4, plot = plot5, device = "pdf")
-
-plot6 <- plot5 +
-  geom_point() +
-  geom_smooth(method = "lm", se = F, aes(weight = size)) +
-  annotate(geom = "text", x = .4, y = .002, hjust = 1,
-           label = paste0("Slope of Best Fit Line: ",scatter_slopes["Non-Hispanic Black"]),
-           size = 3) +
-  theme(legend.position = "none")
-ggsave("figures/scatter_factual_outcome_re_NonHispanicBlack_slide6.pdf",
-       height = 3, width = 4, plot = plot6, device = "pdf")
-
-print("Time spent")
-print(difftime(Sys.time(),t0))
-
-# Close the text output file
+# Note specific occupations that appear in the main text
+print(
+  for_scatter %>%
+    filter(occ_title %in% c("Nursing, Psychiatric, and Home Health Aides",
+                            "Agricultural workers, nec",
+                            "Industrial Truck and Tractor Operators",
+                            "Personal Care Aides",
+                            "Roofers")) %>%
+    select(occ_title, category, proportion) %>%
+    spread(key = category, value = proportion)
+)
+print("Later example uses CEOs")
+print(for_scatter %>%
+        filter(occ_title == "Chief executives and legislators/public administration") %>%
+        select(occ_title, category, proportion, y))
 sink()
-
-# End with an environment with no objects so this code can be run independently
-rm(list = ls(all = TRUE))

@@ -1,57 +1,56 @@
 
-# Quantifying the contribution of occupational
-# segregation to racial disparities in health:
-# A gap-closing perspective
+# This code calls the following packages
+library(tidyverse)
+library(ipumsr)
+library(mgcv)
+library(foreach)
+library(doParallel)
+library(doRNG)
+library(ggrepel)
 
-# Ian Lundberg
-# ilundberg@princeton.edu
+sink("figures/log_session_info.txt")
+print("Date and time of code run:")
+print(Sys.time())
+print("R VERSION:")
+print(data.frame(R.Version()) %>% pivot_longer(cols = everything()))
+print("PACKAGE VERSIONS:")
+for (package_name in c("tidyverse","ipumsr","mgcv","foreach","doParallel","ggrepel")) {
+  print(paste(package_name,packageVersion(package_name)))
+}
+sink()
 
-# Main code file. Calls all individual code files.
-
-setwd("/home/ubuntu/aws_output")
-
-print("Prepare the R environment")
-source("code/prepare_environment.R")
-
-print("Prepare data")
+# PREPARE DATA
+# This requires the data:
+# - data/cps_00050.xml
+# - data/cps_00050.dat
 source("code/prepare_data.R")
 
-print("Note sample restrictions in a text log")
-source("code/sample_restrictions.R")
+# ESTIMATE THE MAIN RESULTS
+# This requires the file code/estimator_functions.R
+source("code/estimation.R")
 
-print("Estimate. Each file internally calls estimator_functions.R.")
+# PRODUCE FIGURES
 
-print("Descriptive estimates")
-source("code/estimate_descriptive.R")
+# Notes:
 
-print("Scatters")
-source("code/estimate_scatters.R")
+# Figure 1 takes minutes to run because it estimates
+#   the x- and y-coordinates of dots in the scatters by multilevel models.
+# Figure 6 takes minutes because it constructs
+#  confidence intervals calculated with replicate weights.
+# Figures 15 and 16 take about a minute because they each create
+#  new point estimates under alternative sample restrictions.
 
-print("Counterfactual estimates")
-source("code/estimate_counterfactual.R")
+source("code/figure_1.R")
+source("code/figure_4.R")
+source("code/figure_6.R")
+source("code/figure_7a.R")
+source("code/figure_7b.R")
+source("code/figure_8.R")
+source("code/figure_14.R")
+source("code/figure_15.R")
+source("code/figure_16.R")
 
-print("Alternative specifications")
-source("code/estimate_additionalControls.R")
-source("code/estimate_withoutImmigrants.R")
-source("code/estimate_forwardLinkingWeight.R")
-source("code/estimate_from1988.R")
-source("code/estimate_beforeRedesign.R")
-source("code/estimate_afterRedesign.R")
-source("code/estimate_doublyRobust.R")
-
-print("Figures")
-# Note: Some figures are entirely LaTeX and thus have no R code.
-source("code/fig01.R")
-source("code/fig03.R")
-source("code/fig06.R")
-source("code/fig07.R")
-source("code/fig10.R")
-source("code/fig14.R")
-source("code/fig15.R")
-source("code/fig16.R")
-
-print("Create confidence intervals for factual to counterfactual changes in gaps")
-source("code/change_confidence_intervals")
-
+sink("figures/log_finish_time.txt")
 print("Finished at")
 print(Sys.time())
+sink()

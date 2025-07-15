@@ -1,47 +1,15 @@
-# Quantifying the contribution of occupational
-# segregation to racial disparities in health:
-# A gap-closing perspective
 
-# Ian Lundberg
-# ilundberg@princeton.edu
+sink("figures/log_figure_4.txt")
+print(Sys.time())
 
-# See run_all.R where this file is called.
+# See run_all.R to see how this file is called
 
-# Start with an environment with no objects so this code can be run independently
-rm(list = ls(all = TRUE))
-
-# Record printed output in a text file
-sink("logs/fig03.txt")
-
-# Record the time that this code file begins.
-t0 <- Sys.time()
-print("Date and time of code run:")
-print(t0)
-
-# Load packages
-library(tidyverse)
-library(reshape2)
-library(labelled)
-
-# Load data
-d_onset <- readRDS("intermediate/d_onset.Rds") %>%
-  filter(YEAR >= 2005)
-full_population <- readRDS("intermediate/full_population.Rds") %>%
-  filter(YEAR >= 2005)
-
-occupation_titles <- full_population %>%
-  select(OCC2010) %>%
-  group_by(OCC2010) %>%
-  filter(1:n() == 1) %>%
-  group_by() %>%
-  mutate(occ_title = as.character(to_factor(OCC2010)),
-         OCC2010 = factor(OCC2010))
+all_data <- list(d_onset = readRDS("intermediate/d_onset.RDS"))
 
 # Find occupations with very different proportions across education and across race
-factual <- d_onset %>%
+factual <- all_data$d_onset %>%
   group_by(OCC2010, EDUC, RACE) %>%
-  summarize(weight = sum(ASECWT), 
-            .groups = "drop") %>%
+  summarize(weight = sum(ASECWT)) %>%
   group_by(EDUC, RACE) %>%
   mutate(factual = weight / sum(weight)) %>%
   group_by() %>%
@@ -59,21 +27,20 @@ factual <- d_onset %>%
   mutate(RACE = gsub(" ","\n",RACE))
 
 # Find the assignment probabilities if assigned by education alone
-counterfactual <- d_onset %>%
+counterfactual <- all_data$d_onset %>%
   group_by(OCC2010, EDUC) %>%
-  summarize(weight = sum(ASECWT), 
-            .groups = "drop") %>%
+  summarize(weight = sum(ASECWT)) %>%
   group_by(EDUC) %>%
   mutate(counterfactual = weight / sum(weight)) %>%
   group_by() %>%
   select(OCC2010, EDUC, counterfactual)
 
 # Look at some of those occupations
-print(unique((factual %>%
-                filter(variance_index <= 3))$occ_title))
+unique((factual %>%
+          filter(variance_index <= 3))$occ_title)
 
 # Produce a plot of the factual assignment rule
-plot <- factual %>%
+factual %>%
   filter(variance_index <= 3) %>%
   group_by(RACE) %>%
   mutate(factual = factual / sum(factual)) %>%
@@ -94,11 +61,10 @@ plot <- factual %>%
   theme(legend.position = "none",
         axis.title = element_blank(),
         plot.title = element_text(hjust = .5, face = "bold"))
-
 ggsave("figures/pi_bucket_factual.pdf",
-       height = 5, width = 4, plot = plot)
+       height = 5, width = 4)
 
-plot <- factual %>%
+factual %>%
   filter(variance_index <= 3) %>%
   left_join(counterfactual, by = c("OCC2010","EDUC")) %>%
   mutate(counterfactual = counterfactual / sum(counterfactual)) %>%
@@ -120,9 +86,9 @@ plot <- factual %>%
         axis.title = element_blank(),
         plot.title = element_text(hjust = .5, face = "bold"))
 ggsave("figures/pi_bucket_counterfactual.pdf",
-       height = 5, width = 4, plot = plot)
+       height = 5, width = 4)
 
-plot <- factual %>%
+factual %>%
   filter(variance_index <= 3) %>%
   left_join(counterfactual, by = c("OCC2010","EDUC")) %>%
   mutate(counterfactual = counterfactual / sum(counterfactual)) %>%
@@ -145,13 +111,6 @@ plot <- factual %>%
         axis.text.y = element_blank(),
         plot.title = element_text(hjust = .5, face = "bold"))
 ggsave("figures/pi_bucket_counterfactual_noLabels.pdf",
-       height = 5, width = 2, plot = plot)
+       height = 5, width = 2)
 
-print("Time spent")
-print(difftime(Sys.time(),t0))
-
-# Close the text output file
 sink()
-
-# End with an environment with no objects so this code can be run independently
-rm(list = ls(all = TRUE))
