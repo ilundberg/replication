@@ -1,7 +1,7 @@
 
 README
 
-This replication package contains code for "[The causal impact of segregation a disparity: An approach llustrated with a racial health gap](https://drive.google.com/file/d/1OFYhRVK7CCglXMCfDOelKK2s0hIUWoX7/view?usp=sharing)" by Ian Lundberg. This is a working paper, and updates to the code should be expected.
+This replication package contains code for "[The causal impact of segregation on a disparity: A gap-closing approach](https://osf.io/x9evk)" by Ian Lundberg.
 
 Email: [ianlundberg@ucla.edu](mailto:ianlundberg@ucla.edu)
 
