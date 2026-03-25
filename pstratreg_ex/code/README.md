@@ -9,5 +9,6 @@ Run the code in this order:
 3. visualize_motherhood.R
 4. standard_practice_comparison.R (can be anytime after step 1)
 5. figures_process_overview.R (can be anytime)
+6. diagnostics.R (can be anytime after step 1)
 
 Results will appear in logs and in figures. Intermediate data files will be in intermediate.
