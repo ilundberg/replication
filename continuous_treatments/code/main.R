@@ -20,11 +20,10 @@ library(gridExtra)
 # Check that all required code is in the directory
 source("code/check_environment.R")
 
-# Define outcomes
-outcomes <- c("enrolled_any","enrolled_4yr",
-              "completed_25","completed_30")
-# Define the magnitude of the hypothetical interventions considered
-delta_values <- c(10e3,25e3)
+# Define outcome
+outcome_name <- "enrolled_any"
+# Define the magnitude of the hypothetical intervention considered
+delta_value <- 10e3
 # Define the number of bootstrap samples
 bs_reps <- 1000
 # Define parallel computing cores
@@ -64,59 +63,45 @@ clear_environment()
 print(Sys.time())
 print("Descriptive estimation")
 source("code/descriptive_smoother.R")
-descriptive_smooths <- foreach(
-  outcome_name = outcomes,
-  .combine = "rbind"
-) %do% {
-  descriptive_smoother(outcome_name = outcome_name, delta = delta_values, bs_reps = bs_reps)
-}
+descriptive_smooths <- descriptive_smoother(
+  outcome_name = outcome_name, 
+  delta = delta_value, 
+  bs_reps = bs_reps
+)
 saveRDS(descriptive_smooths, file = "intermediate/descriptive_smooths.RDS")
 clear_environment()
 
 source("code/descriptive_binner.R")
-descriptive_bins <- foreach(
-  outcome_name = c("enrolled_any","enrolled_4yr","completed_25","completed_30"),
-  .combine = "rbind"
-) %do% {
-  descriptive_binner(outcome_name = outcome_name)
-}
+descriptive_bins <- descriptive_binner(outcome_name = outcome_name)
 saveRDS(descriptive_bins, file = "intermediate/descriptive_bins.RDS")
 clear_environment()
 
 # Causal estimation: Logistic regression in full sample
 print(Sys.time())
 print("Causal estimation: Logit")
-for (outcome_value in outcomes) {
-  print(paste("BEGIN OUTCOME",which(outcomes == outcome_value),
-              "OF",length(outcomes)))
-  source("code/causal_estimator.R")
-  estimate.out <- causal_estimator(
-    outcome = outcome_value, 
-    # Number of bootstrap reps
-    bs_reps = bs_reps,
-    delta = delta_values
-  )
-  saveRDS(estimate.out, 
-          file = paste0("intermediate/causal_",outcome_value,".RDS"))
-}
+source("code/causal_estimator.R")
+estimate.out <- causal_estimator(
+  outcome = outcome_name, 
+  # Number of bootstrap reps
+  bs_reps = bs_reps,
+  delta = delta_value
+)
+saveRDS(estimate.out, 
+        file = paste0("intermediate/causal_",outcome_name,".RDS"))
 clear_environment()
 
 # Causal estimation: GAM in full sample
 print(Sys.time())
 print("Causal estimation: GAM")
-for (outcome_value in outcomes) {
-  print(paste("BEGIN OUTCOME",which(outcomes == outcome_value),
-              "OF",length(outcomes)))
-  source("code/causal_estimator_gam.R")
-  estimate.out <- causal_estimator(
-    outcome = outcome_value, 
-    # Number of bootstrap reps
-    bs_reps = bs_reps,
-    delta = delta_values
-  )
-  saveRDS(estimate.out, 
-          file = paste0("intermediate/causal_",outcome_value,"_gam.RDS"))
-}
+source("code/causal_estimator_gam.R")
+estimate.out <- causal_estimator(
+  outcome = outcome_name, 
+  # Number of bootstrap reps
+  bs_reps = bs_reps,
+  delta = delta_value
+)
+saveRDS(estimate.out, 
+        file = paste0("intermediate/causal_",outcome_name,"_gam.RDS"))
 clear_environment()
 
 # Descriptive visualization
@@ -165,8 +150,8 @@ print(sessionInfo())
 
 print(paste("FINISH TIME:",Sys.time()))
 print(paste("bs_reps:",bs_reps))
-print(paste("outcomes:",paste(outcomes,collapse = " ")))
-print(paste("delta_values:",paste(delta_values,collapse = " ")))
+print(paste("outcome:",outcome_name))
+print(paste("delta_value:",delta_value))
 print(paste("num_cores:",num_cores))
 print(("TIME SPENT:"))
 print(difftime(Sys.time(),t0))

@@ -1,15 +1,13 @@
 
 visualize_causal <- function(model = "logit") {
   
-  source("code/label_outcomes_treatments.R")
-  
   print(model)
   
   # Function to aggregate individual estimates to population
   # and subpopulation summaries
   aggregator <- function(groups) {
     
-    to_return <- foreach(outcome_name = outcomes, .combine = "rbind") %do% {
+    to_return <- foreach(outcome_name = outcome_name, .combine = "rbind") %do% {
       
       # Load this result
       if (model == "logit") {
@@ -67,31 +65,6 @@ visualize_causal <- function(model = "logit") {
     height = 10,
     width = 10
   ) {
-    source("code/label_outcomes_treatments.R")
-    
-    # Plot with all outcomes and treatments
-    this_plot <- data %>%
-      rename_with(.fn = function(x) str_replace_all(x,xvar,"xvar")) %>%
-      ggplot(aes(x = xvar, y = estimate,
-                 ymin = ci.min, ymax = ci.max)) +
-      geom_hline(yintercept = 0, linetype = "dashed", color = "gray") +
-      geom_point() +
-      geom_errorbar(width = .2) +
-      geom_text(aes(label = format(round(estimate,3),nsmall=3)),
-                nudge_x = .2,
-                size = 3) +
-      facet_grid(outcome ~ delta,
-                 switch = "y",
-                 labeller = label_outcomes_treatments) +
-      ylab(ylab) +
-      xlab(xlab) +
-      ggtitle("Treatment") +
-      theme(strip.placement = "outside",
-            axis.title = element_text(size = 12, hjust = .5, face = "bold"),
-            plot.title = element_text(size = 12, hjust = .5, face = "bold"))
-    ggsave(file = paste0("figures/",ifelse(model == "logit", "", paste0(model,"_")),"by_",xvar,"_all.pdf"),
-           plot = this_plot,
-           height = height, width = width)
     
     # Plot with focal outcome and treatment
     this_plot <- data %>%
@@ -162,97 +135,5 @@ visualize_causal <- function(model = "logit") {
       xvar = "label_wealth",
       xlab = "Parent Wealth Tercile"
     )
-  
-  
-  # Visualize CATE estimates by income
-  forplot <- aggregator(groups = c("income","PUBID")) |>
-    filter(delta == 10e3 & outcome == "enrolled_any")
-  forplot |>
-    ggplot(aes(x = income, y = estimate)) + 
-    geom_point(color = "gray", size = .2, alpha = .2) + 
-    scale_x_continuous(
-      labels = scales::label_currency(),
-      name = "Family Income at Age 17",
-      limits = c(0,325e3)
-    ) +
-    ylab(
-      "Effect of Additional $10,000\nOn Any College Enrollment"
-    )
-  ggsave(paste0("figures/",ifelse(model == "logit", "", paste0(model,"_")),"effect_by_income.pdf"),
-         height = 3, width = 4)
-  
-  # Visualize the histogram of CATE estimates
-  cate_all <- foreach(outcome_name = outcomes, .combine = "rbind") %do% {
-    estimate.out <- readRDS(paste0("intermediate/causal_",
-                                   outcome_name,".RDS"))
-    return(estimate.out$estimate %>%
-             mutate(outcome = outcome_name))
-  }
-  cate_all %>%
-    filter(delta == 10e3 & outcome == "enrolled_any") %>%
-    (function(.data) {
-      print(paste0("Below 0 dropped from histogram. Weighted prop: ",
-                   weighted.mean(.data$effect < 0, w = .data$w)))
-      return(.data %>%
-               filter(effect >= 0))
-    }) %>%
-    ggplot(aes(x = effect, weight = w)) +
-    geom_histogram(bins = 20, boundary = 0) +
-    xlab("Conditional Average Causal Effect\nof Additional $10,000 on College Enrollment") +
-    ylab("Weighted\nCount")
-  ggsave(paste0("figures/",ifelse(model == "logit", "", paste0(model,"_")),"effect_histogram.pdf"),
-         height = 2.5, width = 4)
-  
-  cate_all %>%
-    ggplot(aes(x = effect, weight = w)) +
-    geom_histogram() +
-    xlab("Conditional Average Causal Effect") +
-    ylab("Weighted Count") +
-    geom_vline(xintercept = 0, linetype = "dashed") +
-    facet_grid(outcome ~ delta,
-               labeller = label_outcomes_treatments)
-  ggsave(paste0("figures/",ifelse(model == "logit", "", paste0(model,"_")),"effect_histogram_all.pdf"),
-         height = 7.5, width = 6.5)
-  
-  # VISUALIZE CAUSAL VS DESCRIPTIVE
-  ate_descriptive <- readRDS("intermediate/descriptive_smooths.RDS") %>%
-    filter(grepl("delta",estimand)) %>%
-    mutate(delta = as.numeric(gsub("delta_","",estimand))) %>%
-    select(outcome, delta, estimate, ci.min, ci.max) %>%
-    mutate(estimand = "Unadjusted")
-  
-  ate_comparison <- aggregator(NULL) %>%
-    mutate(estimand = "Adjusted for\nConfounders") %>%
-    bind_rows(ate_descriptive) %>%
-    mutate(estimand = fct_rev(estimand)) %>%
-    mutate(label = format(round(estimate,3), nsmall = 3))
-  
-  ate_comparison %>%
-    ggplot(aes(x = estimand, y = estimate,
-               ymin = ci.min, ymax = ci.max,
-               label = label)) +
-    geom_point() +
-    geom_errorbar(width = .2) +
-    geom_text(nudge_x = .3, size = 3) +
-    facet_grid(outcome ~ delta,
-               labeller = label_outcomes_treatments) +
-    geom_hline(yintercept = 0, linetype = "dashed", color = "gray") +
-    ylab("Average Causal Effect Estimate") +
-    xlab("Estimator")
-  ggsave(paste0("figures/",ifelse(model == "logit", "", paste0(model,"_")),"ate_comparison_all.pdf"),
-         height = 7.5, width = 6.5)
-  
-  ate_comparison %>%
-    filter(outcome == "enrolled_any" & delta == 10e3) %>%
-    ggplot(aes(x = estimand, y = estimate,
-               ymin = ci.min, ymax = ci.max,
-               label = label)) +
-    geom_errorbar(width = .2) +
-    geom_label() +
-    geom_hline(yintercept = 0, linetype = "dashed", color = "gray") +
-    ylab("Effect on College Enrollment") +
-    xlab("Estimator")
-  ggsave(paste0("figures/",ifelse(model == "logit", "", paste0(model,"_")),"ate_comparison.pdf"),
-         height = 3, width = 3)
   
 }

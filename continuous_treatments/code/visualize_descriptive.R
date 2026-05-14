@@ -7,27 +7,6 @@ descriptive_smooths <- readRDS("intermediate/descriptive_smooths.RDS")
 descriptive_bins <- readRDS("intermediate/descriptive_bins.RDS")
 
 descriptive_smooths %>%
-  filter(estimand == "yhat") %>%
-  mutate(outcome = fct_rev(outcome)) %>%
-  ggplot(aes(x = income, y = estimate,
-             color = outcome,
-             fill = outcome)) +
-  geom_ribbon(aes(ymin = ci.min, ymax = ci.max),
-              alpha = .2, color = NA) +
-  geom_line() +
-  geom_point(data = descriptive_bins) +
-  ylab("Probability of Educational Milestone") +
-  scale_x_continuous(name = "Parent Income",
-                     labels = scales::label_dollar()) +
-  scale_color_discrete(name = "Outcome",
-                       labels = label_outcomes_treatments) +
-  scale_fill_discrete(name = "Outcome",
-                      labels = label_outcomes_treatments) +
-  theme(legend.key.height = unit(.4,"in"))
-ggsave("figures/descriptive_all_outcomes.pdf",
-       height = 5, width = 6.5)
-
-descriptive_smooths %>%
   filter(outcome == "enrolled_any") %>%
   filter(estimand == "yhat") %>%
   ggplot(aes(x = income, y = estimate)) +

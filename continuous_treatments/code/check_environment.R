@@ -11,7 +11,6 @@ needed_files <- c(
   "prepare_data.R",
   "descriptive_smoother.R",
   "descriptive_binner.R",
-  "strong_confounding.R",
   "causal_estimator.R",
   "causal_estimator_gam.R",
   "visualize_model.R",
@@ -19,7 +18,7 @@ needed_files <- c(
   "visualize_causal.R",
   "visualize_logit_gam_scatter.R",
   "summarize_x_given_effect.R",
-  "visualize_model.R",
+  "simulation_no_tradeoff.R",
   "simulation_forest_can_underperform.R",
   "simulation_interactive_nonlinear_mse.R",
   # supporting files called within scripts above

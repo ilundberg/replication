@@ -20,7 +20,7 @@ causal_estimator <- function(
     )
     
     estimate <- foreach(delta_value = delta, .combine = "rbind") %do% {
-      d %>%
+      estimation %>%
         mutate(yhat1 = predict(fit, type = "response",
                                newdata = estimation %>% mutate(income = income + delta_value)),
                yhat0 = predict(fit, 

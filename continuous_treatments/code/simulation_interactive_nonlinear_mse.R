@@ -1,12 +1,4 @@
 
-library(tidyverse)
-library(mgcv)
-library(foreach)
-library(doParallel)
-library(doRNG)
-cl <- makeCluster(detectCores())
-registerDoParallel(cl)
-
 simulate <- function(
     n = 100,         # sample size
     delta = .01,     # additive shift intervention size

@@ -1,5 +1,9 @@
-[1] "2023-11-28 22:29:22 EST"
-[1] "2023-11-28 22:29:23 EST"
+[1] "2026-05-14 06:33:33 MDT"
+[1] "2026-05-14 06:33:34 MDT"
+[1] "Conceptual figure of nonlinear and heterogeneous effects"
+[1] "Conceptual figure of strong confounding"
+[1] "Conceptual figure with heterogeneity and nonlinearity empirically equivalent"
+[1] "2026-05-14 06:33:35 MDT"
 [1] "Prepare data"
 [1] "enrolled_any"
 [1] "8984 Total"
@@ -21,7 +25,7 @@
 [1] "6588 Valid treatment"
 [1] "6455 Treatment not top-coded"
 [1] "5772 Valid outcome"
-[1] "2023-11-28 22:29:29 EST"
+[1] "2026-05-14 06:33:42 MDT"
 [1] "Descriptive estimation"
 -- Imputation 1 --
 
@@ -31,672 +35,171 @@
 
   1  2
 
--- Imputation 1 --
+[1] "2026-05-14 06:35:17 MDT"
+[1] "Causal estimation: Logit"
 
-  1  2
-
--- Imputation 1 --
-
-  1  2
-
--- Imputation 1 --
-
-  1  2
-
--- Imputation 1 --
-
-  1  2
-
--- Imputation 1 --
-
-  1  2
-
--- Imputation 1 --
-
-  1  2
-
-[1] "2023-11-28 22:36:17 EST"
-[1] "Extrapolation danger"
-[1] "2023-11-28 22:36:17 EST"
-[1] "Extrapolation danger"
--- Imputation 1 --
-
-  1  2
-
-[1] "2023-11-28 22:36:18 EST"
-[1] "Causal estimation"
-[1] "BEGIN OUTCOME 1 OF 4"
-
-Begin point estimate. 2023-11-28 22:36:18.168291-- Imputation 1 --
+Begin point estimate. 2026-05-14 06:35:17.331439-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-11-28 22:36:20.56208 
+Begin 1000 bootstrap replicates. 2026-05-14 06:35:17.418698 
 
-Estimated bootstrap completion time: 2023-11-28 22:39:40.05209 
-[1] "BEGIN OUTCOME 2 OF 4"
+Estimated bootstrap completion time: 2026-05-14 06:35:24.830259 
+[1] "2026-05-14 06:36:03 MDT"
+[1] "Causal estimation: GAM"
 
-Begin point estimate. 2023-11-28 23:13:06.678293-- Imputation 1 --
-
-  1  2
-
-
-Begin 1000 bootstrap replicates. 2023-11-28 23:13:08.880648 
-
-Estimated bootstrap completion time: 2023-11-28 23:16:12.417471 
-[1] "BEGIN OUTCOME 3 OF 4"
-
-Begin point estimate. 2023-11-28 23:18:18.547788-- Imputation 1 --
+Begin point estimate. 2026-05-14 06:36:03.542402-- Imputation 1 --
 
   1  2
 
 
-Begin 1000 bootstrap replicates. 2023-11-28 23:18:20.485657 
+Begin 1000 bootstrap replicates. 2026-05-14 06:36:03.853105 
 
-Estimated bootstrap completion time: 2023-11-28 23:21:01.982814 
-[1] "BEGIN OUTCOME 4 OF 4"
-
-Begin point estimate. 2023-11-28 23:22:59.365064-- Imputation 1 --
-
-  1  2
-
-
-Begin 1000 bootstrap replicates. 2023-11-28 23:23:01.221987 
-
-Estimated bootstrap completion time: 2023-11-28 23:25:35.975085 
-[1] "2023-11-28 23:27:27 EST"
-[1] "Causal estimation within sample splits"
-[1] "BEGIN OUTCOME 1 OF 4"
--- Imputation 1 --
-
-  1  2
-
-
-Begin point estimate. 2023-11-28 23:27:27.503572-- Imputation 1 --
-
-  1  2
-
-
-Begin 1000 bootstrap replicates. 2023-11-28 23:27:29.900152 
-
-Estimated bootstrap completion time: 2023-11-28 23:30:49.622401 
-
-Begin point estimate. 2023-11-29 00:51:35.732537-- Imputation 1 --
-
-  1  2
-
-
-Begin 1000 bootstrap replicates. 2023-11-29 00:51:38.119983 
-
-Estimated bootstrap completion time: 2023-11-29 00:54:57.081142 
-[1] "BEGIN OUTCOME 2 OF 4"
--- Imputation 1 --
-
-  1  2
-
-
-Begin point estimate. 2023-11-29 02:34:06.395747-- Imputation 1 --
-
-  1  2
-
-
-Begin 1000 bootstrap replicates. 2023-11-29 02:34:08.658751 
-
-Estimated bootstrap completion time: 2023-11-29 02:37:17.356257 
-
-Begin point estimate. 2023-11-29 04:04:56.382712-- Imputation 1 --
-
-  1  2
-
-
-Begin 1000 bootstrap replicates. 2023-11-29 04:04:58.536923 
-
-Estimated bootstrap completion time: 2023-11-29 04:07:58.06166 
-[1] "BEGIN OUTCOME 3 OF 4"
--- Imputation 1 --
-
-  1  2
-
-
-Begin point estimate. 2023-11-29 05:45:26.840716-- Imputation 1 --
-
-  1  2
-
-
-Begin 1000 bootstrap replicates. 2023-11-29 05:45:28.695683 
-
-Estimated bootstrap completion time: 2023-11-29 05:48:03.283428 
-
-Begin point estimate. 2023-11-29 07:10:15.097247-- Imputation 1 --
-
-  1  2
-
-
-Begin 1000 bootstrap replicates. 2023-11-29 07:10:16.975821 
-
-Estimated bootstrap completion time: 2023-11-29 07:12:53.629314 
-[1] "BEGIN OUTCOME 4 OF 4"
--- Imputation 1 --
-
-  1  2
-
-
-Begin point estimate. 2023-11-29 08:17:37.256426-- Imputation 1 --
-
-  1  2
-
-
-Begin 1000 bootstrap replicates. 2023-11-29 08:17:39.054205 
-
-Estimated bootstrap completion time: 2023-11-29 08:20:08.876019 
-
-Begin point estimate. 2023-11-29 08:22:03.595807-- Imputation 1 --
-
-  1  2
-
-
-Begin 1000 bootstrap replicates. 2023-11-29 08:22:05.444231 
-
-Estimated bootstrap completion time: 2023-11-29 08:24:39.487233 
-[1] "2023-11-29 08:26:25 EST"
-[1] "Visualize model: Analyze"
-[1] "BEGIN OUTCOME 1 OF 4"
-
-Begin point estimate. 2023-11-29 08:26:25.807031-- Imputation 1 --
-
-  1  2
-
-[1] "BEGIN OUTCOME 2 OF 4"
-
-Begin point estimate. 2023-11-29 08:26:29.820687-- Imputation 1 --
-
-  1  2
-
-[1] "BEGIN OUTCOME 3 OF 4"
-
-Begin point estimate. 2023-11-29 08:26:33.789096-- Imputation 1 --
-
-  1  2
-
-[1] "BEGIN OUTCOME 4 OF 4"
-
-Begin point estimate. 2023-11-29 08:26:37.502397-- Imputation 1 --
-
-  1  2
-
-[1] "2023-11-29 08:26:42 EST"
-[1] "Visualize model: Visualize"
-[1] "2023-11-29 08:26:42 EST"
+Estimated bootstrap completion time: 2026-05-14 06:36:29.757054 
+[1] "2026-05-14 06:37:18 MDT"
 [1] "Descriptive visualization"
        outcome estimate    se ci.min ci.max
-1 enrolled_any    0.032 0.002  0.029  0.035
-2 enrolled_4yr    0.030 0.001  0.028  0.033
-3 completed_25    0.024 0.001  0.022  0.026
-4 completed_30    0.028 0.001  0.026  0.030
-[1] "2023-11-29 08:26:43 EST"
+1 enrolled_any    0.031 0.002  0.028  0.034
+[1] "2026-05-14 06:37:18 MDT"
 [1] "Deductive causal visualization"
+[1] "logit"
 [1] "POPULATION AVERAGE EFFECT"
-# A tibble: 8 × 7
-  delta estimate      se  ci.min  ci.max outcome      ybar0
-  <dbl>    <dbl>   <dbl>   <dbl>   <dbl> <chr>        <dbl>
-1 10000  0.0167  0.00246 0.0119  0.0215  enrolled_any 0.557
-2 25000  0.0381  0.00478 0.0288  0.0475  enrolled_any 0.557
-3 10000  0.0111  0.00177 0.00761 0.0145  enrolled_4yr 0.358
-4 25000  0.0250  0.00378 0.0176  0.0324  enrolled_4yr 0.358
-5 10000  0.00668 0.00144 0.00387 0.00950 completed_25 0.223
-6 25000  0.0153  0.00329 0.00889 0.0218  completed_25 0.223
-7 10000  0.00820 0.00169 0.00488 0.0115  completed_30 0.288
-8 25000  0.0186  0.00348 0.0118  0.0254  completed_30 0.288
+# A tibble: 1 × 7
+  delta estimate      se ci.min ci.max outcome      ybar0
+  <dbl>    <dbl>   <dbl>  <dbl>  <dbl> <chr>        <dbl>
+1 10000   0.0172 0.00180 0.0136 0.0207 enrolled_any 0.557
 [1] "WITHIN EDUCATION"
-# A tibble: 24 × 8
-   delta educJoint estimate      se    ci.min  ci.max outcome      ybar0
-   <dbl>     <dbl>    <dbl>   <dbl>     <dbl>   <dbl> <chr>        <dbl>
- 1 10000         2  0.00359 0.00229 -0.000893 0.00808 enrolled_any 0.557
- 2 10000         1  0.00703 0.00234  0.00244  0.0116  enrolled_any 0.557
- 3 10000         0  0.0206  0.00254  0.0156   0.0256  enrolled_any 0.557
- 4 25000         2  0.00836 0.00461 -0.000672 0.0174  enrolled_any 0.557
- 5 25000         1  0.0164  0.00469  0.00719  0.0256  enrolled_any 0.557
- 6 25000         0  0.0470  0.00489  0.0374   0.0566  enrolled_any 0.557
- 7 10000         2  0.00311 0.00174 -0.000306 0.00653 enrolled_4yr 0.358
- 8 10000         1  0.00479 0.00177  0.00132  0.00825 enrolled_4yr 0.358
- 9 10000         0  0.0136  0.00180  0.0100   0.0171  enrolled_4yr 0.358
-10 25000         2  0.00727 0.00386 -0.000294 0.0148  enrolled_4yr 0.358
-# ℹ 14 more rows
+# A tibble: 3 × 8
+  delta educJoint estimate      se   ci.min  ci.max outcome      ybar0
+  <dbl>     <dbl>    <dbl>   <dbl>    <dbl>   <dbl> <chr>        <dbl>
+1 10000         2  0.00300 0.00247 -0.00183 0.00784 enrolled_any 0.557
+2 10000         1  0.00686 0.00266  0.00165 0.0121  enrolled_any 0.557
+3 10000         0  0.0214  0.00229  0.0169  0.0259  enrolled_any 0.557
 [1] "WITHIN INCOME TERCILE"
-# A tibble: 24 × 8
-   delta label_income estimate      se  ci.min  ci.max outcome      ybar0
-   <dbl> <chr>           <dbl>   <dbl>   <dbl>   <dbl> <chr>        <dbl>
- 1 10000 Low           0.0267  0.00281 0.0212  0.0322  enrolled_any 0.557
- 2 10000 Mid           0.0154  0.00249 0.0105  0.0203  enrolled_any 0.557
- 3 10000 High          0.00686 0.00220 0.00254 0.0112  enrolled_any 0.557
- 4 25000 Low           0.0599  0.00526 0.0496  0.0702  enrolled_any 0.557
- 5 25000 Mid           0.0358  0.00490 0.0262  0.0454  enrolled_any 0.557
- 6 25000 High          0.0162  0.00445 0.00750 0.0249  enrolled_any 0.557
- 7 10000 Low           0.0163  0.00195 0.0125  0.0201  enrolled_4yr 0.358
- 8 10000 Mid           0.0104  0.00175 0.00698 0.0138  enrolled_4yr 0.358
- 9 10000 High          0.00589 0.00173 0.00251 0.00927 enrolled_4yr 0.358
-10 25000 Low           0.0352  0.00398 0.0274  0.0430  enrolled_4yr 0.358
-# ℹ 14 more rows
+# A tibble: 3 × 8
+  delta label_income estimate       se  ci.min  ci.max outcome      ybar0
+  <dbl> <chr>           <dbl>    <dbl>   <dbl>   <dbl> <chr>        <dbl>
+1 10000 Low           0.0311  0.00360  0.0240  0.0381  enrolled_any 0.557
+2 10000 Mid           0.0129  0.00153  0.00995 0.0159  enrolled_any 0.557
+3 10000 High          0.00614 0.000720 0.00473 0.00755 enrolled_any 0.557
 [1] "WITHIN WEALTH TERCILE"
-# A tibble: 24 × 8
-   delta label_wealth estimate      se  ci.min ci.max outcome      ybar0
-   <dbl> <chr>           <dbl>   <dbl>   <dbl>  <dbl> <chr>        <dbl>
- 1 10000 Low           0.0227  0.00261 0.0176  0.0278 enrolled_any 0.557
- 2 10000 Mid           0.0174  0.00260 0.0124  0.0225 enrolled_any 0.557
- 3 10000 High          0.00963 0.00227 0.00519 0.0141 enrolled_any 0.557
- 4 25000 Low           0.0513  0.00494 0.0416  0.0610 enrolled_any 0.557
- 5 25000 Mid           0.0401  0.00506 0.0302  0.0500 enrolled_any 0.557
- 6 25000 High          0.0222  0.00454 0.0133  0.0311 enrolled_any 0.557
- 7 10000 Low           0.0120  0.00187 0.00834 0.0157 enrolled_4yr 0.358
- 8 10000 Mid           0.0121  0.00181 0.00859 0.0157 enrolled_4yr 0.358
- 9 10000 High          0.00897 0.00172 0.00559 0.0123 enrolled_4yr 0.358
-10 25000 Low           0.0261  0.00388 0.0185  0.0337 enrolled_4yr 0.358
-# ℹ 14 more rows
-[1] "Below 0 dropped from histogram. Weighted prop: 0.000718531534054633"
-[1] "2023-11-29 08:52:18 EST"
-[1] "Causal estimates in interactive subgroups"
-[1] "ENROLLED_ANY"
-[1] "Subgroups that are never seen"
-# A tibble: 3 × 5
-  race               educJoint                   label_wealth label_income     n
-  <fct>              <fct>                       <fct>        <fct>        <int>
-1 Hispanic           "Two parents\nfinished col… "Middle\n$3… "Middle\n$5…    NA
-2 Hispanic           "Two parents\nfinished col… "High\n$190… "Low\n< $55…    NA
-3 Non-Hispanic Black "Two parents\nfinished col… "Low\n< $35… "Middle\n$5…    NA
-[1] "Subgroups that are very sparse:"
-# A tibble: 78 × 5
-# Groups:   race, educJoint, label_wealth, label_income [78]
-   race                   educJoint              label_wealth label_income     n
-   <fct>                  <fct>                  <fct>        <fct>        <int>
- 1 Hispanic               "Two parents\nfinishe… "Low\n< $35… "Low\n< $55…     1
- 2 Hispanic               "Two parents\nfinishe… "Low\n< $35… "Middle\n$5…     1
- 3 Hispanic               "Two parents\nfinishe… "Middle\n$3… "Low\n< $55…     1
- 4 Non-Hispanic Black     "Two parents\nfinishe… "Low\n< $35… "Low\n< $55…     1
- 5 Non-Hispanic Black     "Two parents\nfinishe… "High\n$190… "Low\n< $55…     1
- 6 Non-Black Non-Hispanic "Two parents\nfinishe… "Middle\n$3… "Low\n< $55…     2
- 7 Hispanic               "Two parents\nfinishe… "Low\n< $35… "High\n$104…     2
- 8 Hispanic               "One parent\nfinished… "High\n$190… "Low\n< $55…     2
- 9 Non-Hispanic Black     "Two parents\nfinishe… "Middle\n$3… "Low\n< $55…     2
-10 Non-Hispanic Black     "Two parents\nfinishe… "High\n$190… "Middle\n$5…     2
-# ℹ 68 more rows
-[1] "Number of subgroups with at least 100:"
-# A tibble: 1 × 1
-  num_subgroups
-          <int>
-1            18
-[1] "Prop of sample in those subgroups:"
-# A tibble: 1 × 2
-  prop_sample weighted
-        <dbl>    <dbl>
-1       0.799    0.803
-[1] "ENROLLED_4YR"
-[1] "Subgroups that are never seen"
-# A tibble: 4 × 5
-  race               educJoint                   label_wealth label_income     n
-  <fct>              <fct>                       <fct>        <fct>        <int>
-1 Hispanic           "Two parents\nfinished col… "Middle\n$3… "Low\n< $55…    NA
-2 Hispanic           "Two parents\nfinished col… "Middle\n$3… "Middle\n$5…    NA
-3 Hispanic           "Two parents\nfinished col… "High\n$190… "Low\n< $55…    NA
-4 Non-Hispanic Black "Two parents\nfinished col… "Low\n< $35… "Middle\n$5…    NA
-[1] "Subgroups that are very sparse:"
-# A tibble: 77 × 5
-# Groups:   race, educJoint, label_wealth, label_income [77]
-   race               educJoint                  label_wealth label_income     n
-   <fct>              <fct>                      <fct>        <fct>        <int>
- 1 Non-Hispanic Black "Two parents\nfinished co… "Low\n< $35… "Low\n< $55…     1
- 2 Non-Hispanic Black "Two parents\nfinished co… "High\n$190… "Low\n< $55…     1
- 3 Non-Hispanic Black "One parent\nfinished col… "High\n$190… "Low\n< $55…     1
- 4 Hispanic           "Two parents\nfinished co… "Low\n< $35… "Low\n< $55…     2
- 5 Hispanic           "Two parents\nfinished co… "Low\n< $35… "Middle\n$5…     2
- 6 Hispanic           "Two parents\nfinished co… "Low\n< $35… "High\n$104…     2
- 7 Non-Hispanic Black "Two parents\nfinished co… "Low\n< $35… "High\n$104…     2
- 8 Non-Hispanic Black "Two parents\nfinished co… "Middle\n$3… "Low\n< $55…     2
- 9 Hispanic           "Two parents\nfinished co… "High\n$190… "Middle\n$5…     3
-10 Hispanic           "One parent\nfinished col… "Low\n< $35… "High\n$104…     3
-# ℹ 67 more rows
-[1] "Number of subgroups with at least 100:"
-# A tibble: 1 × 1
-  num_subgroups
-          <int>
-1            18
-[1] "Prop of sample in those subgroups:"
-# A tibble: 1 × 2
-  prop_sample weighted
-        <dbl>    <dbl>
-1       0.797    0.799
-[1] "COMPLETED_25"
-[1] "Subgroups that are never seen"
-# A tibble: 3 × 5
-  race               educJoint                   label_wealth label_income     n
-  <fct>              <fct>                       <fct>        <fct>        <int>
-1 Hispanic           "Two parents\nfinished col… "High\n$190… "Low\n< $55…    NA
-2 Non-Hispanic Black "Two parents\nfinished col… "Low\n< $35… "Middle\n$5…    NA
-3 Non-Hispanic Black "One parent\nfinished coll… "High\n$190… "Low\n< $55…    NA
-[1] "Subgroups that are very sparse:"
-# A tibble: 78 × 5
-# Groups:   race, educJoint, label_wealth, label_income [78]
-   race                   educJoint              label_wealth label_income     n
-   <fct>                  <fct>                  <fct>        <fct>        <int>
- 1 Non-Black Non-Hispanic "Two parents\nfinishe… "Low\n< $35… "High\n$104…     1
- 2 Hispanic               "Two parents\nfinishe… "Low\n< $35… "Low\n< $55…     1
- 3 Hispanic               "Two parents\nfinishe… "Low\n< $35… "High\n$104…     1
- 4 Hispanic               "Two parents\nfinishe… "Middle\n$3… "Low\n< $55…     1
- 5 Hispanic               "Two parents\nfinishe… "Middle\n$3… "Middle\n$5…     1
- 6 Non-Hispanic Black     "Two parents\nfinishe… "Low\n< $35… "Low\n< $55…     1
- 7 Non-Hispanic Black     "Two parents\nfinishe… "High\n$190… "Low\n< $55…     1
- 8 Non-Black Non-Hispanic "Two parents\nfinishe… "Middle\n$3… "Low\n< $55…     2
- 9 Hispanic               "Two parents\nfinishe… "Low\n< $35… "Middle\n$5…     2
-10 Hispanic               "Two parents\nfinishe… "High\n$190… "Middle\n$5…     2
-# ℹ 68 more rows
-[1] "Number of subgroups with at least 100:"
-# A tibble: 1 × 1
-  num_subgroups
-          <int>
-1            18
-[1] "Prop of sample in those subgroups:"
-# A tibble: 1 × 2
-  prop_sample weighted
-        <dbl>    <dbl>
-1       0.805    0.808
-[1] "COMPLETED_30"
-[1] "Subgroups that are never seen"
-# A tibble: 3 × 5
-  race               educJoint                   label_wealth label_income     n
-  <fct>              <fct>                       <fct>        <fct>        <int>
-1 Hispanic           "Two parents\nfinished col… "Middle\n$3… "Middle\n$5…    NA
-2 Hispanic           "Two parents\nfinished col… "High\n$190… "Low\n< $55…    NA
-3 Non-Hispanic Black "Two parents\nfinished col… "Low\n< $35… "Middle\n$5…    NA
-[1] "Subgroups that are very sparse:"
-# A tibble: 78 × 5
-# Groups:   race, educJoint, label_wealth, label_income [78]
-   race               educJoint                  label_wealth label_income     n
-   <fct>              <fct>                      <fct>        <fct>        <int>
- 1 Hispanic           "Two parents\nfinished co… "Low\n< $35… "Low\n< $55…     1
- 2 Hispanic           "Two parents\nfinished co… "Low\n< $35… "Middle\n$5…     1
- 3 Hispanic           "Two parents\nfinished co… "Middle\n$3… "Low\n< $55…     1
- 4 Non-Hispanic Black "Two parents\nfinished co… "Low\n< $35… "Low\n< $55…     1
- 5 Non-Hispanic Black "Two parents\nfinished co… "High\n$190… "Low\n< $55…     1
- 6 Hispanic           "Two parents\nfinished co… "Low\n< $35… "High\n$104…     2
- 7 Non-Hispanic Black "Two parents\nfinished co… "Low\n< $35… "High\n$104…     2
- 8 Non-Hispanic Black "Two parents\nfinished co… "Middle\n$3… "Low\n< $55…     2
- 9 Non-Hispanic Black "One parent\nfinished col… "Low\n< $35… "High\n$104…     2
-10 Non-Hispanic Black "One parent\nfinished col… "High\n$190… "Low\n< $55…     2
-# ℹ 68 more rows
-[1] "Number of subgroups with at least 100:"
-# A tibble: 1 × 1
-  num_subgroups
-          <int>
-1            17
-[1] "Prop of sample in those subgroups:"
-# A tibble: 1 × 2
-  prop_sample weighted
-        <dbl>    <dbl>
-1       0.783    0.792
-[1] "2023-11-29 08:53:36 EST"
+# A tibble: 3 × 8
+  delta label_wealth estimate      se  ci.min ci.max outcome      ybar0
+  <dbl> <chr>           <dbl>   <dbl>   <dbl>  <dbl> <chr>        <dbl>
+1 10000 Low            0.0239 0.00347 0.0171  0.0307 enrolled_any 0.557
+2 10000 Mid            0.0157 0.00191 0.0120  0.0195 enrolled_any 0.557
+3 10000 High           0.0113 0.00140 0.00856 0.0141 enrolled_any 0.557
+[1] "gam"
+[1] "POPULATION AVERAGE EFFECT"
+# A tibble: 1 × 7
+  delta estimate      se ci.min ci.max outcome      ybar0
+  <dbl>    <dbl>   <dbl>  <dbl>  <dbl> <chr>        <dbl>
+1 10000   0.0159 0.00197 0.0121 0.0198 enrolled_any 0.557
+[1] "WITHIN EDUCATION"
+# A tibble: 3 × 8
+  delta educJoint estimate       se  ci.min  ci.max outcome      ybar0
+  <dbl>     <dbl>    <dbl>    <dbl>   <dbl>   <dbl> <chr>        <dbl>
+1 10000         2  0.00461 0.001000 0.00265 0.00656 enrolled_any 0.557
+2 10000         1  0.0107  0.00128  0.00815 0.0132  enrolled_any 0.557
+3 10000         0  0.0186  0.00242  0.0139  0.0234  enrolled_any 0.557
+[1] "WITHIN INCOME TERCILE"
+# A tibble: 3 × 8
+  delta label_income estimate      se  ci.min ci.max outcome      ybar0
+  <dbl> <chr>           <dbl>   <dbl>   <dbl>  <dbl> <chr>        <dbl>
+1 10000 Low           0.0252  0.00550 0.0144  0.0360 enrolled_any 0.557
+2 10000 Mid           0.0148  0.00346 0.00797 0.0215 enrolled_any 0.557
+3 10000 High          0.00681 0.00190 0.00309 0.0105 enrolled_any 0.557
+[1] "WITHIN WEALTH TERCILE"
+# A tibble: 3 × 8
+  delta label_wealth estimate      se  ci.min ci.max outcome      ybar0
+  <dbl> <chr>           <dbl>   <dbl>   <dbl>  <dbl> <chr>        <dbl>
+1 10000 Low           0.0219  0.00418 0.0137  0.0300 enrolled_any 0.557
+2 10000 Mid           0.0162  0.00179 0.0127  0.0197 enrolled_any 0.557
+3 10000 High          0.00904 0.00130 0.00650 0.0116 enrolled_any 0.557
+[1] "2026-05-14 06:37:33 MDT"
+[1] "Logit vs GAM scatter"
+[1] "2026-05-14 06:37:36 MDT"
 [1] "Covariates given effect size"
 [1] "ENROLLED_ANY 10000"
-% latex table generated in R 4.3.2 by xtable 1.8-4 package
-% Wed Nov 29 08:53:39 2023
+% latex table generated in R 4.5.2 by xtable 1.8-8 package
+% Thu May 14 06:37:37 2026
 \begin{table}[ht]
 \centering
 \begin{tabular}{llll}
   \hline
 label & Bottom Quartile of Effect Size & Middle 50\% of Effect Size & Top Quartile of Effect Size \\ 
   \hline
-Range of effect sizes & -0.01 to 0.01 &  0.01 to 0.02 &  0.02 to 0.07 \\ 
-  Factual outcome: Proportion enrolled in college & 0.82 & 0.54 & 0.32 \\ 
-  Median income & \$145,832 & \$77,842 & \$26,250 \\ 
-  Median wealth & \$319,920 & \$82,031 & \$20,234 \\ 
+Range of effect sizes & -0.03 to 0.01 &  0.01 to 0.02 &  0.02 to 0.13 \\ 
+  Factual outcome: Proportion enrolled in college & 0.79 & 0.55 & 0.35 \\ 
+  Median income & \$138,235 & \$81,299 & \$25,184 \\ 
+  Median wealth & \$221,483 & \$89,322 & \$10,000 \\ 
   Proportion Two parents
-finished college & 0.36 & 0.01 &  \\ 
+completed college & 0.36 & 0.01 & 0.00 \\ 
   Proportion One parent
-finished college & 0.48 & 0.09 & 0.01 \\ 
+completed college & 0.48 & 0.09 & 0.03 \\ 
   Proportion No parent
-finished college & 0.16 & 0.89 & 0.99 \\ 
-  Proportion Non-Black Non-Hispanic & 0.83 & 0.70 & 0.64 \\ 
-  Proportion Hispanic & 0.09 & 0.17 & 0.08 \\ 
-  Proportion Non-Hispanic Black & 0.08 & 0.13 & 0.28 \\ 
+completed college & 0.16 & 0.90 & 0.97 \\ 
+  Proportion White or Other & 0.79 & 0.75 & 0.59 \\ 
+  Proportion Hispanic & 0.12 & 0.12 & 0.16 \\ 
+  Proportion Non-Hispanic Black & 0.09 & 0.13 & 0.26 \\ 
    \hline
 \end{tabular}
 \caption{Characteristics of those with low, middle, and high causal effects} 
 \end{table}
-[1] "ENROLLED_ANY 25000"
-% latex table generated in R 4.3.2 by xtable 1.8-4 package
-% Wed Nov 29 08:53:42 2023
-\begin{table}[ht]
-\centering
-\begin{tabular}{llll}
-  \hline
-label & Bottom Quartile of Effect Size & Middle 50\% of Effect Size & Top Quartile of Effect Size \\ 
-  \hline
-Range of effect sizes & -0.01 to 0.02 &  0.02 to 0.05 &  0.05 to 0.14 \\ 
-  Factual outcome: Proportion enrolled in college & 0.83 & 0.54 & 0.32 \\ 
-  Median income & \$144,010 & \$77,854 & \$26,797 \\ 
-  Median wealth & \$320,831 & \$82,395 & \$19,784 \\ 
-  Proportion Two parents
-finished college & 0.36 & 0.01 &  \\ 
-  Proportion One parent
-finished college & 0.49 & 0.09 & 0.00 \\ 
-  Proportion No parent
-finished college & 0.15 & 0.90 & 1.00 \\ 
-  Proportion Non-Black Non-Hispanic & 0.84 & 0.70 & 0.64 \\ 
-  Proportion Hispanic & 0.09 & 0.17 & 0.08 \\ 
-  Proportion Non-Hispanic Black & 0.08 & 0.13 & 0.28 \\ 
-   \hline
-\end{tabular}
-\caption{Characteristics of those with low, middle, and high causal effects} 
-\end{table}
-[1] "ENROLLED_4YR 10000"
-% latex table generated in R 4.3.2 by xtable 1.8-4 package
-% Wed Nov 29 08:54:50 2023
-\begin{table}[ht]
-\centering
-\begin{tabular}{llll}
-  \hline
-label & Bottom Quartile of Effect Size & Middle 50\% of Effect Size & Top Quartile of Effect Size \\ 
-  \hline
-Range of effect sizes & -0.01 to 0.01 &  0.01 to 0.01 &  0.01 to 0.07 \\ 
-  Factual outcome: Proportion enrolled in college & 0.61 & 0.30 & 0.22 \\ 
-  Median income & \$130,520 & \$79,114 & \$30,989 \\ 
-  Median wealth & \$218,749 & \$70,177 & \$57,422 \\ 
-  Proportion Two parents
-finished college & 0.36 & 0.01 & 0.00 \\ 
-  Proportion One parent
-finished college & 0.52 & 0.07 & 0.02 \\ 
-  Proportion No parent
-finished college & 0.13 & 0.92 & 0.98 \\ 
-  Proportion Non-Black Non-Hispanic & 0.78 & 0.73 & 0.63 \\ 
-  Proportion Hispanic & 0.14 & 0.16 & 0.07 \\ 
-  Proportion Non-Hispanic Black & 0.08 & 0.11 & 0.31 \\ 
-   \hline
-\end{tabular}
-\caption{Characteristics of those with low, middle, and high causal effects} 
-\end{table}
-[1] "ENROLLED_4YR 25000"
-% latex table generated in R 4.3.2 by xtable 1.8-4 package
-% Wed Nov 29 08:54:54 2023
-\begin{table}[ht]
-\centering
-\begin{tabular}{llll}
-  \hline
-label & Bottom Quartile of Effect Size & Middle 50\% of Effect Size & Top Quartile of Effect Size \\ 
-  \hline
-Range of effect sizes & -0.03 to 0.01 &  0.01 to 0.03 &  0.03 to 0.14 \\ 
-  Factual outcome: Proportion enrolled in college & 0.61 & 0.30 & 0.22 \\ 
-  Median income & \$129,335 & \$78,385 & \$33,068 \\ 
-  Median wealth & \$218,749 & \$64,713 & \$66,536 \\ 
-  Proportion Two parents
-finished college & 0.36 & 0.01 & 0.00 \\ 
-  Proportion One parent
-finished college & 0.52 & 0.07 & 0.02 \\ 
-  Proportion No parent
-finished college & 0.12 & 0.92 & 0.98 \\ 
-  Proportion Non-Black Non-Hispanic & 0.78 & 0.72 & 0.65 \\ 
-  Proportion Hispanic & 0.14 & 0.16 & 0.05 \\ 
-  Proportion Non-Hispanic Black & 0.08 & 0.12 & 0.30 \\ 
-   \hline
-\end{tabular}
-\caption{Characteristics of those with low, middle, and high causal effects} 
-\end{table}
-[1] "COMPLETED_25 10000"
-% latex table generated in R 4.3.2 by xtable 1.8-4 package
-% Wed Nov 29 08:54:57 2023
-\begin{table}[ht]
-\centering
-\begin{tabular}{llll}
-  \hline
-label & Bottom Quartile of Effect Size & Middle 50\% of Effect Size & Top Quartile of Effect Size \\ 
-  \hline
-Range of effect sizes & -0.01 to 0.00 &  0.00 to 0.01 &  0.01 to 0.05 \\ 
-  Factual outcome: Proportion enrolled in college & 0.46 & 0.14 & 0.15 \\ 
-  Median income & \$124,869 & \$69,270 & \$47,396 \\ 
-  Median wealth & \$206,444 & \$40,104 & \$135,442 \\ 
-  Proportion Two parents
-finished college & 0.36 & 0.01 & 0.00 \\ 
-  Proportion One parent
-finished college & 0.55 & 0.05 & 0.01 \\ 
-  Proportion No parent
-finished college & 0.08 & 0.94 & 0.99 \\ 
-  Proportion Non-Black Non-Hispanic & 0.84 & 0.64 & 0.74 \\ 
-  Proportion Hispanic & 0.12 & 0.18 & 0.05 \\ 
-  Proportion Non-Hispanic Black & 0.04 & 0.18 & 0.21 \\ 
-   \hline
-\end{tabular}
-\caption{Characteristics of those with low, middle, and high causal effects} 
-\end{table}
-[1] "COMPLETED_25 25000"
-% latex table generated in R 4.3.2 by xtable 1.8-4 package
-% Wed Nov 29 08:55:00 2023
-\begin{table}[ht]
-\centering
-\begin{tabular}{llll}
-  \hline
-label & Bottom Quartile of Effect Size & Middle 50\% of Effect Size & Top Quartile of Effect Size \\ 
-  \hline
-Range of effect sizes & -0.02 to 0.01 &  0.01 to 0.02 &  0.02 to 0.11 \\ 
-  Factual outcome: Proportion enrolled in college & 0.45 & 0.14 & 0.16 \\ 
-  Median income & \$124,869 & \$67,265 & \$53,958 \\ 
-  Median wealth & \$205,077 & \$35,547 & \$149,661 \\ 
-  Proportion Two parents
-finished college & 0.36 & 0.01 & 0.00 \\ 
-  Proportion One parent
-finished college & 0.56 & 0.05 & 0.01 \\ 
-  Proportion No parent
-finished college & 0.08 & 0.94 & 0.99 \\ 
-  Proportion Non-Black Non-Hispanic & 0.84 & 0.63 & 0.77 \\ 
-  Proportion Hispanic & 0.12 & 0.18 & 0.03 \\ 
-  Proportion Non-Hispanic Black & 0.04 & 0.19 & 0.20 \\ 
-   \hline
-\end{tabular}
-\caption{Characteristics of those with low, middle, and high causal effects} 
-\end{table}
-[1] "COMPLETED_30 10000"
-% latex table generated in R 4.3.2 by xtable 1.8-4 package
-% Wed Nov 29 08:55:03 2023
-\begin{table}[ht]
-\centering
-\begin{tabular}{llll}
-  \hline
-label & Bottom Quartile of Effect Size & Middle 50\% of Effect Size & Top Quartile of Effect Size \\ 
-  \hline
-Range of effect sizes & -0.04 to 0.00 &  0.00 to 0.01 &  0.01 to 0.07 \\ 
-  Factual outcome: Proportion enrolled in college & 0.51 & 0.23 & 0.19 \\ 
-  Median income & \$124,869 & \$76,270 & \$41,927 \\ 
-  Median wealth & \$164,877 & \$59,153 & \$109,283 \\ 
-  Proportion Two parents
-finished college & 0.38 & 0.00 & 0.00 \\ 
-  Proportion One parent
-finished college & 0.47 & 0.09 & 0.01 \\ 
-  Proportion No parent
-finished college & 0.15 & 0.90 & 0.99 \\ 
-  Proportion Non-Black Non-Hispanic & 0.77 & 0.71 & 0.67 \\ 
-  Proportion Hispanic & 0.17 & 0.15 & 0.04 \\ 
-  Proportion Non-Hispanic Black & 0.05 & 0.14 & 0.29 \\ 
-   \hline
-\end{tabular}
-\caption{Characteristics of those with low, middle, and high causal effects} 
-\end{table}
-[1] "COMPLETED_30 25000"
-% latex table generated in R 4.3.2 by xtable 1.8-4 package
-% Wed Nov 29 08:55:06 2023
-\begin{table}[ht]
-\centering
-\begin{tabular}{llll}
-  \hline
-label & Bottom Quartile of Effect Size & Middle 50\% of Effect Size & Top Quartile of Effect Size \\ 
-  \hline
-Range of effect sizes & -0.06 to 0.01 &  0.01 to 0.03 &  0.03 to 0.14 \\ 
-  Factual outcome: Proportion enrolled in college & 0.51 & 0.22 & 0.21 \\ 
-  Median income & \$123,958 & \$74,520 & \$48,489 \\ 
-  Median wealth & \$159,869 & \$52,317 & \$129,882 \\ 
-  Proportion Two parents
-finished college & 0.38 & 0.00 & 0.00 \\ 
-  Proportion One parent
-finished college & 0.45 & 0.10 & 0.01 \\ 
-  Proportion No parent
-finished college & 0.17 & 0.90 & 0.99 \\ 
-  Proportion Non-Black Non-Hispanic & 0.76 & 0.70 & 0.70 \\ 
-  Proportion Hispanic & 0.19 & 0.15 & 0.03 \\ 
-  Proportion Non-Hispanic Black & 0.05 & 0.15 & 0.27 \\ 
-   \hline
-\end{tabular}
-\caption{Characteristics of those with low, middle, and high causal effects} 
-\end{table}
-[1] "2023-11-29 08:55:06 EST"
-[1] "Visualize inductive"
-[1] "2023-11-29 08:55:07 EST"
-[1] "Alternative specification: Super Learner"
+[1] "2026-05-14 06:37:37 MDT"
+[1] "Visualize model"
 -- Imputation 1 --
 
   1  2
 
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Ventura 13.6.2
+[1] "2026-05-14 06:37:38 MDT"
+[1] "Simulation: Forest can underperform"
+[1] "Simulation: Jointly interactive and nonlinear DGP"
+R version 4.5.2 (2025-10-31)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.7.4
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
-time zone: America/New_York
+time zone: America/Denver
 tzcode source: internal
 
 attached base packages:
- [1] splines   grid      parallel  stats     graphics  grDevices utils    
- [8] datasets  methods   base     
+[1] grid      parallel  stats     graphics  grDevices utils     datasets 
+[8] methods   base     
 
 other attached packages:
- [1] grf_2.3.1             SuperLearner_2.0-28.1 gam_1.22-2           
- [4] nnls_1.5              gridExtra_2.3         mgcv_1.9-0           
- [7] nlme_3.1-163          doRNG_1.8.6           rngtools_1.5.2       
-[10] doParallel_1.0.17     iterators_1.0.14      foreach_1.5.2        
-[13] lubridate_1.9.3       forcats_1.0.0         stringr_1.5.0        
-[16] dplyr_1.1.3           purrr_1.0.2           readr_2.1.4          
-[19] tidyr_1.3.0           tibble_3.2.1          ggplot2_3.4.4        
-[22] tidyverse_2.0.0      
+ [1] gridExtra_2.3     grf_2.5.0         mgcv_1.9-3        nlme_3.1-168     
+ [5] doRNG_1.8.6.2     rngtools_1.5.2    doParallel_1.0.17 iterators_1.0.14 
+ [9] foreach_1.5.2     lubridate_1.9.4   forcats_1.0.1     stringr_1.6.0    
+[13] dplyr_1.1.4       purrr_1.2.0       readr_2.1.5       tidyr_1.3.1      
+[17] tibble_3.3.0      ggplot2_4.0.0     tidyverse_2.0.0  
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.4      rstatix_0.7.2     lattice_0.21-9    tzdb_0.4.0       
- [5] vctrs_0.6.4       tools_4.3.2       generics_0.1.3    fansi_1.0.5      
- [9] pkgconfig_2.0.3   Matrix_1.6-1.1    lifecycle_1.0.3   compiler_4.3.2   
-[13] farver_2.1.1      textshaping_0.3.7 munsell_0.5.0     DiceKriging_1.6.0
-[17] codetools_0.2-19  carData_3.0-5     Amelia_1.8.1      pillar_1.9.0     
-[21] car_3.1-2         ggpubr_0.6.0      crayon_1.5.2      abind_1.4-5      
-[25] tidyselect_1.2.0  digest_0.6.33     stringi_1.7.12    labeling_0.4.3   
-[29] cowplot_1.1.1     colorspace_2.1-0  cli_3.6.1         magrittr_2.0.3   
-[33] utf8_1.2.3        broom_1.0.5       foreign_0.8-85    withr_2.5.1      
-[37] scales_1.2.1      backports_1.4.1   bit64_4.0.5       timechange_0.2.0 
-[41] bit_4.0.5         ggsignif_0.6.4    ragg_1.2.6        hms_1.1.3        
-[45] rlang_1.1.1       Rcpp_1.0.11       xtable_1.8-4      glue_1.6.2       
-[49] vroom_1.6.4       R6_2.5.1          systemfonts_1.0.5
-[1] "FINISH TIME: 2023-11-29 08:58:18.851312"
+ [1] gtable_0.3.6       rstatix_0.7.3      lattice_0.22-7     tzdb_0.5.0        
+ [5] vctrs_0.6.5        tools_4.5.2        generics_0.1.4     pkgconfig_2.0.3   
+ [9] Matrix_1.7-4       RColorBrewer_1.1-3 S7_0.2.0           lifecycle_1.0.4   
+[13] compiler_4.5.2     farver_2.1.2       textshaping_1.0.4  DiceKriging_1.6.1 
+[17] codetools_0.2-20   carData_3.0-6      Amelia_1.8.3       Formula_1.2-5     
+[21] pillar_1.11.1      car_3.1-5          ggpubr_0.6.3       crayon_1.5.3      
+[25] abind_1.4-8        tidyselect_1.2.1   digest_0.6.37      stringi_1.8.7     
+[29] labeling_0.4.3     splines_4.5.2      cowplot_1.2.0      cli_3.6.5         
+[33] magrittr_2.0.4     utf8_1.2.6         broom_1.0.10       foreign_0.8-90    
+[37] withr_3.0.2        scales_1.4.0       backports_1.5.0    bit64_4.6.0-1     
+[41] timechange_0.3.0   bit_4.6.0          ggsignif_0.6.4     ragg_1.5.0        
+[45] hms_1.1.4          rlang_1.1.6        Rcpp_1.1.0         xtable_1.8-8      
+[49] glue_1.8.0         rstudioapi_0.17.1  vroom_1.6.6        R6_2.6.1          
+[53] systemfonts_1.3.1 
+[1] "FINISH TIME: 2026-05-14 06:39:12.163671"
 [1] "bs_reps: 1000"
-[1] "outcomes: enrolled_any enrolled_4yr completed_25 completed_30"
-[1] "delta_values: 10000 25000"
+[1] "outcome: enrolled_any"
+[1] "delta_value: 10000"
 [1] "num_cores: 12"
 [1] "TIME SPENT:"
-Time difference of 10.48239 hours
+Time difference of 5.642485 mins

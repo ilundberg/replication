@@ -130,7 +130,7 @@ forplot |>
     data = forplot |> 
       filter((A >= .5 & L == "Disadvantaged") | (A <= -.5 & L == "Advantaged")),
     linetype = "dotted",
-    size = 1.2
+    linewidth = 1.2
   ) +
   xlab("Treatment") +
   scale_y_continuous(name = "\nOutcome") +

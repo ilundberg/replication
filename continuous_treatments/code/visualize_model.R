@@ -79,7 +79,7 @@ to_predict |>
     axis.text.x = element_text(hjust = 1, angle = 45),
     strip.text.y = element_text(angle = 0)
   )
-ggsave("figures/figure7_logit.pdf", height = 4, width = 6)
+ggsave("figures/visualize_model_logit.pdf", height = 4, width = 6)
 
 to_predict |>
   mutate(
@@ -123,27 +123,6 @@ to_predict |>
     axis.text.x = element_text(hjust = 1, angle = 45),
     strip.text.y = element_text(angle = 0)
   )
-ggsave("figures/figure7_gam.pdf", height = 4, width = 6)
-
-
-
-to_predict |>
-  mutate(
-    GAM = predict(gam, type = "response", newdata = to_predict),
-    Logit = predict(logit, type = "response", newdata = to_predict)
-  ) |>
-  pivot_longer(cols = c("GAM","Logit"), names_to = "Model", values_to = "estimate") |>
-  mutate(educJoint = fct_rev(educJoint), race = fct_relevel(race,"Hispanic","Non-Hispanic Black","White or Other")) |>
-  ggplot(aes(x = income, y = estimate, linetype = Model, color = factor(wealth))) +
-  geom_line() +
-  facet_grid(race ~ educJoint) +
-  scale_color_discrete(
-    name = "Wealth",
-    labels = function(x) scales::label_currency(scale = 1e-3, suffix = "k")(as.numeric(x))
-  ) +
-  scale_x_continuous(name = "Parent Income", labels = scales::label_currency(scale = 1e-3, suffix = "k")) +
-  scale_y_continuous(name = "Any College Enrollment by Age 21", labels = scales::label_percent())
-ggsave("figures/model_visualization.pdf", height = 5, width = 6.5)
-
+ggsave("figures/visualize_model_gam.pdf", height = 4, width = 6)
 
   
